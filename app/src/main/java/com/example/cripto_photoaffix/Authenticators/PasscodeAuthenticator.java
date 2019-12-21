@@ -5,7 +5,6 @@ public class PasscodeAuthenticator {
 
     public PasscodeAuthenticator(String path) {
         filePath = path;
-
     }
 
     public boolean authenticate(Integer passcode) {
