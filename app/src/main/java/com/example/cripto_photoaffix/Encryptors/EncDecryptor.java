@@ -2,72 +2,108 @@ package com.example.cripto_photoaffix.Encryptors;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-
+import java.security.SecureRandom;
 import javax.crypto.Cipher;
-import javax.crypto.CipherInputStream;
-import javax.crypto.CipherOutputStream;
-import javax.crypto.spec.SecretKeySpec;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.PBEParameterSpec;
 
 public class EncDecryptor {
 
-    public void decrypt(String passwd, String file, String destination) {
-        SecretKeySpec key = new SecretKeySpec(passwd.getBytes(), "AES");
-        byte[] bytes = new byte[8];
+    public void decrypt(String password, String file, String destination) {
         try {
+            SecretKey secretKey = generateKey(password);
+
             FileInputStream inputStream = new FileInputStream(file);
-            FileOutputStream outputStream = new FileOutputStream(destination);
+            FileOutputStream fos = new FileOutputStream(destination);
 
-            Cipher cipher = Cipher.getInstance("AES");
-            cipher.init(Cipher.DECRYPT_MODE, key);
+            byte[] salt = new byte[8];
+            inputStream.read(salt);
 
-            CipherInputStream cipherInputStream = new CipherInputStream(inputStream, cipher);
+            PBEParameterSpec pbeParameterSpec = new PBEParameterSpec(salt, 100);
 
-            int byt = cipherInputStream.read(bytes);
+            Cipher cipher = Cipher.getInstance("PBEWithMD5AndTripleDES");
+            cipher.init(Cipher.DECRYPT_MODE, secretKey, pbeParameterSpec);
 
-            StringBuilder res = new StringBuilder();
+            byte[] in = new byte[64];
+            int read = inputStream.read(in);
 
-            while (byt != -1) {
-                outputStream.write(bytes, 0, byt);
-                byt = cipherInputStream.read(bytes);
+            while (read != -1) {
+                byte[] output = cipher.update(in, 0, read);
+                if (output != null)
+                    fos.write(output);
+
+                read = inputStream.read(in);
             }
 
+            byte[] output = cipher.doFinal();
+            if (output != null)
+                fos.write(output);
+
             inputStream.close();
-            outputStream.flush();
-            outputStream.close();
-            cipherInputStream.close();
+            fos.flush();
+            fos.close();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void encrypt(String passwd, String data, String destination) {
-        SecretKeySpec key = new SecretKeySpec(passwd.getBytes(), "AES");
-
+    public void encrypt(String password, String data, String destination) {
         try {
-            Cipher cipher = Cipher.getInstance("AES");
-            cipher.init(Cipher.ENCRYPT_MODE, key);
+            FileInputStream inFile = new FileInputStream(data);
+            FileOutputStream outFile = new FileOutputStream(destination);
 
-            FileOutputStream output = new FileOutputStream(destination);
-            FileInputStream inputStream = new FileInputStream(data);
+            SecretKey secretKey = generateKey(password);
 
-            CipherOutputStream stream = new CipherOutputStream(output, cipher);
+            byte[] salt = new byte[8];
 
-            byte[] bytes = new byte[8];
-            int byt = inputStream.read(bytes);
+            SecureRandom random = new SecureRandom();
+            random.nextBytes(salt);
 
-            while (byt != -1) {
-                stream.write(bytes, 0, byt);
-                byt = inputStream.read(bytes);
+            PBEParameterSpec pbeParameterSpec = new PBEParameterSpec(salt, 100);
+
+            Cipher cipher = Cipher.getInstance("PBEWithMD5AndTripleDES");
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey, pbeParameterSpec);
+
+            outFile.write(salt);
+
+            byte[] input = new byte[64];
+            int bytesRead = inFile.read(input);
+
+            while (bytesRead != -1) {
+                byte[] output = cipher.update(input, 0, bytesRead);
+                if (output != null)
+                    outFile.write(output);
+
+                bytesRead = inFile.read(input);
             }
 
-            output.flush();
-            output.close();
-            inputStream.close();
-            stream.close();
+            byte[] output = cipher.doFinal();
+            if (output != null)
+                outFile.write(output);
+
+            inFile.close();
+            outFile.flush();
+            outFile.close();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private SecretKey generateKey(String password) {
+        SecretKey secretKey = null;
+        try {
+            PBEKeySpec keySpec = new PBEKeySpec(password.toCharArray());
+
+            SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("PBEWithMD5AndTripleDES");
+            secretKey = secretKeyFactory.generateSecret(keySpec);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return secretKey;
     }
 }
