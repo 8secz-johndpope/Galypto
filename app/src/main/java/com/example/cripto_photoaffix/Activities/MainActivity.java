@@ -16,6 +16,8 @@ import com.example.cripto_photoaffix.Activities.LoginActivities.PasscodeAuthenti
 import com.example.cripto_photoaffix.Factories.FingerprintAuthenticationIntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentFactory;
 import com.example.cripto_photoaffix.Factories.PasscodeAuthenticationIntentFactory;
+import com.example.cripto_photoaffix.Factories.RegisterIntentFactory;
+import com.example.cripto_photoaffix.FileManagement.TextFilesManager;
 import com.example.cripto_photoaffix.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,10 +30,17 @@ public class MainActivity extends AppCompatActivity {
 
         IntentFactory factory;
 
-        if (canUseFingerprint())
-            factory = new FingerprintAuthenticationIntentFactory(this);
+        TextFilesManager manager = new TextFilesManager(this);
+
+        if (manager.exists("pswrd")) {
+            System.out.println(manager.getFileContent("pswrd"));
+            if (canUseFingerprint())
+                factory = new FingerprintAuthenticationIntentFactory(this);
+            else
+                factory = new PasscodeAuthenticationIntentFactory(this);
+        }
         else
-            factory = new PasscodeAuthenticationIntentFactory(this);
+            factory = new RegisterIntentFactory(this);
 
         startActivity(factory.create());
         finish();

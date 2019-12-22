@@ -17,4 +17,5 @@
     <string name="nine">9</string>
     <string name="cero">0</string>
     <string name="Authenticate">Enter</string>
+    <string name="insertPassword">Insert numeric password</string>
 </resources>

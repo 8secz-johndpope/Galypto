@@ -2,42 +2,49 @@ package com.example.cripto_photoaffix.Activities.LoginActivities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
+
 import com.example.cripto_photoaffix.Authenticators.PasscodeAuthenticator;
 import com.example.cripto_photoaffix.Factories.GalleryIntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentFactory;
 import com.example.cripto_photoaffix.R;
 
 public class PasscodeAuthenticationActivity extends AppCompatActivity {
-    private Integer passcode;
+    private EditText field;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passcode_authentication);
 
-        passcode = 0;
+        field = findViewById(R.id.loginPasscode);
+
+        field.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE)
+                    authenticate(field.getText().toString());
+
+                return true;
+            }
+        });
     }
 
-    public void press(View view) {
-        Button button = (Button) view;
-        passcode = passcode * 10 + Integer.parseInt(button.getText().toString());
-        System.out.println("Code: " + passcode);
-    }
-
-    public void authenticate(View view) {
-        PasscodeAuthenticator authenticator = new PasscodeAuthenticator("/");
+    private void authenticate(String passcode) {
+        PasscodeAuthenticator authenticator = new PasscodeAuthenticator(this);
         boolean auth = authenticator.authenticate(passcode);
 
         if (auth) {
             IntentFactory factory = new GalleryIntentFactory(this);
             startActivity(factory.create());
-            passcode = null;
             finish();
         }
         else {
-            passcode = 0;
+            field.selectAll();
             System.out.println("Error!");
         }
     }
