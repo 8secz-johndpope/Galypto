@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.Visitors.SuccessfulAuthenticationVisitor;
 import com.example.cripto_photoaffix.Visitors.UnsuccessfulAuthenticationVisitor;
