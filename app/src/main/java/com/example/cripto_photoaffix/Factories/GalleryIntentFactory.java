@@ -1,17 +1,16 @@
 package com.example.cripto_photoaffix.Factories;
 
-import android.content.Context;
 import android.content.Intent;
-
-import com.example.cripto_photoaffix.Activities.GalleryAtivity;
+import com.example.cripto_photoaffix.Activities.GalleryActivity;
+import com.example.cripto_photoaffix.Activities.MyActivity;
 
 public class GalleryIntentFactory extends IntentFactory {
 
-    public GalleryIntentFactory(Context context) {
-        super(context);
+    public GalleryIntentFactory(MyActivity activity) {
+        super(activity);
     }
 
     public Intent create() {
-        return new Intent(context, GalleryAtivity.class);
+        return new Intent(activity, GalleryActivity.class);
     }
 }

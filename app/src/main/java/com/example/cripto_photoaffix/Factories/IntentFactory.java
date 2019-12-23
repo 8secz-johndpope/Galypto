@@ -1,18 +1,19 @@
 package com.example.cripto_photoaffix.Factories;
 
-import android.content.Context;
 import android.content.Intent;
 
-public abstract class IntentFactory {
-    protected Context context;
+import com.example.cripto_photoaffix.Activities.MyActivity;
 
-    protected IntentFactory(Context context) {
-        this.context = context;
+public abstract class IntentFactory {
+    protected MyActivity activity;
+
+    protected IntentFactory(MyActivity activity) {
+        this.activity = activity;
     }
 
     public abstract Intent create();
 
-    public Context getContext() {
-        return context;
+    public MyActivity getActivity() {
+        return activity;
     }
 }

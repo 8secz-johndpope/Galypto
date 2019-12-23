@@ -2,6 +2,8 @@ package com.example.cripto_photoaffix.Security;
 
 import android.content.Context;
 
+import com.example.cripto_photoaffix.Activities.MyActivity;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -15,10 +17,10 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 
 public class EncDecryptor {
-    private Context context;
+    private MyActivity activity;
 
-    public EncDecryptor(Context c) {
-        context = c;
+    public EncDecryptor(MyActivity c) {
+        activity = c;
     }
 
     public String decrypt(String password, String file) {
@@ -152,7 +154,7 @@ public class EncDecryptor {
     }
 
     private void createFileIfDoesnotExists(String folder, String filename) {
-        File path = new File(context.getFilesDir(), folder);
+        File path = new File(activity.getFilesDir(), folder);
 
         if (!path.exists())
             path.mkdirs();

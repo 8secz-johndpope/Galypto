@@ -18,10 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activities.RegisterActivities.RegisterActivity"></activity>
-        <activity android:name=".Activities.GalleryAtivity" />
+        <activity android:name=".Activities.GalleryActivity" />
         <activity android:name=".Activities.LoginActivities.PasscodeAuthenticationActivity" />
         <activity android:name=".Activities.LoginActivities.FingerprintAuthenticationActivity" />
-        <activity android:name=".Activities.MainActivity">
+        <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

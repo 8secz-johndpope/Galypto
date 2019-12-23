@@ -2,6 +2,8 @@ package com.example.cripto_photoaffix.FileManagement;
 
 import android.content.Context;
 
+import com.example.cripto_photoaffix.Activities.MyActivity;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -10,14 +12,14 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 public class TextFilesManager {
-    private Context context;
+    private MyActivity activity;
 
-    public TextFilesManager(Context c) {
-        context = c;
+    public TextFilesManager(MyActivity c) {
+        activity = c;
     }
 
     public void createFile(String folder, String filename) {
-        File path = new File(context.getFilesDir(), folder);
+        File path = new File(activity.getFilesDir(), folder);
 
         if (!path.exists())
             path.mkdirs();
@@ -34,7 +36,7 @@ public class TextFilesManager {
     }
 
     public void createFolder(String name) {
-        File path = new File(context.getFilesDir(), name);
+        File path = new File(activity.getFilesDir(), name);
 
         if (!path.exists())
             path.mkdirs();
@@ -42,7 +44,7 @@ public class TextFilesManager {
 
     public void writeToFile(String name, String data) {
         try {
-            OutputStreamWriter writer = new OutputStreamWriter(context.openFileOutput(name, Context.MODE_PRIVATE));
+            OutputStreamWriter writer = new OutputStreamWriter(activity.openFileOutput(name, Context.MODE_PRIVATE));
             writer.write(data);
             writer.flush();
             writer.close();
@@ -56,7 +58,7 @@ public class TextFilesManager {
 
         try {
 
-            InputStream input = context.openFileInput(path);
+            InputStream input = activity.openFileInput(path);
 
             if (input != null) {
                 InputStreamReader reader = new InputStreamReader(input);
@@ -80,7 +82,7 @@ public class TextFilesManager {
 
     public boolean exists(String name) {
         boolean does = false;
-        String [] fileNames = context.fileList();
+        String [] fileNames = activity.fileList();
         int i = 0;
 
         while (i < fileNames.length && !does) {

@@ -8,13 +8,15 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.FileManagement.TextFilesManager;
 import com.example.cripto_photoaffix.Factories.GalleryIntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentFactory;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Security.BCrypt;
+import com.example.cripto_photoaffix.Visitors.Visitor;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends MyActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,4 +53,6 @@ public class RegisterActivity extends AppCompatActivity {
         startActivity(factory.create());
         finish();
     }
+
+    public void accept(Visitor visitor) {}
 }
