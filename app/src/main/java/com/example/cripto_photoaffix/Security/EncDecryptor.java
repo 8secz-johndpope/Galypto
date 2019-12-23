@@ -1,15 +1,11 @@
 package com.example.cripto_photoaffix.Security;
 
-import android.content.Context;
-
 import com.example.cripto_photoaffix.Activities.MyActivity;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.SecureRandom;
-
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;

@@ -1,13 +1,10 @@
 package com.example.cripto_photoaffix.Activities.RegisterActivities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.FileManagement.TextFilesManager;
 import com.example.cripto_photoaffix.Factories.GalleryIntentFactory;
