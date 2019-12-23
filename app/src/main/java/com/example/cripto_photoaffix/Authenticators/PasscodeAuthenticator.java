@@ -34,8 +34,10 @@ public class PasscodeAuthenticator extends Authenticator {
 
         if (BCrypt.checkpw(passcode, hash))
             visitor = new SuccessfulAuthenticationVisitor();
-        else
+        else {
             visitor = new UnsuccessfulAuthenticationVisitor();
+            field.selectAll();
+        }
 
         activity.accept(visitor);
     }
