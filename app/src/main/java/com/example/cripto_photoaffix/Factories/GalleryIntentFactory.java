@@ -1,7 +1,7 @@
 package com.example.cripto_photoaffix.Factories;
 
 import android.content.Intent;
-import com.example.cripto_photoaffix.Activities.GalleryActivity;
+
 import com.example.cripto_photoaffix.Activities.MyActivity;
 
 public class GalleryIntentFactory extends IntentFactory {
