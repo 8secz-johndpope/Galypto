@@ -12,7 +12,7 @@ import com.example.cripto_photoaffix.FileManagement.TextFilesManager;
 import com.example.cripto_photoaffix.Factories.GalleryIntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentFactory;
 import com.example.cripto_photoaffix.R;
-import com.example.cripto_photoaffix.Security.MyHasher;
+import com.example.cripto_photoaffix.Security.BCrypt;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -37,11 +37,9 @@ public class RegisterActivity extends AppCompatActivity {
     public void createUserData() {
         EditText field = findViewById(R.id.passcode);
         String passcode = field.getText().toString();
-        System.out.println("PASSSCCCODODEEEE: " + passcode);
-        System.out.println(passcode);
-        MyHasher myHasher = new MyHasher();
 
-        String password = myHasher.hash(passcode);
+        String salt = BCrypt.gensalt();
+        String password = BCrypt.hashpw(passcode, salt);
 
         TextFilesManager manager = new TextFilesManager(this);
         String path = getFilesDir() + "/userData";
