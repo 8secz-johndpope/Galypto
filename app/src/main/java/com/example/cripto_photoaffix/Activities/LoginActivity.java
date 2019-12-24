@@ -1,10 +1,13 @@
 package com.example.cripto_photoaffix.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.cripto_photoaffix.Authenticators.Authenticator;
 import com.example.cripto_photoaffix.Authenticators.FingerprintAuthenticator;
 import com.example.cripto_photoaffix.Authenticators.PasscodeAuthenticator;
@@ -26,6 +29,7 @@ public class LoginActivity extends MyActivity {
 
         initializePasswordField();
         choseActivity();
+        checkForIncomingIntents();
     }
 
     private void initializePasswordField() {
@@ -40,6 +44,19 @@ public class LoginActivity extends MyActivity {
                 return true;
             }
         });
+    }
+
+    private void checkForIncomingIntents() {
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+
+        if (Intent.ACTION_SEND.equals(action) && type != null) {
+            if (type.startsWith("image/"))
+                handleImage(intent);
+            else
+                handleVideo(intent);
+        }
     }
 
     private void authenticate() {
@@ -78,5 +95,15 @@ public class LoginActivity extends MyActivity {
 
     public void accept(Visitor visitor) {
         visitor.visit(this);
+    }
+
+    private void handleImage(Intent intent) {
+        //Store and encrypt image.
+        Toast.makeText(this, "Image received", Toast.LENGTH_SHORT).show();
+    }
+
+    private void handleVideo(Intent intent) {
+        //Store and encrypt video.
+        Toast.makeText(this, "Video received", Toast.LENGTH_SHORT).show();
     }
 }
