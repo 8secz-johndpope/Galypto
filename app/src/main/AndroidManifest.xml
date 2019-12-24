@@ -20,15 +20,26 @@
         <activity
             android:name=".Activities.GalleryActivity"
             android:label="@string/title_activity_gallery"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity android:name=".Activities.RegisterActivities.RegisterActivity" />
-        <activity android:name=".Activities.LoginActivities.PasscodeAuthenticationActivity" />
-        <activity android:name=".Activities.LoginActivities.FingerprintAuthenticationActivity" />
         <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="video/*" />
             </intent-filter>
         </activity>
     </application>
