@@ -8,10 +8,11 @@
     tools:context=".Activities.GalleryActivity"
     tools:showIn="@layout/activity_gallery">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/large_text" />
+    <androidx.gridlayout.widget.GridLayout
+        android:id="@+id/grid_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+
+    </androidx.gridlayout.widget.GridLayout>
 </androidx.core.widget.NestedScrollView>
