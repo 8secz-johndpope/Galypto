@@ -44,7 +44,6 @@ public class FingerprintAuthenticator extends Authenticator {
         @Override
         public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
             super.onAuthenticationError(errorCode, errString);
-            unsuccessful();
         }
 
         @Override
