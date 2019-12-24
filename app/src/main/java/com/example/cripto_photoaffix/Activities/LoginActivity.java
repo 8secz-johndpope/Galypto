@@ -2,11 +2,14 @@ package com.example.cripto_photoaffix.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -19,10 +22,17 @@ import com.example.cripto_photoaffix.Authenticators.PasscodeAuthenticator;
 import com.example.cripto_photoaffix.Factories.GalleryIntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentFactory;
 import com.example.cripto_photoaffix.Factories.RegisterIntentFactory;
-import com.example.cripto_photoaffix.FileManagement.TextFilesManager;
+import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.R;
+import com.example.cripto_photoaffix.Security.EncryptedFile;
+import com.example.cripto_photoaffix.Security.MyEncryptor;
 import com.example.cripto_photoaffix.Visitors.Visitor;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.LinkedTransferQueue;
 
@@ -76,7 +86,7 @@ public class LoginActivity extends MyActivity {
 
     private void choseActivity() {
         IntentFactory factory;
-        TextFilesManager manager = new TextFilesManager(this);
+        FilesManager manager = new FilesManager(this);
 
         if (manager.exists("pswrd")) {
             fingerprintAuthenticator = new FingerprintAuthenticator(this);
@@ -94,7 +104,7 @@ public class LoginActivity extends MyActivity {
 
     public void loginSuccessful() {
         //Encryptor: encrypt everything in toEncrypt.
-
+        encryptQueue(field.getText().toString());
         IntentFactory factory = new GalleryIntentFactory(this);
         startActivity(factory.create());
 
@@ -124,6 +134,7 @@ public class LoginActivity extends MyActivity {
 
         if (image != null)
             toEncrypt.add(image);
+
     }
 
     private void handleVideo(Intent intent) {
@@ -134,5 +145,44 @@ public class LoginActivity extends MyActivity {
 
         if (video != null)
             toEncrypt.add(video);
+    }
+
+    private void encryptQueue(String password) {
+        Bitmap bitmap;
+        List<EncryptedFile> files = new LinkedList<EncryptedFile>();
+        MyEncryptor encryptor = new MyEncryptor();
+        String bitmapString;
+
+        while (!toEncrypt.isEmpty()) {
+            bitmap = getThumbnail(toEncrypt.poll());
+            bitmapString = bitmapToString(bitmap);
+            files.add(encryptor.encrypt(bitmapString, password));
+        }
+
+        FilesManager manager = new FilesManager(this);
+        manager.store(files);
+    }
+
+    private Bitmap getThumbnail(Uri uri) {
+        Bitmap bitmap;
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(uri);
+
+            bitmap = BitmapFactory.decodeStream(inputStream);
+        } catch (FileNotFoundException exception) {
+            exception.printStackTrace();
+            bitmap = null;
+        }
+
+        return bitmap;
+    }
+
+    private String bitmapToString(Bitmap bitmap) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+
+        byte[] bytes = outputStream.toByteArray();
+
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
 }

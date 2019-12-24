@@ -2,7 +2,7 @@ package com.example.cripto_photoaffix.Authenticators;
 
 import android.widget.EditText;
 import com.example.cripto_photoaffix.Activities.MyActivity;
-import com.example.cripto_photoaffix.FileManagement.TextFilesManager;
+import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Security.BCrypt;
 import com.example.cripto_photoaffix.Visitors.SuccessfulAuthenticationVisitor;
 import com.example.cripto_photoaffix.Visitors.UnsuccessfulAuthenticationVisitor;
@@ -26,7 +26,7 @@ public class PasscodeAuthenticator extends Authenticator {
     public void authenticate() {
         String passcode = field.getText().toString();
 
-        TextFilesManager manager = new TextFilesManager(activity);
+        FilesManager manager = new FilesManager(activity);
 
         String hash = manager.getFileContent("pswrd");
 

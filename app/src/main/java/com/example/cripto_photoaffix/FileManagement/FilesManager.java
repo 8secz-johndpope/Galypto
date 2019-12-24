@@ -2,17 +2,24 @@ package com.example.cripto_photoaffix.FileManagement;
 
 import android.content.Context;
 import com.example.cripto_photoaffix.Activities.MyActivity;
+import com.example.cripto_photoaffix.Security.EncryptedFile;
+
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
+import java.security.SecureRandom;
+import java.util.List;
 
-public class TextFilesManager {
+public class FilesManager {
     private MyActivity activity;
 
-    public TextFilesManager(MyActivity c) {
+    public FilesManager(MyActivity c) {
         activity = c;
     }
 
@@ -90,5 +97,35 @@ public class TextFilesManager {
         }
 
         return does;
+    }
+
+    public void store(List<EncryptedFile> files) {
+        //Store
+        SecureRandom random = new SecureRandom();
+
+        if (!exists(activity.getFilesDir() + "/pictures"))
+            createFolder("pictures");
+
+        for (EncryptedFile file: files) {
+            String name = random.nextInt() + "";
+
+            while (exists(activity.getFilesDir() + "/pictures/" + name))
+                name = random.nextInt() + "";
+
+            file.setFileName(name);
+
+            storeObject(file, activity.getFilesDir() + "/pictures" ,file.getFileName());
+        }
+    }
+
+    private void storeObject(Serializable object, String path, String name) {
+        try {
+            FileOutputStream outputStream = new FileOutputStream(path + '/' + name);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+
+            objectOutputStream.writeObject(object);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

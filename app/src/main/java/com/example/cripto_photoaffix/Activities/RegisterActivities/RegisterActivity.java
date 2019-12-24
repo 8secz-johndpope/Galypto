@@ -6,7 +6,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.example.cripto_photoaffix.Activities.MyActivity;
-import com.example.cripto_photoaffix.FileManagement.TextFilesManager;
+import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Factories.GalleryIntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentFactory;
 import com.example.cripto_photoaffix.R;
@@ -40,7 +40,7 @@ public class RegisterActivity extends MyActivity {
         String salt = BCrypt.gensalt();
         String password = BCrypt.hashpw(passcode, salt);
 
-        TextFilesManager manager = new TextFilesManager(this);
+        FilesManager manager = new FilesManager(this);
         String path = getFilesDir() + "/userData";
         manager.createFile(path, "pswrd");
 
