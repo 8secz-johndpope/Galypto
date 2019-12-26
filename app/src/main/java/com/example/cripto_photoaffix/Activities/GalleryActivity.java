@@ -11,14 +11,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.Toolbar;
-
 import android.util.DisplayMetrics;
-import android.view.MotionEvent;
 import android.view.View;
 import androidx.gridlayout.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.example.cripto_photoaffix.R;
 import java.util.List;
 
@@ -49,21 +46,24 @@ public class GalleryActivity extends MyActivity {
         DataTransferer transferer = DataTransferer.getInstance();
         List<Bitmap> bitmaps = (List<Bitmap>) transferer.getData();
 
-        if (bitmaps == null)
-            gallery = new Gallery();
-        else
-            gallery = new Gallery(bitmaps);
-
         GridLayout gridLayout = findViewById(R.id.grid_layout);
         gridLayout.setColumnCount(3);
-        gridLayout.setRowCount(40);
+
+        if (bitmaps == null) {
+            gridLayout.setRowCount(3);
+            gallery = new Gallery();
+        }
+        else {
+            gridLayout.setRowCount(bitmaps.size()/3 + 1);
+            gallery = new Gallery(bitmaps);
+        }
 
         if (bitmaps != null) {
             for (Bitmap picture : bitmaps) {
                 AppCompatImageButton button = new MyImageButton(picture, this);
-                button.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                button.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 button.setBackgroundColor(Color.WHITE);
-                gridLayout.addView(button, getScreenWidth()/3, getScreenHeigth()/3);
+                gridLayout.addView(button, getScreenWidth()/3, getScreenHeigth()/6);
                 button.setOnClickListener(new ButtonListener());
             }
         }
@@ -74,15 +74,13 @@ public class GalleryActivity extends MyActivity {
     private int getScreenWidth() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int width = displayMetrics.widthPixels;
-        return width;
+        return displayMetrics.widthPixels;
     }
 
     private int getScreenHeigth() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.widthPixels;
-        return height;
+        return displayMetrics.heightPixels;
     }
 
     private class ButtonListener implements View.OnClickListener {
