@@ -49,7 +49,8 @@ public class FingerprintAuthenticator extends Authenticator {
         @Override
         public void onAuthenticationFailed() {
             super.onAuthenticationFailed();
-            unsuccessful();
+            Visitor visitor = new UnsuccessfulAuthenticationVisitor();
+            activity.accept(visitor);
         }
 
         @Override
@@ -57,11 +58,6 @@ public class FingerprintAuthenticator extends Authenticator {
             super.onAuthenticationSucceeded(result);
 
             Visitor visitor = new SuccessfulAuthenticationVisitor();
-            activity.accept(visitor);
-        }
-
-        private void unsuccessful() {
-            Visitor visitor = new UnsuccessfulAuthenticationVisitor();
             activity.accept(visitor);
         }
     }
