@@ -4,7 +4,7 @@ public class DataTransferer {
     private static final DataTransferer instance = new DataTransferer();
     private Object data;
 
-    public DataTransferer() {
+    private DataTransferer() {
         data = null;
     }
 
