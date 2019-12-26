@@ -52,6 +52,35 @@ public class LoginActivity extends MyActivity {
         checkForIncomingIntents();
     }
 
+    public void loginSuccessful() {
+        //Encryptor: encrypt everything in toEncrypt.
+        encryptQueue(field.getText().toString());
+
+        List<Bitmap> bitmaps = decryptFiles();
+        DataTransferer transferer = DataTransferer.getInstance();
+        transferer.setData(bitmaps);
+
+        IntentFactory factory = new GalleryIntentFactory(this);
+        startActivity(factory.create());
+
+        finish();
+    }
+
+    public void loginUnsuccessful() {
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
+        else {
+            VibrationEffect effect = VibrationEffect.createOneShot(50, 1);
+            vibrator.vibrate(effect);
+        }
+    }
+
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
+
     private void initializePasswordField() {
         field = findViewById(R.id.loginPasscode);
 
@@ -100,35 +129,6 @@ public class LoginActivity extends MyActivity {
             startActivity(factory.create());
             finish();
         }
-    }
-
-    public void loginSuccessful() {
-        //Encryptor: encrypt everything in toEncrypt.
-        encryptQueue(field.getText().toString());
-
-        List<Bitmap> bitmaps = decryptFiles();
-        DataTransferer transferer = DataTransferer.getInstance();
-        transferer.setData(bitmaps);
-
-        IntentFactory factory = new GalleryIntentFactory(this);
-        startActivity(factory.create());
-
-        finish();
-    }
-
-    public void loginUnsuccessful() {
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
-        else {
-            VibrationEffect effect = VibrationEffect.createOneShot(50, 1);
-            vibrator.vibrate(effect);
-        }
-    }
-
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
     }
 
     private void handleImage(Intent intent) {
