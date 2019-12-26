@@ -53,7 +53,6 @@ public class LoginActivity extends MyActivity {
     }
 
     public void loginSuccessful() {
-        //Encryptor: encrypt everything in toEncrypt.
         encryptQueue(field.getText().toString());
 
         List<Bitmap> bitmaps = decryptFiles();
