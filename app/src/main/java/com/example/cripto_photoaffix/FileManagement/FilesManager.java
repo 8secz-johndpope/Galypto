@@ -3,17 +3,19 @@ package com.example.cripto_photoaffix.FileManagement;
 import android.content.Context;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.Security.EncryptedFile;
-
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.security.SecureRandom;
+import java.util.LinkedList;
 import java.util.List;
 
 public class FilesManager {
@@ -47,9 +49,10 @@ public class FilesManager {
             path.mkdirs();
     }
 
-    public void writeToFile(String name, String data) {
+    public void writeToFile(String path, String data) {
         try {
-            OutputStreamWriter writer = new OutputStreamWriter(activity.openFileOutput(name, Context.MODE_PRIVATE));
+            OutputStreamWriter writer = new OutputStreamWriter(activity.openFileOutput(path, Context.MODE_PRIVATE));
+
             writer.write(data);
             writer.flush();
             writer.close();
@@ -100,7 +103,6 @@ public class FilesManager {
     }
 
     public void store(List<EncryptedFile> files) {
-        //Store
         SecureRandom random = new SecureRandom();
 
         if (!exists(activity.getFilesDir() + "/pictures"))
@@ -118,6 +120,29 @@ public class FilesManager {
         }
     }
 
+    public List<EncryptedFile> restoreMedia() {
+        List<EncryptedFile> files = new LinkedList<EncryptedFile>();
+        List<String> names = getMedia();
+
+        try {
+            EncryptedFile file;
+            for (String name: names) {
+                FileInputStream inputStream = new FileInputStream(name);
+                ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+                System.out.println("Restoring " + name);
+                file = (EncryptedFile) objectInputStream.readObject();
+                files.add(file);
+
+                inputStream.close();
+                objectInputStream.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return files;
+    }
+
     private void storeObject(Serializable object, String path, String name) {
         try {
             FileOutputStream outputStream = new FileOutputStream(path + '/' + name);
@@ -127,5 +152,39 @@ public class FilesManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private List<String> getMedia() {
+        String[] media;
+
+        File folder = new File(activity.getFilesDir() + "/pictures");
+
+        media = folder.list();
+
+        List<String> res = new LinkedList<String>();
+
+        for (String s: media) {
+            System.out.println("File contained " + s);
+            res.add(activity.getFilesDir() + "/pictures/" + s);
+        }
+
+        return res;
+    }
+
+    public void removeEverything() {
+        File folder = new File(activity.getFilesDir() + "/pictures");
+
+        if (folder.exists()) {
+            for (File file : folder.listFiles()) {
+                file.delete();
+            }
+
+            folder.delete();
+        }
+
+        File password = new File(activity.getFilesDir() + "/pswrd");
+
+        if (password.exists())
+            password.delete();
     }
 }

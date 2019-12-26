@@ -15,10 +15,10 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.cripto_photoaffix.Authenticators.Authenticator;
 import com.example.cripto_photoaffix.Authenticators.FingerprintAuthenticator;
 import com.example.cripto_photoaffix.Authenticators.PasscodeAuthenticator;
+import com.example.cripto_photoaffix.DataTransferer;
 import com.example.cripto_photoaffix.Factories.GalleryIntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentFactory;
 import com.example.cripto_photoaffix.Factories.RegisterIntentFactory;
@@ -27,7 +27,6 @@ import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Security.EncryptedFile;
 import com.example.cripto_photoaffix.Security.MyEncryptor;
 import com.example.cripto_photoaffix.Visitors.Visitor;
-
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -96,6 +95,7 @@ public class LoginActivity extends MyActivity {
                 fingerprintAuthenticator.initialize();
         }
         else {
+            manager.removeEverything();
             factory = new RegisterIntentFactory(this);
             startActivity(factory.create());
             finish();
@@ -105,6 +105,11 @@ public class LoginActivity extends MyActivity {
     public void loginSuccessful() {
         //Encryptor: encrypt everything in toEncrypt.
         encryptQueue(field.getText().toString());
+
+        List<Bitmap> bitmaps = decryptFiles();
+        DataTransferer transferer = DataTransferer.getInstance();
+        transferer.setData(bitmaps);
+
         IntentFactory factory = new GalleryIntentFactory(this);
         startActivity(factory.create());
 
@@ -148,6 +153,7 @@ public class LoginActivity extends MyActivity {
     }
 
     private void encryptQueue(String password) {
+        System.out.println("ENCRYPTING QUEUEUE");
         Bitmap bitmap;
         List<EncryptedFile> files = new LinkedList<EncryptedFile>();
         MyEncryptor encryptor = new MyEncryptor();
@@ -161,6 +167,26 @@ public class LoginActivity extends MyActivity {
 
         FilesManager manager = new FilesManager(this);
         manager.store(files);
+    }
+
+    private List<Bitmap> decryptFiles() {
+        FilesManager manager = new FilesManager(this);
+        List<EncryptedFile> encryptedFiles = manager.restoreMedia();
+        MyEncryptor encryptor = new MyEncryptor();
+        String bitmapString;
+        Bitmap bitmap;
+        List<Bitmap> bitmaps = new LinkedList<Bitmap>();
+
+        for (EncryptedFile file: encryptedFiles) {
+            System.out.println("FILE NAME: "  + file.getFileName());
+            System.out.println("FILE SALT: "  + file.getSalt());
+            System.out.println("FILE DATA: " + file.getData());
+            bitmapString = encryptor.decrypt(file, field.getText().toString());
+            bitmap = stringToBitmap(bitmapString);
+            bitmaps.add(bitmap);
+        }
+
+        return bitmaps;
     }
 
     private Bitmap getThumbnail(Uri uri) {
@@ -184,5 +210,13 @@ public class LoginActivity extends MyActivity {
         byte[] bytes = outputStream.toByteArray();
 
         return Base64.encodeToString(bytes, Base64.DEFAULT);
+    }
+
+    private Bitmap stringToBitmap(String bit) {
+        byte[] bytes = Base64.decode(bit, Base64.DEFAULT);
+
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+        return bitmap;
     }
 }
