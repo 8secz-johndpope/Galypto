@@ -33,7 +33,9 @@ public class RegisterActivity extends MyActivity {
         });
     }
 
-    public void createUserData() {
+    public void accept(Visitor visitor) {}
+
+    private void createUserData() {
         EditText field = findViewById(R.id.passcode);
         String passcode = field.getText().toString();
 
@@ -50,6 +52,4 @@ public class RegisterActivity extends MyActivity {
         startActivity(factory.create());
         finish();
     }
-
-    public void accept(Visitor visitor) {}
 }
