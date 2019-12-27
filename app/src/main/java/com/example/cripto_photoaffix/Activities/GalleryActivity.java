@@ -47,28 +47,20 @@ public class GalleryActivity extends MyActivity {
 
     private void initialize() {
         DataTransferer transferer = DataTransferer.getInstance();
-        List<Bitmap> bitmaps = (List<Bitmap>) transferer.getData();
+        gallery = (Gallery)transferer.getData();
 
         GridLayout gridLayout = findViewById(R.id.grid_layout);
         gridLayout.setColumnCount(3);
+        gridLayout.setRowCount(gallery.getPictures().size()/3 + 1);
 
-        if (bitmaps == null) {
-            gridLayout.setRowCount(3);
-            gallery = new Gallery();
-        }
-        else {
-            gridLayout.setRowCount(bitmaps.size()/3 + 1);
-            gallery = new Gallery(bitmaps);
-        }
+        List<Bitmap> bitmaps = gallery.getPictures();
 
-        if (bitmaps != null) {
-            for (Bitmap picture : bitmaps) {
-                AppCompatImageButton button = new MyImageButton(picture, this);
-                button.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                button.setBackgroundColor(Color.WHITE);
-                gridLayout.addView(button, getScreenWidth()/3, getScreenHeigth()/6);
-                button.setOnClickListener(new ButtonListener());
-            }
+        for (Bitmap picture : bitmaps) {
+            AppCompatImageButton button = new MyImageButton(picture, this);
+            button.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            button.setBackgroundColor(Color.WHITE);
+            gridLayout.addView(button, getScreenWidth()/3, getScreenHeigth()/6);
+            button.setOnClickListener(new ButtonListener());
         }
     }
 
