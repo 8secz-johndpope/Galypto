@@ -35,7 +35,6 @@ public class DecryptorThread extends Thread {
 
         while (!encryptedFiles.isEmpty()) {
             file = encryptedFiles.poll();
-            System.out.println("Decrypting " + file.getFileName());
             bitmapString = encryptor.decrypt(file, passcode);
             bitmap = stringToBitmap(bitmapString);
             result.add(bitmap);
