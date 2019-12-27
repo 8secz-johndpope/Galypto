@@ -41,9 +41,7 @@ public class Gallery {
         List<Queue<EncryptedFile>> queues = divideDecryption();
         List<Bitmap> bitmaps = startThreading(queues, password);
 
-        for (Bitmap bitmap: bitmaps) {
-            pictures.add(bitmap);
-        }
+        pictures.addAll(bitmaps);
     }
 
     public Gallery(MyActivity activity) {
