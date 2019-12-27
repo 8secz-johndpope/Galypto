@@ -231,8 +231,7 @@ public class LoginActivity extends MyActivity {
         Handler handler = new Handler();
 
         for (Queue<EncryptedFile> queue: queues) {
-            DecryptorThread thread = new DecryptorThread(queue);
-            thread.setPasscode(passcode);
+            DecryptorThread thread = new DecryptorThread(queue, passcode);
             thread.start();
             handler.post(thread);
             threads.add(thread);
