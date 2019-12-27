@@ -26,6 +26,7 @@ import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Security.EncryptedFile;
 import com.example.cripto_photoaffix.Security.MyEncryptor;
+import com.example.cripto_photoaffix.Threads.DecryptorThread;
 import com.example.cripto_photoaffix.Visitors.Visitor;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -55,7 +56,9 @@ public class LoginActivity extends MyActivity {
     public void loginSuccessful() {
         encryptQueue(field.getText().toString());
 
-        List<Bitmap> bitmaps = decryptFiles();
+        List<Queue<EncryptedFile>> queues = divideDecryption();
+        List<Bitmap> bitmaps = startThreading(queues, field.getText().toString());
+
         DataTransferer transferer = DataTransferer.getInstance();
         transferer.setData(bitmaps);
 
@@ -131,7 +134,6 @@ public class LoginActivity extends MyActivity {
     }
 
     private void handleImage(Intent intent) {
-        //Store and encrypt image.
         Toast.makeText(this, "Image received", Toast.LENGTH_SHORT).show();
 
         Uri image = intent.getParcelableExtra(Intent.EXTRA_STREAM);
@@ -168,26 +170,6 @@ public class LoginActivity extends MyActivity {
         manager.store(files);
     }
 
-    private List<Bitmap> decryptFiles() {
-        FilesManager manager = new FilesManager(this);
-        List<EncryptedFile> encryptedFiles = manager.restoreMedia();
-        MyEncryptor encryptor = new MyEncryptor();
-        String bitmapString;
-        Bitmap bitmap;
-        List<Bitmap> bitmaps = new LinkedList<Bitmap>();
-
-        for (EncryptedFile file: encryptedFiles) {
-            System.out.println("FILE NAME: "  + file.getFileName());
-            System.out.println("FILE SALT: "  + file.getSalt());
-            System.out.println("FILE DATA: " + file.getData());
-            bitmapString = encryptor.decrypt(file, field.getText().toString());
-            bitmap = stringToBitmap(bitmapString);
-            bitmaps.add(bitmap);
-        }
-
-        return bitmaps;
-    }
-
     private Bitmap getThumbnail(Uri uri) {
         Bitmap bitmap;
         try {
@@ -211,11 +193,67 @@ public class LoginActivity extends MyActivity {
         return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
 
-    private Bitmap stringToBitmap(String bit) {
-        byte[] bytes = Base64.decode(bit, Base64.DEFAULT);
+    private List<Queue<EncryptedFile>> divideDecryption() {
+        FilesManager manager = new FilesManager(this);
+        List<EncryptedFile> encryptedFiles = manager.restoreMedia();
+        List<Queue<EncryptedFile>> res = new LinkedList<Queue<EncryptedFile>>();
 
-        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        int cantQueues = encryptedFiles.size() > 20?20:encryptedFiles.size();
+        Queue<EncryptedFile> actual;
+        int pos = 0;
 
-        return bitmap;
+        for (int i = 0; i < cantQueues; i++) {
+            actual = new LinkedTransferQueue<EncryptedFile>();
+            for (int j = 0; j < encryptedFiles.size()/cantQueues; j++) {
+                actual.add(encryptedFiles.get(pos));
+                pos++;
+            }
+
+            res.add(actual);
+
+            if (pos < encryptedFiles.size() - 1 && i == cantQueues - 1) {
+                int queue = 0;
+                while (queue < cantQueues && pos < encryptedFiles.size()) {
+                    res.get(queue).add(encryptedFiles.get(pos));
+                    queue++;
+                    pos++;
+                }
+            }
+        }
+
+        return res;
+    }
+
+    private List<Bitmap> startThreading(List<Queue<EncryptedFile>> queues, String passcode) {
+        List<DecryptorThread> threads = new LinkedList<DecryptorThread>();
+
+        for (Queue<EncryptedFile> queue: queues) {
+            DecryptorThread thread = new DecryptorThread(queue);
+            thread.setPasscode(passcode);
+            thread.start();
+            threads.add(thread);
+        }
+
+        List<Bitmap> bitmaps = new LinkedList<Bitmap>();
+
+        Queue<DecryptorThread> toGoBack = new LinkedTransferQueue<DecryptorThread>();
+
+        for (DecryptorThread thread: threads) {
+            if (thread.finished())
+                bitmaps.addAll(thread.getBitmaps());
+            else
+                toGoBack.add(thread);
+        }
+
+        while (!toGoBack.isEmpty()) {
+            DecryptorThread thread = toGoBack.poll();
+
+            if (thread.finished())
+                bitmaps.addAll(thread.getBitmaps());
+            else
+                toGoBack.add(thread);
+        }
+
+        return bitmaps;
     }
 }
