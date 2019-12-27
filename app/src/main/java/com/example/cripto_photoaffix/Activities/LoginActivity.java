@@ -238,25 +238,19 @@ public class LoginActivity extends MyActivity {
             threads.add(thread);
         }
 
+        for (Thread thread: threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException exception) {
+                exception.printStackTrace();
+            }
+        }
+
         List<Bitmap> bitmaps = new LinkedList<Bitmap>();
 
-        Queue<DecryptorThread> toGoBack = new LinkedTransferQueue<DecryptorThread>();
+        for (DecryptorThread thread: threads)
+            bitmaps.addAll(thread.getBitmaps());
 
-        for (DecryptorThread thread: threads) {
-            if (thread.finished())
-                bitmaps.addAll(thread.getBitmaps());
-            else
-                toGoBack.add(thread);
-        }
-
-        while (!toGoBack.isEmpty()) {
-            DecryptorThread thread = toGoBack.poll();
-
-            if (thread.finished())
-                bitmaps.addAll(thread.getBitmaps());
-            else
-                toGoBack.add(thread);
-        }
 
         return bitmaps;
     }
