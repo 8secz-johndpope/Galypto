@@ -2,15 +2,11 @@ package com.example.cripto_photoaffix.Activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -27,15 +23,7 @@ import com.example.cripto_photoaffix.Factories.IntentsFactory.RegisterIntentFact
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Gallery;
 import com.example.cripto_photoaffix.R;
-import com.example.cripto_photoaffix.Security.EncryptedFile;
-import com.example.cripto_photoaffix.Security.MyEncryptor;
-import com.example.cripto_photoaffix.Threads.DecryptorThread;
 import com.example.cripto_photoaffix.Visitors.Visitor;
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.LinkedTransferQueue;
 
