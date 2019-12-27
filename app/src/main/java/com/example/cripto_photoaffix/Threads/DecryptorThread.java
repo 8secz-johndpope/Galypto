@@ -4,9 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Process;
 import android.util.Base64;
-
-import com.example.cripto_photoaffix.Activities.MyActivity;
-import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Security.EncryptedFile;
 import com.example.cripto_photoaffix.Security.MyEncryptor;
 import java.util.LinkedList;

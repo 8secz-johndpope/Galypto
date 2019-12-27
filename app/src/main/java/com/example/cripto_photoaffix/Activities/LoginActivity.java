@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Base64;
@@ -227,10 +228,13 @@ public class LoginActivity extends MyActivity {
     private List<Bitmap> startThreading(List<Queue<EncryptedFile>> queues, String passcode) {
         List<DecryptorThread> threads = new LinkedList<DecryptorThread>();
 
+        Handler handler = new Handler();
+
         for (Queue<EncryptedFile> queue: queues) {
             DecryptorThread thread = new DecryptorThread(queue);
             thread.setPasscode(passcode);
             thread.start();
+            handler.post(thread);
             threads.add(thread);
         }
 
