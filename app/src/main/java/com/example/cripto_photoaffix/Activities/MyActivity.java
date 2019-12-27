@@ -10,7 +10,6 @@ public abstract class MyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
     }
 
     public abstract void accept(Visitor visitor);
