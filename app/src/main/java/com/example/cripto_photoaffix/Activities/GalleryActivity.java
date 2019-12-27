@@ -43,6 +43,8 @@ public class GalleryActivity extends MyActivity {
         initialize();
     }
 
+    public void accept(Visitor visitor) {}
+
     private void initialize() {
         DataTransferer transferer = DataTransferer.getInstance();
         List<Bitmap> bitmaps = (List<Bitmap>) transferer.getData();
@@ -69,8 +71,6 @@ public class GalleryActivity extends MyActivity {
             }
         }
     }
-
-    public void accept(Visitor visitor) {}
 
     private int getScreenWidth() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
