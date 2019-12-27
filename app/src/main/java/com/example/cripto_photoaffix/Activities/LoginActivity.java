@@ -142,8 +142,6 @@ public class LoginActivity extends MyActivity {
     }
 
     private void handleImage(Intent intent) {
-        Toast.makeText(this, "Image received", Toast.LENGTH_SHORT).show();
-
         Uri image = intent.getParcelableExtra(Intent.EXTRA_STREAM);
 
         if (image != null)
@@ -162,7 +160,6 @@ public class LoginActivity extends MyActivity {
     }
 
     private void encryptQueue(String password) {
-        System.out.println("ENCRYPTING QUEUEUE");
         Bitmap bitmap;
         List<EncryptedFile> files = new LinkedList<EncryptedFile>();
         MyEncryptor encryptor = new MyEncryptor();
