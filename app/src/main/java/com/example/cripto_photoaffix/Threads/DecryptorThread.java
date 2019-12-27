@@ -14,12 +14,10 @@ public class DecryptorThread extends Thread {
     private Queue<EncryptedFile> encryptedFiles;
     private List<Bitmap> result;
     private String passcode;
-    private boolean finished;
 
     public DecryptorThread(Queue<EncryptedFile> encryptedFiles, String passcode) {
         super();
         this.encryptedFiles = encryptedFiles;
-        finished = false;
         result = new LinkedList<Bitmap>();
         this.passcode = passcode;
     }
@@ -39,8 +37,6 @@ public class DecryptorThread extends Thread {
             bitmap = stringToBitmap(bitmapString);
             result.add(bitmap);
         }
-
-        finished = true;
     }
 
     public List<Bitmap> getBitmaps() {
