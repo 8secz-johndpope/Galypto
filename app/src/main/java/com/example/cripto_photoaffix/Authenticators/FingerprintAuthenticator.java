@@ -5,8 +5,8 @@ import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 import com.example.cripto_photoaffix.Activities.MyActivity;
-import com.example.cripto_photoaffix.Visitors.SuccessfulAuthenticationVisitor;
-import com.example.cripto_photoaffix.Visitors.UnsuccessfulAuthenticationVisitor;
+import com.example.cripto_photoaffix.Visitors.FingerprintSuccessfulAuthenticationVisitor;
+import com.example.cripto_photoaffix.Visitors.FingerprintUnsuccessfulAuthenticationVisitor;
 import com.example.cripto_photoaffix.Visitors.Visitor;
 
 import java.util.concurrent.Executor;
@@ -49,7 +49,7 @@ public class FingerprintAuthenticator extends Authenticator {
         @Override
         public void onAuthenticationFailed() {
             super.onAuthenticationFailed();
-            Visitor visitor = new UnsuccessfulAuthenticationVisitor();
+            Visitor visitor = new FingerprintUnsuccessfulAuthenticationVisitor();
             activity.accept(visitor);
         }
 
@@ -57,7 +57,7 @@ public class FingerprintAuthenticator extends Authenticator {
         public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
             super.onAuthenticationSucceeded(result);
 
-            Visitor visitor = new SuccessfulAuthenticationVisitor();
+            Visitor visitor = new FingerprintSuccessfulAuthenticationVisitor();
             activity.accept(visitor);
         }
     }

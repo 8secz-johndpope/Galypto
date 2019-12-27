@@ -17,12 +17,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.cripto_photoaffix.Authenticators.Authenticator;
-import com.example.cripto_photoaffix.Authenticators.FingerprintAuthenticator;
-import com.example.cripto_photoaffix.Authenticators.PasscodeAuthenticator;
 import com.example.cripto_photoaffix.DataTransferer;
-import com.example.cripto_photoaffix.Factories.GalleryIntentFactory;
-import com.example.cripto_photoaffix.Factories.IntentFactory;
-import com.example.cripto_photoaffix.Factories.RegisterIntentFactory;
+import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.AuthenticatorFactory;
+import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.FingerprintAuthenticatorFactory;
+import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.PasscodeAuthenticatorFactory;
+import com.example.cripto_photoaffix.Factories.IntentsFactory.GalleryIntentFactory;
+import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
+import com.example.cripto_photoaffix.Factories.IntentsFactory.RegisterIntentFactory;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Security.EncryptedFile;
@@ -39,7 +40,7 @@ import java.util.concurrent.LinkedTransferQueue;
 
 public class LoginActivity extends MyActivity {
     private EditText field;
-    private Authenticator passcodeAuthenticator, fingerprintAuthenticator;
+    private Authenticator authenticator;
     private Queue<Uri> toEncrypt;
 
     @Override
@@ -73,9 +74,9 @@ public class LoginActivity extends MyActivity {
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
+            vibrator.vibrate(VibrationEffect.createOneShot(75, VibrationEffect.DEFAULT_AMPLITUDE));
         else {
-            VibrationEffect effect = VibrationEffect.createOneShot(50, 1);
+            VibrationEffect effect = VibrationEffect.createOneShot(75, 1);
             vibrator.vibrate(effect);
         }
     }
@@ -91,7 +92,7 @@ public class LoginActivity extends MyActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE)
-                    authenticate();
+                    passcodeAuthenticate();
 
                 return true;
             }
@@ -111,8 +112,10 @@ public class LoginActivity extends MyActivity {
         }
     }
 
-    private void authenticate() {
-        passcodeAuthenticator.authenticate();
+    private void passcodeAuthenticate() {
+        AuthenticatorFactory factory = new PasscodeAuthenticatorFactory(this, field);
+        authenticator = factory.create();
+        authenticator.authenticate();
     }
 
     private void choseActivity() {
@@ -120,11 +123,15 @@ public class LoginActivity extends MyActivity {
         FilesManager manager = new FilesManager(this);
 
         if (manager.exists("pswrd")) {
-            fingerprintAuthenticator = new FingerprintAuthenticator(this);
-            passcodeAuthenticator = new PasscodeAuthenticator(this, field);
+            AuthenticatorFactory authFactory = new FingerprintAuthenticatorFactory(this);
+            authenticator = authFactory.create();
 
-            if (fingerprintAuthenticator.canBeUsed())
-                fingerprintAuthenticator.initialize();
+            if (authenticator.canBeUsed())
+                authenticator.initialize();
+            else {
+                authFactory = new PasscodeAuthenticatorFactory(this, field);
+                authenticator = authFactory.create();
+            }
         }
         else {
             manager.removeEverything();

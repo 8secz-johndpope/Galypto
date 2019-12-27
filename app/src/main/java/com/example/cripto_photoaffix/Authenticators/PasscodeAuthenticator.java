@@ -4,8 +4,8 @@ import android.widget.EditText;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Security.BCrypt;
-import com.example.cripto_photoaffix.Visitors.SuccessfulAuthenticationVisitor;
-import com.example.cripto_photoaffix.Visitors.UnsuccessfulAuthenticationVisitor;
+import com.example.cripto_photoaffix.Visitors.PasscodeSuccessfulAuthenticationVisitor;
+import com.example.cripto_photoaffix.Visitors.PasscodeUnsuccessfulAuthenticationVisitor;
 import com.example.cripto_photoaffix.Visitors.Visitor;
 
 public class PasscodeAuthenticator extends Authenticator {
@@ -33,9 +33,9 @@ public class PasscodeAuthenticator extends Authenticator {
         Visitor visitor;
 
         if (BCrypt.checkpw(passcode, hash))
-            visitor = new SuccessfulAuthenticationVisitor();
+            visitor = new PasscodeSuccessfulAuthenticationVisitor();
         else {
-            visitor = new UnsuccessfulAuthenticationVisitor();
+            visitor = new PasscodeUnsuccessfulAuthenticationVisitor();
             field.selectAll();
         }
 
