@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.Authenticators.Authenticator;
+import com.example.cripto_photoaffix.Authenticators.FingerprintAuthenticator;
 import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.AuthenticatorFactory;
 import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.FingerprintAuthenticatorFactory;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
@@ -55,8 +56,10 @@ public class RegisterActivity extends MyActivity {
         String finalPassword = generatePassword();
         encryptAndStoreForPassocde(field.getText().toString(), finalPassword);
 
-        AuthenticatorFactory fingerprint = new FingerprintAuthenticatorFactory(this);
-        if (fingerprint.create().canBeUsed()) {
+        AuthenticatorFactory fingerprintAuthenticatorFactory = new FingerprintAuthenticatorFactory(this);
+        Authenticator fingerprint = fingerprintAuthenticatorFactory.create();
+        if (fingerprint.canBeUsed()) {
+            encryptAndStoreForFingerprint(fingerprint);
             //If the user wants to use fingerprint sensor.
         }
 
@@ -93,7 +96,7 @@ public class RegisterActivity extends MyActivity {
         manager.storePassword(finalPass);
     }
 
-    private void encryptAndStoreForFingerprint(String passwordToEncrypt) {
+    private void encryptAndStoreForFingerprint(Authenticator fingerprint) {
         
     }
 }

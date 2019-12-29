@@ -50,10 +50,6 @@ public class MyEncryptor {
             file.setSalt(salt);
             file.setIV(iv);
 
-            System.out.println("FILE NAME: "  + file.getFileName());
-            System.out.println("FILE SALT: "  + file.getSalt());
-            System.out.println("FILE DATA: " + file.getData());
-
         } catch (Exception e) {
             e.printStackTrace();
         }
