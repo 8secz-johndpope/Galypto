@@ -187,4 +187,8 @@ public class FilesManager {
         if (password.exists())
             password.delete();
     }
+
+    public void storePassword(EncryptedFile password) {
+        storeObject(password, activity.getFilesDir().toString(), password.getFileName());
+    }
 }

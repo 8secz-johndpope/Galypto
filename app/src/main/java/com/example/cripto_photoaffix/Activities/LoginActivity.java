@@ -24,6 +24,9 @@ import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Gallery;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Visitors.Visitor;
+
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.LinkedTransferQueue;
 
@@ -83,7 +86,7 @@ public class LoginActivity extends MyActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE)
-                    passcodeAuthenticate();
+                    authenticator.authenticate();
 
                 return true;
             }
@@ -103,33 +106,29 @@ public class LoginActivity extends MyActivity {
         }
     }
 
-    private void passcodeAuthenticate() {
-        AuthenticatorFactory factory = new PasscodeAuthenticatorFactory(this, field);
-        authenticator = factory.create();
-        authenticator.authenticate();
-    }
-
     private void choseActivity() {
         IntentFactory factory;
         FilesManager manager = new FilesManager(this);
 
-        if (manager.exists("pswrd")) {
-            AuthenticatorFactory authFactory = new FingerprintAuthenticatorFactory(this);
-            authenticator = authFactory.create();
-
-            if (authenticator.canBeUsed())
-                authenticator.initialize();
-            else {
-                authFactory = new PasscodeAuthenticatorFactory(this, field);
-                authenticator = authFactory.create();
-            }
-        }
+        if (manager.exists("pswrd"))
+            initializeAuthenticators();
         else {
             manager.removeEverything();
             factory = new RegisterIntentFactory(this);
             startActivity(factory.create());
             finish();
         }
+    }
+
+    private void initializeAuthenticators() {
+        AuthenticatorFactory factory = new PasscodeAuthenticatorFactory(this, field);
+        Authenticator created = factory.create();
+
+        if (created.canBeUsed())
+            authenticator = created;
+
+        factory = new FingerprintAuthenticatorFactory(this);
+        created = factory.create();
     }
 
     private void handleImage(Intent intent) {

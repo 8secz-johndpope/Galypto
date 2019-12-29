@@ -16,6 +16,9 @@ public class FingerprintAuthenticator extends Authenticator {
 
     public FingerprintAuthenticator(MyActivity activity) {
         super(activity);
+
+        if (canBeUsed())
+            initialize();
     }
 
     public void authenticate() {}
