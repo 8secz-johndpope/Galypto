@@ -7,18 +7,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.Authenticators.Authenticator;
-import com.example.cripto_photoaffix.Authenticators.FingerprintAuthenticator;
+import com.example.cripto_photoaffix.Authenticators.PasscodeAuthenticator;
 import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.AuthenticatorFactory;
 import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.FingerprintAuthenticatorFactory;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.GalleryIntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
 import com.example.cripto_photoaffix.R;
-import com.example.cripto_photoaffix.Security.BCrypt;
 import com.example.cripto_photoaffix.Security.EncryptedFile;
-import com.example.cripto_photoaffix.Security.MyEncryptor;
 import com.example.cripto_photoaffix.Visitors.Visitor;
-
 import java.security.SecureRandom;
 
 public class RegisterActivity extends MyActivity {
@@ -45,23 +42,16 @@ public class RegisterActivity extends MyActivity {
 
     private void createUserData() {
         EditText field = findViewById(R.id.passcode);
-        String passcode = field.getText().toString();
-
-        String salt = BCrypt.gensalt();
-        String password = BCrypt.hashpw(passcode, salt);
-
-        FilesManager manager = new FilesManager(this);
-        manager.writeToFile("pswrd", password);
 
         String finalPassword = generatePassword();
-        encryptAndStoreForPassocde(field.getText().toString(), finalPassword);
+
+        encryptAndStoreForPassocde(field, finalPassword);
 
         AuthenticatorFactory fingerprintAuthenticatorFactory = new FingerprintAuthenticatorFactory(this);
         Authenticator fingerprint = fingerprintAuthenticatorFactory.create();
-        if (fingerprint.canBeUsed()) {
-            encryptAndStoreForFingerprint(fingerprint);
-            //If the user wants to use fingerprint sensor.
-        }
+
+        if (fingerprint.canBeUsed())
+            encryptAndStoreForFingerprint(fingerprint, finalPassword);
 
         IntentFactory factory = new GalleryIntentFactory(this);
         startActivity(factory.create());
@@ -86,17 +76,22 @@ public class RegisterActivity extends MyActivity {
         return res.toString();
     }
 
-    private void encryptAndStoreForPassocde(String password, String passwordToEncrypt) {
-        MyEncryptor encryptor = new MyEncryptor();
+    private void encryptAndStoreForPassocde(EditText field, String passwordToEncrypt) {
+        Authenticator authenticator = new PasscodeAuthenticator(this, field);
 
-        EncryptedFile finalPass = encryptor.encrypt(passwordToEncrypt, password);
-        finalPass.setFileName("finalPassword");
+        EncryptedFile finalPass = authenticator.encrypt(passwordToEncrypt);
+        finalPass.setFileName("passcodePassword");
 
         FilesManager manager = new FilesManager(this);
         manager.storePassword(finalPass);
     }
 
-    private void encryptAndStoreForFingerprint(Authenticator fingerprint) {
-        
+    private void encryptAndStoreForFingerprint(Authenticator fingerprint, String password) {
+        EncryptedFile file = fingerprint.encrypt(password);
+        file.setFileName("fingerprintPassword");
+
+        FilesManager manager = new FilesManager(this);
+
+        manager.storePassword(file);
     }
 }

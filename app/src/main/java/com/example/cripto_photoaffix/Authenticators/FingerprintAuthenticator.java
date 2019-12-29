@@ -1,15 +1,25 @@
 package com.example.cripto_photoaffix.Authenticators;
 
+import android.security.keystore.KeyGenParameterSpec;
+import android.security.keystore.KeyProperties;
+
 import androidx.annotation.NonNull;
 import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 import com.example.cripto_photoaffix.Activities.MyActivity;
+import com.example.cripto_photoaffix.FileManagement.FilesManager;
+import com.example.cripto_photoaffix.Security.EncryptedFile;
 import com.example.cripto_photoaffix.Visitors.FingerprintSuccessfulAuthenticationVisitor;
 import com.example.cripto_photoaffix.Visitors.FingerprintUnsuccessfulAuthenticationVisitor;
 import com.example.cripto_photoaffix.Visitors.Visitor;
 
+import java.security.KeyStore;
 import java.util.concurrent.Executor;
+
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
 
 public class FingerprintAuthenticator extends Authenticator {
     private BiometricPrompt.PromptInfo promptInfo;
@@ -34,6 +44,28 @@ public class FingerprintAuthenticator extends Authenticator {
         initializePromptInfo();
         BiometricPrompt prompt = new BiometricPrompt(activity, executor, new MyAuthenticatorCallback());
         prompt.authenticate(promptInfo);
+    }
+
+    public EncryptedFile encrypt(String data) {
+        EncryptedFile res = null;
+
+        try {
+            SecretKey secretKey = getSecretKey();
+
+            Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+
+            byte[] iv = cipher.getIV();
+            byte[] encrypted = cipher.doFinal(data.getBytes("UTF-8"));
+
+            res  = new EncryptedFile();
+            res.setIV(iv);
+            res.setData(encrypted);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return res;
     }
 
     private void initializePromptInfo() {
@@ -63,5 +95,39 @@ public class FingerprintAuthenticator extends Authenticator {
             Visitor visitor = new FingerprintSuccessfulAuthenticationVisitor();
             activity.accept(visitor);
         }
+    }
+
+    private Cipher getCryptoCipher() {
+        Cipher cipher = null;
+
+        try {
+            cipher = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES, "/" + KeyProperties.BLOCK_MODE_CBC + "/" + KeyProperties.ENCRYPTION_PADDING_PKCS7);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return cipher;
+    }
+
+    private SecretKey getSecretKey() {
+        SecretKey secretKey = null;
+
+        KeyGenerator keygen = null;
+        KeyGenParameterSpec specs = null;
+        try {
+            keygen = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
+            specs = new KeyGenParameterSpec.Builder("Crypto-PhotoAffix",
+                    KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
+                    .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+                    .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+                    .build();
+
+            keygen.init(specs);
+            secretKey = keygen.generateKey();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return secretKey;
     }
 }
