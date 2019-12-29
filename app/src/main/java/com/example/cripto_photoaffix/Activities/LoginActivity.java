@@ -128,7 +128,7 @@ public class LoginActivity extends MyActivity {
             authenticator = created;
 
         factory = new FingerprintAuthenticatorFactory(this);
-        created = factory.create();
+        factory.create();
     }
 
     private void handleImage(Intent intent) {
