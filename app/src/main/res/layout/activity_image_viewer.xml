@@ -28,6 +28,14 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black_overlay"
+            android:contentDescription="@string/image"
+            tools:srcCompat="@tools:sample/avatars" />
+
         <LinearLayout
             android:id="@+id/fullscreen_content_controls"
             style="?metaButtonBarStyle"
@@ -63,13 +71,6 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/image"
-            android:background="@color/black_overlay"
-            tools:srcCompat="@tools:sample/avatars" />
     </FrameLayout>
 
 </FrameLayout>
