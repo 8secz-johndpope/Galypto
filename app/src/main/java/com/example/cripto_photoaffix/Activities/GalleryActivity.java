@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import com.example.cripto_photoaffix.DataTransferer;
+import com.example.cripto_photoaffix.Factories.IntentsFactory.ImageViewerIntentFactory;
+import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
 import com.example.cripto_photoaffix.Gallery;
 import com.example.cripto_photoaffix.MyImageButton;
 import com.example.cripto_photoaffix.Visitors.Visitor;
@@ -56,11 +58,11 @@ public class GalleryActivity extends MyActivity {
         List<Bitmap> bitmaps = gallery.getPictures();
 
         for (Bitmap picture : bitmaps) {
-            AppCompatImageButton button = new MyImageButton(picture, this);
+            MyImageButton button = new MyImageButton(picture, this);
             button.setScaleType(ImageView.ScaleType.CENTER_CROP);
             button.setBackgroundColor(Color.WHITE);
             gridLayout.addView(button, getScreenWidth()/3, getScreenHeigth()/6);
-            button.setOnClickListener(new ButtonListener());
+            button.setOnClickListener(new ButtonListener(button));
         }
     }
 
@@ -77,10 +79,21 @@ public class GalleryActivity extends MyActivity {
     }
 
     private class ButtonListener implements View.OnClickListener {
+        private MyImageButton button;
+
+        public ButtonListener(MyImageButton button) {
+            this.button = button;
+        }
 
         @Override
         public void onClick(View v) {
             Toast.makeText(GalleryActivity.this, "Opening Image!!!!", Toast.LENGTH_SHORT).show();
+            IntentFactory factory = new ImageViewerIntentFactory(GalleryActivity.this);
+
+            DataTransferer transferer = DataTransferer.getInstance();
+            transferer.setData(button.getBitmap());
+
+            startActivity(factory.create());
         }
     }
 }

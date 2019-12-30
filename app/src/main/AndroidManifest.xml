@@ -9,7 +9,6 @@
     <uses-permission
         android:name="android.permission.USE_BIOMETRIC"
         android:required="true" />
-
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
@@ -20,10 +19,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".Activities.ImageViewerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_image_viewer"
+            android:theme="@style/FullscreenTheme"></activity>
+        <activity
             android:name=".Activities.GalleryActivity"
             android:label="@string/title_activity_gallery"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".Activities.RegisterActivities.RegisterActivity" />
         <activity android:name=".Activities.LoginActivity">
             <intent-filter>
@@ -31,16 +34,18 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="image/*" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="video/*" />
             </intent-filter>
         </activity>
