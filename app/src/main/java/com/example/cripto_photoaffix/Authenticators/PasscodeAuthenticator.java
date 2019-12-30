@@ -35,7 +35,7 @@ public class PasscodeAuthenticator extends Authenticator {
         Visitor visitor;
 
         if (BCrypt.checkpw(passcode, hash))
-            visitor = new PasscodeSuccessfulAuthenticationVisitor();
+            visitor = new PasscodeSuccessfulAuthenticationVisitor(this);
         else {
             visitor = new PasscodeUnsuccessfulAuthenticationVisitor();
             field.selectAll();
@@ -54,5 +54,13 @@ public class PasscodeAuthenticator extends Authenticator {
         MyEncryptor encryptor = new MyEncryptor();
 
         return encryptor.decrypt(file, field.getText().toString());
+    }
+
+    public String getFinalPassword() {
+        FilesManager manager = new FilesManager(activity);
+
+        EncryptedFile finalPassword = manager.restorePassword("passcodeFinalPassword");
+
+        return decrypt(finalPassword);
     }
 }

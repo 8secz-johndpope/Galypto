@@ -120,7 +120,6 @@ public class FilesManager {
             for (String name: names) {
                 FileInputStream inputStream = new FileInputStream(name);
                 ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-                System.out.println("Restoring " + name);
                 file = (EncryptedFile) objectInputStream.readObject();
                 files.add(file);
 
@@ -132,6 +131,23 @@ public class FilesManager {
         }
 
         return files;
+    }
+
+    public EncryptedFile restorePassword(String name) {
+        EncryptedFile file = null;
+
+        try {
+            FileInputStream inputStream = new FileInputStream(activity.getFilesDir() + "/" + name);
+            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+            file = (EncryptedFile) objectInputStream.readObject();
+
+            inputStream.close();
+            objectInputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return file;
     }
 
     private void storeObject(Serializable object, String path, String name) {
@@ -201,10 +217,6 @@ public class FilesManager {
     }
 
     public void storePassword(EncryptedFile password) {
-        System.out.println();
-        if (!exists(activity.getFilesDir().toString() + "/" + password.getFileName()))
-            createFile(activity.getFilesDir().toString(), password.getFileName());
-
         storeObject(password, activity.getFilesDir().toString(), password.getFileName());
 
         for (File f: activity.getFilesDir().listFiles())

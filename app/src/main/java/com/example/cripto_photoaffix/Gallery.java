@@ -49,10 +49,6 @@ public class Gallery {
         this.activity = activity;
     }
 
-    public void addPicture(Bitmap picture) {
-        pictures.add(picture);
-    }
-
     public List<Bitmap> getPictures() {
         return pictures;
     }

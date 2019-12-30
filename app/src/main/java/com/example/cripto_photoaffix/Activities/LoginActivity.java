@@ -47,13 +47,13 @@ public class LoginActivity extends MyActivity {
         checkForIncomingIntents();
     }
 
-    public void loginSuccessful() {
+    public void loginSuccessful(String password) {
         Gallery gallery;
 
         if (toEncrypt.isEmpty())
-            gallery = new Gallery(this, field.getText().toString());
+            gallery = new Gallery(this, password);
         else
-            gallery = new Gallery(this, field.getText().toString(), toEncrypt);
+            gallery = new Gallery(this, password, toEncrypt);
 
         DataTransferer transferer = DataTransferer.getInstance();
         transferer.setData(gallery);
@@ -111,8 +111,12 @@ public class LoginActivity extends MyActivity {
         FilesManager manager = new FilesManager(this);
 
         boolean allFilesExist = manager.exists(getFilesDir() + "/passcodeFinalPassword") &&
-                manager.exists(getFilesDir() + "/fingerprintFinalPassword") &&
                 manager.exists(getFilesDir() + "/passcodePassword");
+
+
+        AuthenticatorFactory factory1 = new FingerprintAuthenticatorFactory(this);
+        if (allFilesExist && factory1.create().canBeUsed())
+            allFilesExist = manager.exists(getFilesDir() + "/fingerprintFinalPassword");
 
         if (allFilesExist)
             initializeAuthenticators();

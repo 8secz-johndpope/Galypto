@@ -19,4 +19,6 @@ public abstract class Authenticator {
     public abstract EncryptedFile encrypt(String data);
 
     public abstract String decrypt(EncryptedFile file);
+
+    public abstract String getFinalPassword();
 }

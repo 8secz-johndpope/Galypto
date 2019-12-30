@@ -69,6 +69,38 @@ public class FingerprintAuthenticator extends Authenticator {
         return res;
     }
 
+    public String decrypt(EncryptedFile file) {
+        String res = "";
+        try {
+            KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
+            keyStore.load(null);
+
+            KeyStore.SecretKeyEntry entry = (KeyStore.SecretKeyEntry) keyStore.getEntry("Crypto-PhotoAffix", null);
+
+            SecretKey secretKey = entry.getSecretKey();
+
+            Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+            GCMParameterSpec spec = new GCMParameterSpec(128, file.getIV());
+
+            cipher.init(Cipher.DECRYPT_MODE, secretKey,spec);
+
+            byte[] decodedData = cipher.doFinal(file.getData());
+
+            res = new String(decodedData, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    public String getFinalPassword() {
+        FilesManager manager = new FilesManager(activity);
+
+        EncryptedFile finalPassword = manager.restorePassword("fingerprintFinalPassword");
+
+        return decrypt(finalPassword);
+    }
+
     protected void initializePromptInfo() {
         promptInfo = new BiometricPrompt.PromptInfo.Builder().setTitle("Touch the fingerprint sensor")
                 .setSubtitle("Log in using your fingerprint.").setNegativeButtonText("Use passcode")
@@ -93,7 +125,7 @@ public class FingerprintAuthenticator extends Authenticator {
         public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
             super.onAuthenticationSucceeded(result);
 
-            Visitor visitor = new FingerprintSuccessfulAuthenticationVisitor();
+            Visitor visitor = new FingerprintSuccessfulAuthenticationVisitor(FingerprintAuthenticator.this);
             activity.accept(visitor);
         }
     }
@@ -130,29 +162,5 @@ public class FingerprintAuthenticator extends Authenticator {
         }
 
         return secretKey;
-    }
-
-    public String decrypt(EncryptedFile file) {
-        String res = "";
-        try {
-            KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
-            keyStore.load(null);
-
-            KeyStore.SecretKeyEntry entry = (KeyStore.SecretKeyEntry) keyStore.getEntry("Crypto-PhotoAffix", null);
-
-            SecretKey secretKey = entry.getSecretKey();
-
-            Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
-            GCMParameterSpec spec = new GCMParameterSpec(128, file.getIV());
-
-            cipher.init(Cipher.DECRYPT_MODE, secretKey,spec);
-
-            byte[] decodedData = cipher.doFinal(file.getData());
-
-            res = new String(decodedData, "UTF-8");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return res;
     }
 }
