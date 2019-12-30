@@ -31,8 +31,6 @@ public class PasscodeAuthenticator extends Authenticator {
         FilesManager manager = new FilesManager(activity);
 
         String hash = manager.getFileContent("passcodePassword");
-        System.out.println("Passcode: " + passcode);
-        System.out.println("Hash: " + hash);
 
         Visitor visitor;
 
