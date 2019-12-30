@@ -114,4 +114,8 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="image">TODO</string>
+    <string name="shareButton">Button</string>
+    <string name="ShareButton">Share Button</string>
+    <string name="Delete">Delete</string>
+    <string name="save_to_device">Save to device</string>
 </resources>
