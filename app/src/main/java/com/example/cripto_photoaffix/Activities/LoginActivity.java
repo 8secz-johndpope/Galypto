@@ -110,7 +110,11 @@ public class LoginActivity extends MyActivity {
         IntentFactory factory;
         FilesManager manager = new FilesManager(this);
 
-        if (manager.exists("pswrd"))
+        boolean allFilesExist = manager.exists(getFilesDir() + "/passcodeFinalPassword") &&
+                manager.exists(getFilesDir() + "/fingerprintFinalPassword") &&
+                manager.exists(getFilesDir() + "/passcodePassword");
+
+        if (allFilesExist)
             initializeAuthenticators();
         else {
             manager.removeEverything();

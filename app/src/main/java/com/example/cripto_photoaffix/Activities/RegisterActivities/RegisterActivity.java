@@ -8,12 +8,15 @@ import android.widget.TextView;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.Authenticators.Authenticator;
 import com.example.cripto_photoaffix.Authenticators.PasscodeAuthenticator;
+import com.example.cripto_photoaffix.DataTransferer;
 import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.AuthenticatorFactory;
 import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.FingerprintAuthenticatorFactory;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.GalleryIntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
+import com.example.cripto_photoaffix.Gallery;
 import com.example.cripto_photoaffix.R;
+import com.example.cripto_photoaffix.Security.BCrypt;
 import com.example.cripto_photoaffix.Security.EncryptedFile;
 import com.example.cripto_photoaffix.Visitors.Visitor;
 import java.security.SecureRandom;
@@ -36,12 +39,17 @@ public class RegisterActivity extends MyActivity {
                 return true;
             }
         });
+
+        AuthenticatorFactory factory = new FingerprintAuthenticatorFactory(this);
+        factory.create();
     }
 
     public void accept(Visitor visitor) {}
 
     private void createUserData() {
         EditText field = findViewById(R.id.passcode);
+
+        hashPassword(field.getText().toString());
 
         String finalPassword = generatePassword();
 
@@ -52,6 +60,9 @@ public class RegisterActivity extends MyActivity {
 
         if (fingerprint.canBeUsed())
             encryptAndStoreForFingerprint(fingerprint, finalPassword);
+
+        DataTransferer transferer = DataTransferer.getInstance();
+        transferer.setData(new Gallery(this));
 
         IntentFactory factory = new GalleryIntentFactory(this);
         startActivity(factory.create());
@@ -67,8 +78,6 @@ public class RegisterActivity extends MyActivity {
             while (value < 33 || value > 126)
                 value = (value % 127) + 33;
 
-            System.out.println(value + " "  + (char)value);
-
             char c = (char) value;
             res.append(c);
         }
@@ -76,11 +85,26 @@ public class RegisterActivity extends MyActivity {
         return res.toString();
     }
 
+    private void hashPassword(String password) {
+        String salt = BCrypt.gensalt(12);
+        String hashed = BCrypt.hashpw(password, salt);
+
+        System.out.println("Hashed password: " + hashed);
+        System.out.println("Password: " + password);
+
+        FilesManager manager = new FilesManager(this);
+        manager.createFile("", "passcodePassword");
+
+        manager.writeToFile("passcodePassword", hashed);
+
+        System.out.println(manager.getFileContent("passcodePassword"));
+    }
+
     private void encryptAndStoreForPassocde(EditText field, String passwordToEncrypt) {
         Authenticator authenticator = new PasscodeAuthenticator(this, field);
 
         EncryptedFile finalPass = authenticator.encrypt(passwordToEncrypt);
-        finalPass.setFileName("passcodePassword");
+        finalPass.setFileName("passcodeFinalPassword");
 
         FilesManager manager = new FilesManager(this);
         manager.storePassword(finalPass);
@@ -88,7 +112,7 @@ public class RegisterActivity extends MyActivity {
 
     private void encryptAndStoreForFingerprint(Authenticator fingerprint, String password) {
         EncryptedFile file = fingerprint.encrypt(password);
-        file.setFileName("fingerprintPassword");
+        file.setFileName("fingerprintFinalPassword");
 
         FilesManager manager = new FilesManager(this);
 

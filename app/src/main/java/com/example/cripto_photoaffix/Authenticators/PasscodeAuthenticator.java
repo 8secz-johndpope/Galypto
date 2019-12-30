@@ -30,7 +30,9 @@ public class PasscodeAuthenticator extends Authenticator {
 
         FilesManager manager = new FilesManager(activity);
 
-        String hash = manager.getFileContent("pswrd");
+        String hash = manager.getFileContent("passcodePassword");
+        System.out.println("Passcode: " + passcode);
+        System.out.println("Hash: " + hash);
 
         Visitor visitor;
 
@@ -48,5 +50,11 @@ public class PasscodeAuthenticator extends Authenticator {
         MyEncryptor encryptor = new MyEncryptor();
 
         return encryptor.encrypt(data, field.getText().toString());
+    }
+
+    public String decrypt(EncryptedFile file) {
+        MyEncryptor encryptor = new MyEncryptor();
+
+        return encryptor.decrypt(file, field.getText().toString());
     }
 }

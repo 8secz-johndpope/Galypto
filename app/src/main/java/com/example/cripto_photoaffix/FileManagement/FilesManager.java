@@ -65,7 +65,6 @@ public class FilesManager {
         StringBuilder res = new StringBuilder();
 
         try {
-
             InputStream input = activity.openFileInput(path);
 
             if (input != null) {
@@ -89,17 +88,9 @@ public class FilesManager {
     }
 
     public boolean exists(String name) {
-        boolean does = false;
-        String [] fileNames = activity.fileList();
-        int i = 0;
+        File f = new File(name);
 
-        while (i < fileNames.length && !does) {
-            does = fileNames[i].equals(name);
-            System.out.println(does + " " + name);
-            i++;
-        }
-
-        return does;
+        return f.exists();
     }
 
     public void store(List<EncryptedFile> files) {
@@ -159,14 +150,16 @@ public class FilesManager {
 
         File folder = new File(activity.getFilesDir() + "/pictures");
 
+        if (!folder.exists())
+            createFolder("pictures");
+
+
         media = folder.list();
 
         List<String> res = new LinkedList<String>();
 
-        for (String s: media) {
-            System.out.println("File contained " + s);
+        for (String s: media)
             res.add(activity.getFilesDir() + "/pictures/" + s);
-        }
 
         return res;
     }
@@ -182,13 +175,39 @@ public class FilesManager {
             folder.delete();
         }
 
-        File password = new File(activity.getFilesDir() + "/pswrd");
+        folder = new File(activity.getFilesDir() + "/passwords");
+
+        if (folder.exists()) {
+            for (File file: folder.listFiles())
+                file.delete();
+
+            folder.delete();
+        }
+
+        File password = new File(activity.getFilesDir() + "/passcodePassword");
+
+        if (password.exists())
+            password.delete();
+
+        password = new File(activity.getFilesDir() + "/passcodeFinalPassword");
+
+        if (password.exists())
+            password.delete();
+
+        password = new File(activity.getFilesDir() + "/fingerprintFinalPassword");
 
         if (password.exists())
             password.delete();
     }
 
     public void storePassword(EncryptedFile password) {
+        System.out.println();
+        if (!exists(activity.getFilesDir().toString() + "/" + password.getFileName()))
+            createFile(activity.getFilesDir().toString(), password.getFileName());
+
         storeObject(password, activity.getFilesDir().toString(), password.getFileName());
+
+        for (File f: activity.getFilesDir().listFiles())
+            System.out.println("FILE: " + f.getName());
     }
 }
