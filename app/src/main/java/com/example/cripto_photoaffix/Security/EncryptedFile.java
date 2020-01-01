@@ -2,18 +2,19 @@ package com.example.cripto_photoaffix.Security;
 
 import java.io.Serializable;
 
-public class EncryptedFile implements Serializable {
-    private byte[] data, salt, iv;
-    private String fileName;
+public abstract class EncryptedFile implements Serializable {
+    protected byte[] data, salt, iv;
+    protected String fileName, path;
 
-    public EncryptedFile(byte[] data, byte[] salt, byte[] iv, String fileName) {
+    protected EncryptedFile(byte[] data, byte[] salt, byte[] iv, String fileName, String path) {
         this.data = data;
         this.salt = salt;
         this.iv = iv;
         this.fileName = fileName;
+        this.path = path;
     }
 
-    public EncryptedFile() {
+    protected EncryptedFile() {
         this.data = null;
         this.salt = null;
         this.iv = null;
@@ -35,6 +36,10 @@ public class EncryptedFile implements Serializable {
         return fileName;
     }
 
+    public String getPath() {
+        return path;
+    }
+
     public void setData(byte[] data) {
         this.data = data;
     }
@@ -50,4 +55,12 @@ public class EncryptedFile implements Serializable {
     public void setFileName(String name) {
         fileName = name;
     }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public abstract void encrypt(String data, String password);
+
+    public abstract String decrypt(String password);
 }

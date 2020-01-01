@@ -3,6 +3,9 @@ package com.example.cripto_photoaffix.FileManagement;
 import android.content.Context;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.Security.EncryptedFile;
+import com.example.cripto_photoaffix.Security.EncryptedPassword;
+import com.example.cripto_photoaffix.Security.EncryptedPicture;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -106,6 +109,7 @@ public class FilesManager {
                 name = random.nextInt() + "";
 
             file.setFileName(name);
+            file.setPath(activity.getFilesDir() + "/pictures");
 
             storeObject(file, activity.getFilesDir() + "/pictures" ,file.getFileName());
         }

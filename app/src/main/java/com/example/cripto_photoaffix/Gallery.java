@@ -8,7 +8,7 @@ import android.util.Base64;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Security.EncryptedFile;
-import com.example.cripto_photoaffix.Security.MyEncryptor;
+import com.example.cripto_photoaffix.Security.EncryptedPicture;
 import com.example.cripto_photoaffix.Threads.DecryptorThread;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -116,13 +116,17 @@ public class Gallery {
     private void storePictures(Queue<Uri> toEncrypt, String password) {
         Bitmap bitmap;
         List<EncryptedFile> files = new LinkedList<EncryptedFile>();
-        MyEncryptor encryptor = new MyEncryptor();
         String bitmapString;
+        EncryptedFile created;
 
         while (!toEncrypt.isEmpty()) {
             bitmap = getThumbnail(toEncrypt.poll());
             bitmapString = bitmapToString(bitmap);
-            files.add(encryptor.encrypt(bitmapString, password));
+
+            created = new EncryptedPicture();
+            created.encrypt(bitmapString, password);
+
+            files.add(created);
         }
 
         FilesManager manager = new FilesManager(activity);

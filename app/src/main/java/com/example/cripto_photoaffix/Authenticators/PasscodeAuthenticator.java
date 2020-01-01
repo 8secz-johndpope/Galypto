@@ -5,6 +5,7 @@ import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Security.BCrypt;
 import com.example.cripto_photoaffix.Security.EncryptedFile;
+import com.example.cripto_photoaffix.Security.EncryptedPassword;
 import com.example.cripto_photoaffix.Security.MyEncryptor;
 import com.example.cripto_photoaffix.Visitors.PasscodeSuccessfulAuthenticationVisitor;
 import com.example.cripto_photoaffix.Visitors.PasscodeUnsuccessfulAuthenticationVisitor;
@@ -44,10 +45,11 @@ public class PasscodeAuthenticator extends Authenticator {
         activity.accept(visitor);
     }
 
-    public EncryptedFile encrypt(String data) {
-        MyEncryptor encryptor = new MyEncryptor();
+    public EncryptedFile encrypt(String password) {
+        EncryptedFile encryptedPassword = new EncryptedPassword();
+        encryptedPassword.encrypt(password, field.getText().toString());
 
-        return encryptor.encrypt(data, field.getText().toString());
+        return encryptedPassword;
     }
 
     public String decrypt(EncryptedFile file) {

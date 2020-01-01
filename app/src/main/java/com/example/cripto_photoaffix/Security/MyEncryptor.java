@@ -3,6 +3,7 @@ package com.example.cripto_photoaffix.Security;
 import java.security.AlgorithmParameters;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
+import java.util.Vector;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -11,6 +12,8 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
 public class MyEncryptor {
+
+    public MyEncryptor() {}
 
     public String decrypt(EncryptedFile file, String password) {
         String decrypted = null;
@@ -29,9 +32,17 @@ public class MyEncryptor {
         return decrypted;
     }
 
-    public EncryptedFile encrypt(String data, String password) {
-
-        EncryptedFile file = new EncryptedFile();
+    /**
+     * Returns a vector whose indexes contain is:
+     *                                  0: Data encrypted.
+     *                                  1: Initialization Vector.
+     *                                  2: Salt.
+     * @param data: Data to encrypt.
+     * @param password: Password to encrypt the data.
+     * @return Vector with the parameters needed to decrypt.
+     */
+    public Vector<byte[]> encrypt(String data, String password) {
+        Vector<byte[]> res = new Vector<byte[]>(3);
         SecureRandom random = new SecureRandom();
         byte[] salt = random.generateSeed(8);
 
@@ -46,15 +57,15 @@ public class MyEncryptor {
             byte[] iv = parameters.getParameterSpec(IvParameterSpec.class).getIV();
             byte[] ciphertext = cipher.doFinal(data.getBytes());
 
-            file.setData(ciphertext);
-            file.setSalt(salt);
-            file.setIV(iv);
+            res.add(ciphertext);
+            res.add(iv);
+            res.add(salt);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return file;
+        return res;
     }
 
     private SecretKey generateSecretKey(char[] password, byte[] salt) {

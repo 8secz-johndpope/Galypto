@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Security.EncryptedFile;
+import com.example.cripto_photoaffix.Security.EncryptedPassword;
 import com.example.cripto_photoaffix.Visitors.FingerprintSuccessfulAuthenticationVisitor;
 import com.example.cripto_photoaffix.Visitors.FingerprintUnsuccessfulAuthenticationVisitor;
 import com.example.cripto_photoaffix.Visitors.Visitor;
@@ -59,7 +60,7 @@ public class FingerprintAuthenticator extends Authenticator {
             byte[] iv = cipher.getIV();
             byte[] encrypted = cipher.doFinal(data.getBytes("UTF-8"));
 
-            res  = new EncryptedFile();
+            res  = new EncryptedPassword();
             res.setIV(iv);
             res.setData(encrypted);
         } catch (Exception e) {

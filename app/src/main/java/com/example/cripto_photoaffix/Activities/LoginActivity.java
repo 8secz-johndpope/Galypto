@@ -11,7 +11,6 @@ import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.example.cripto_photoaffix.Authenticators.Authenticator;
 import com.example.cripto_photoaffix.DataTransferer;
 import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.AuthenticatorFactory;
@@ -24,9 +23,6 @@ import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Gallery;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Visitors.Visitor;
-
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.LinkedTransferQueue;
 
@@ -148,9 +144,6 @@ public class LoginActivity extends MyActivity {
     }
 
     private void handleVideo(Intent intent) {
-        //Store and encrypt video.
-        Toast.makeText(this, "Video received", Toast.LENGTH_SHORT).show();
-
         Uri video = intent.getParcelableExtra(Intent.EXTRA_STREAM);
 
         if (video != null)
