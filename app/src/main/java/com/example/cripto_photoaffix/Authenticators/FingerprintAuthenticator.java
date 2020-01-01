@@ -2,7 +2,6 @@ package com.example.cripto_photoaffix.Authenticators;
 
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
-
 import androidx.annotation.NonNull;
 import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
@@ -11,13 +10,11 @@ import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Security.EncryptedFile;
 import com.example.cripto_photoaffix.Security.EncryptedPassword;
-import com.example.cripto_photoaffix.Visitors.FingerprintSuccessfulAuthenticationVisitor;
-import com.example.cripto_photoaffix.Visitors.FingerprintUnsuccessfulAuthenticationVisitor;
-import com.example.cripto_photoaffix.Visitors.Visitor;
-
+import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.FingerprintSuccessfulAuthenticationActivityVisitor;
+import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.FingerprintUnsuccessfulAuthenticationActivityVisitor;
+import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
 import java.security.KeyStore;
 import java.util.concurrent.Executor;
-
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -118,16 +115,16 @@ public class FingerprintAuthenticator extends Authenticator {
         @Override
         public void onAuthenticationFailed() {
             super.onAuthenticationFailed();
-            Visitor visitor = new FingerprintUnsuccessfulAuthenticationVisitor();
-            activity.accept(visitor);
+            ActivityVisitor activityVisitor = new FingerprintUnsuccessfulAuthenticationActivityVisitor();
+            activity.accept(activityVisitor);
         }
 
         @Override
         public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
             super.onAuthenticationSucceeded(result);
 
-            Visitor visitor = new FingerprintSuccessfulAuthenticationVisitor(FingerprintAuthenticator.this);
-            activity.accept(visitor);
+            ActivityVisitor activityVisitor = new FingerprintSuccessfulAuthenticationActivityVisitor(FingerprintAuthenticator.this);
+            activity.accept(activityVisitor);
         }
     }
 

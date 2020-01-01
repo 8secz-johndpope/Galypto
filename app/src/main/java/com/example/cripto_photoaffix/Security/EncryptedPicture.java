@@ -1,5 +1,8 @@
 package com.example.cripto_photoaffix.Security;
 
+import com.example.cripto_photoaffix.Gallery.Media;
+import com.example.cripto_photoaffix.Visitors.EncryptedFilesVisitors.EncryptedFileVisitor;
+
 import java.util.Vector;
 
 public class EncryptedPicture extends EncryptedFile {
@@ -23,5 +26,9 @@ public class EncryptedPicture extends EncryptedFile {
         this.data = vector.get(0);
         this.iv = vector.get(1);
         this.salt = vector.get(2);
+    }
+
+    public Media accept(EncryptedFileVisitor visitor) {
+        return visitor.visit(this);
     }
 }

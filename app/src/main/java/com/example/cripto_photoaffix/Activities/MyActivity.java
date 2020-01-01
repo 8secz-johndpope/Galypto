@@ -2,8 +2,8 @@ package com.example.cripto_photoaffix.Activities;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.cripto_photoaffix.R;
-import com.example.cripto_photoaffix.Visitors.Visitor;
+
+import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
 
 public abstract class MyActivity extends AppCompatActivity {
 
@@ -12,5 +12,5 @@ public abstract class MyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
     }
 
-    public abstract void accept(Visitor visitor);
+    public abstract void accept(ActivityVisitor activityVisitor);
 }

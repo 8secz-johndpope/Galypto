@@ -4,21 +4,25 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Process;
 import android.util.Base64;
+
+import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.Security.EncryptedFile;
-import com.example.cripto_photoaffix.Security.MyEncryptor;
+import com.example.cripto_photoaffix.Visitors.EncryptedFilesVisitors.EncryptedFileVisitor;
+import com.example.cripto_photoaffix.Visitors.EncryptedFilesVisitors.MediaSelectorVisitor;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
 public class DecryptorThread extends Thread {
     private Queue<EncryptedFile> encryptedFiles;
-    private List<Bitmap> result;
+    private List<Media> result;
     private String passcode;
 
     public DecryptorThread(Queue<EncryptedFile> encryptedFiles, String passcode) {
         super();
         this.encryptedFiles = encryptedFiles;
-        result = new LinkedList<Bitmap>();
+        result = new LinkedList<Media>();
         this.passcode = passcode;
     }
 
@@ -26,20 +30,20 @@ public class DecryptorThread extends Thread {
     public void run() {
         android.os.Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
 
-        MyEncryptor encryptor = new MyEncryptor();
-        String bitmapString;
-        Bitmap bitmap;
         EncryptedFile file;
+        EncryptedFileVisitor visitor = new MediaSelectorVisitor(passcode);
+        Media media;
 
         while (!encryptedFiles.isEmpty()) {
             file = encryptedFiles.poll();
-            bitmapString = encryptor.decrypt(file, passcode);
-            bitmap = stringToBitmap(bitmapString);
-            result.add(bitmap);
+
+            media = file.accept(visitor);
+
+            result.add(media);
         }
     }
 
-    public List<Bitmap> getBitmaps() {
+    public List<Media> getMedia() {
         return result;
     }
 

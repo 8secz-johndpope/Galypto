@@ -1,5 +1,8 @@
 package com.example.cripto_photoaffix.Security;
 
+import com.example.cripto_photoaffix.Gallery.Media;
+import com.example.cripto_photoaffix.Visitors.EncryptedFilesVisitors.EncryptedFileVisitor;
+
 import java.io.Serializable;
 
 public abstract class EncryptedFile implements Serializable {
@@ -63,4 +66,6 @@ public abstract class EncryptedFile implements Serializable {
     public abstract void encrypt(String data, String password);
 
     public abstract String decrypt(String password);
+
+    public abstract Media accept(EncryptedFileVisitor visitor);
 }

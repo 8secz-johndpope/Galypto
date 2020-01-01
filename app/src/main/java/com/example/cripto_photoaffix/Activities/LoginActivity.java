@@ -20,23 +20,24 @@ import com.example.cripto_photoaffix.Factories.IntentsFactory.GalleryIntentFacto
 import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.RegisterIntentFactory;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
-import com.example.cripto_photoaffix.Gallery;
+import com.example.cripto_photoaffix.Gallery.Gallery;
 import com.example.cripto_photoaffix.R;
-import com.example.cripto_photoaffix.Visitors.Visitor;
+import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
 import java.util.Queue;
 import java.util.concurrent.LinkedTransferQueue;
 
 public class LoginActivity extends MyActivity {
     private EditText field;
     private Authenticator authenticator;
-    private Queue<Uri> toEncrypt;
+    private Queue<Uri> picturesToEncrypt, videosToEncrypt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        toEncrypt = new LinkedTransferQueue<Uri>();
+        picturesToEncrypt = new LinkedTransferQueue<Uri>();
+        videosToEncrypt = new LinkedTransferQueue<Uri>();
 
         initializePasswordField();
         choseActivity();
@@ -46,10 +47,10 @@ public class LoginActivity extends MyActivity {
     public void loginSuccessful(String password) {
         Gallery gallery;
 
-        if (toEncrypt.isEmpty())
+        if (picturesToEncrypt.isEmpty())
             gallery = new Gallery(this, password);
         else
-            gallery = new Gallery(this, password, toEncrypt);
+            gallery = new Gallery(this, password, picturesToEncrypt, videosToEncrypt);
 
         DataTransferer transferer = DataTransferer.getInstance();
         transferer.setData(gallery);
@@ -71,8 +72,8 @@ public class LoginActivity extends MyActivity {
         }
     }
 
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
+    public void accept(ActivityVisitor activityVisitor) {
+        activityVisitor.visit(this);
     }
 
     private void initializePasswordField() {
@@ -139,7 +140,7 @@ public class LoginActivity extends MyActivity {
         Uri image = intent.getParcelableExtra(Intent.EXTRA_STREAM);
 
         if (image != null)
-            toEncrypt.add(image);
+            picturesToEncrypt.add(image);
 
     }
 
@@ -147,6 +148,6 @@ public class LoginActivity extends MyActivity {
         Uri video = intent.getParcelableExtra(Intent.EXTRA_STREAM);
 
         if (video != null)
-            toEncrypt.add(video);
+            videosToEncrypt.add(video);
     }
 }

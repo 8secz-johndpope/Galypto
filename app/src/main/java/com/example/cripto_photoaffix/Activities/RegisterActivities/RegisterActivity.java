@@ -14,11 +14,11 @@ import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.Fingerpri
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.GalleryIntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
-import com.example.cripto_photoaffix.Gallery;
+import com.example.cripto_photoaffix.Gallery.Gallery;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Security.BCrypt;
 import com.example.cripto_photoaffix.Security.EncryptedFile;
-import com.example.cripto_photoaffix.Visitors.Visitor;
+import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
 import java.security.SecureRandom;
 
 public class RegisterActivity extends MyActivity {
@@ -44,7 +44,7 @@ public class RegisterActivity extends MyActivity {
         factory.create();
     }
 
-    public void accept(Visitor visitor) {}
+    public void accept(ActivityVisitor activityVisitor) {}
 
     private void createUserData() {
         EditText field = findViewById(R.id.passcode);

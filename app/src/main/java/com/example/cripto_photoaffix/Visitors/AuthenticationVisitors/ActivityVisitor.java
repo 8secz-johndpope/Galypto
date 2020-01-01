@@ -1,7 +1,7 @@
-package com.example.cripto_photoaffix.Visitors;
+package com.example.cripto_photoaffix.Visitors.AuthenticationVisitors;
 
 import com.example.cripto_photoaffix.Activities.LoginActivity;
 
-public interface Visitor {
+public interface ActivityVisitor {
     public void visit(LoginActivity activity);
 }

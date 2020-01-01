@@ -7,9 +7,9 @@ import com.example.cripto_photoaffix.Security.BCrypt;
 import com.example.cripto_photoaffix.Security.EncryptedFile;
 import com.example.cripto_photoaffix.Security.EncryptedPassword;
 import com.example.cripto_photoaffix.Security.MyEncryptor;
-import com.example.cripto_photoaffix.Visitors.PasscodeSuccessfulAuthenticationVisitor;
-import com.example.cripto_photoaffix.Visitors.PasscodeUnsuccessfulAuthenticationVisitor;
-import com.example.cripto_photoaffix.Visitors.Visitor;
+import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.PasscodeSuccessfulAuthenticationActivityVisitor;
+import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.PasscodeUnsuccessfulAuthenticationActivityVisitor;
+import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
 
 public class PasscodeAuthenticator extends Authenticator {
     protected EditText field;
@@ -33,16 +33,16 @@ public class PasscodeAuthenticator extends Authenticator {
 
         String hash = manager.getFileContent("passcodePassword");
 
-        Visitor visitor;
+        ActivityVisitor activityVisitor;
 
         if (BCrypt.checkpw(passcode, hash))
-            visitor = new PasscodeSuccessfulAuthenticationVisitor(this);
+            activityVisitor = new PasscodeSuccessfulAuthenticationActivityVisitor(this);
         else {
-            visitor = new PasscodeUnsuccessfulAuthenticationVisitor();
+            activityVisitor = new PasscodeUnsuccessfulAuthenticationActivityVisitor();
             field.selectAll();
         }
 
-        activity.accept(visitor);
+        activity.accept(activityVisitor);
     }
 
     public EncryptedFile encrypt(String password) {

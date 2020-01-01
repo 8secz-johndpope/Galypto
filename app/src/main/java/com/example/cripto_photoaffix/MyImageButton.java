@@ -3,21 +3,22 @@ package com.example.cripto_photoaffix;
 import android.graphics.Bitmap;
 import androidx.appcompat.widget.AppCompatImageButton;
 import com.example.cripto_photoaffix.Activities.MyActivity;
+import com.example.cripto_photoaffix.Gallery.Media;
 
 public class MyImageButton extends AppCompatImageButton {
-    private Bitmap bitmap;
+    private Media media;
 
-    public MyImageButton(Bitmap bitmap, MyActivity activity) {
+    public MyImageButton(Media media, MyActivity activity) {
         super(activity);
-        this.bitmap = bitmap;
-        setImageBitmap(bitmap);
+        this.media = media;
+        setImageBitmap(media.getPreview());
     }
 
-    public void setBitmap(Bitmap bitmap) {
-        this.bitmap = bitmap;
+    public void setMedia(Media media) {
+        this.media = media;
     }
 
-    public Bitmap getBitmap() {
-        return bitmap;
+    public Bitmap getPreview() {
+        return media.getPreview();
     }
 }

@@ -1,12 +1,12 @@
-package com.example.cripto_photoaffix.Visitors;
+package com.example.cripto_photoaffix.Visitors.AuthenticationVisitors;
 
 import com.example.cripto_photoaffix.Activities.LoginActivity;
 import com.example.cripto_photoaffix.Authenticators.Authenticator;
 
-public class FingerprintSuccessfulAuthenticationVisitor implements Visitor {
+public class FingerprintSuccessfulAuthenticationActivityVisitor implements ActivityVisitor {
     private Authenticator authenticator;
 
-    public FingerprintSuccessfulAuthenticationVisitor(Authenticator authenticator) {
+    public FingerprintSuccessfulAuthenticationActivityVisitor(Authenticator authenticator) {
         this.authenticator = authenticator;
     }
 

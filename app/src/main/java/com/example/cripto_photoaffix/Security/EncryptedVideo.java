@@ -1,10 +1,10 @@
 package com.example.cripto_photoaffix.Security;
 
-import java.io.ByteArrayInputStream;
+import com.example.cripto_photoaffix.Gallery.Media;
+import com.example.cripto_photoaffix.Visitors.EncryptedFilesVisitors.EncryptedFileVisitor;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
 import java.util.Base64;
 import java.util.Vector;
 
@@ -61,11 +61,15 @@ public class EncryptedVideo extends EncryptedFile {
             Vector<byte[]> vector = encryptor.encrypt(res, password);
 
             this.data = vector.get(0);
-            this.iv = vector.get(0);
-            this.salt = vector.get(0);
+            this.iv = vector.get(1);
+            this.salt = vector.get(2);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public Media accept(EncryptedFileVisitor visitor) {
+        return visitor.visit(this);
     }
 }

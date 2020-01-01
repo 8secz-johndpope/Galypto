@@ -1,4 +1,4 @@
-package com.example.cripto_photoaffix;
+package com.example.cripto_photoaffix.Gallery;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +9,7 @@ import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Security.EncryptedFile;
 import com.example.cripto_photoaffix.Security.EncryptedPicture;
+import com.example.cripto_photoaffix.Security.EncryptedVideo;
 import com.example.cripto_photoaffix.Threads.DecryptorThread;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -19,47 +20,51 @@ import java.util.Queue;
 import java.util.concurrent.LinkedTransferQueue;
 
 public class Gallery {
-    private List<Bitmap> pictures;
+    private List<Media> media;
     private MyActivity activity;
 
     public Gallery(MyActivity activity, String password) {
-        pictures = new LinkedList<Bitmap>();
+        media = new LinkedList<Media>();
         this.activity = activity;
 
         List<Queue<EncryptedFile>> queues = divideDecryption();
-        List<Bitmap> bitmaps = startThreading(queues, password);
+        List<Media> allMedia = startThreading(queues, password);
 
-        pictures.addAll(bitmaps);
+        media.addAll(allMedia);
     }
 
-    public Gallery(MyActivity activity, String password, Queue<Uri> toEncrypt) {
-        pictures = new LinkedList<Bitmap>();
+    public Gallery(MyActivity activity, String password, Queue<Uri> picturesToEncrypt, Queue<Uri> videosToEncrypt) {
+        media = new LinkedList<Media>();
         this.activity = activity;
 
-        storePictures(toEncrypt, password);
+        storePictures(picturesToEncrypt, password);
+        storeVideos(videosToEncrypt, password);
 
         List<Queue<EncryptedFile>> queues = divideDecryption();
-        List<Bitmap> bitmaps = startThreading(queues, password);
+        List<Media> allMedia = startThreading(queues, password);
 
-        pictures.addAll(bitmaps);
+        media.addAll(allMedia);
     }
 
     public Gallery(MyActivity activity) {
-        pictures = new LinkedList<Bitmap>();
+        media = new LinkedList<Media>();
         this.activity = activity;
     }
 
-    public List<Bitmap> getPictures() {
-        return pictures;
+    public List<Media> getMedia() {
+        return media;
     }
 
     private List<Queue<EncryptedFile>> divideDecryption() {
         FilesManager manager = new FilesManager(activity);
         List<EncryptedFile> encryptedFiles = manager.restoreMedia();
+
         List<Queue<EncryptedFile>> res = new LinkedList<Queue<EncryptedFile>>();
 
         int cantQueues = encryptedFiles.size() > 20?20:encryptedFiles.size();
+
         Queue<EncryptedFile> actual;
+
         int pos = 0;
 
         for (int i = 0; i < cantQueues; i++) {
@@ -84,7 +89,7 @@ public class Gallery {
         return res;
     }
 
-    private List<Bitmap> startThreading(List<Queue<EncryptedFile>> queues, String passcode) {
+    private List<Media> startThreading(List<Queue<EncryptedFile>> queues, String passcode) {
         List<DecryptorThread> threads = new LinkedList<DecryptorThread>();
 
         Handler handler = new Handler();
@@ -104,13 +109,13 @@ public class Gallery {
             }
         }
 
-        List<Bitmap> bitmaps = new LinkedList<Bitmap>();
+        List<Media> media = new LinkedList<Media>();
 
         for (DecryptorThread thread: threads)
-            bitmaps.addAll(thread.getBitmaps());
+            media.addAll(thread.getMedia());
 
 
-        return bitmaps;
+        return media;
     }
 
     private void storePictures(Queue<Uri> toEncrypt, String password) {
@@ -125,6 +130,24 @@ public class Gallery {
 
             created = new EncryptedPicture();
             created.encrypt(bitmapString, password);
+
+            files.add(created);
+        }
+
+        FilesManager manager = new FilesManager(activity);
+        manager.store(files);
+    }
+
+    private void storeVideos(Queue<Uri> toEncrypt, String password) {
+        List<EncryptedFile> files = new LinkedList<EncryptedFile>();
+        EncryptedFile created;
+        Uri actual;
+
+        while (!toEncrypt.isEmpty()) {
+            actual = toEncrypt.poll();
+
+            created = new EncryptedVideo();
+            created.encrypt(actual.getPath(), password);
 
             files.add(created);
         }
