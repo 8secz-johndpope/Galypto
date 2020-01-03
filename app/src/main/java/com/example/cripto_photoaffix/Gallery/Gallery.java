@@ -142,12 +142,15 @@ public class Gallery {
         List<EncryptedFile> files = new LinkedList<EncryptedFile>();
         EncryptedFile created;
         Uri actual;
+        String actualContent;
 
         while (!toEncrypt.isEmpty()) {
             actual = toEncrypt.poll();
-
             created = new EncryptedVideo();
-            created.encrypt(actual.getPath(), password);
+            actualContent = getDataFromUri(actual);
+
+        //    System.out.println("Encrypting video in path: " + actual.getPath());
+            created.encrypt(actualContent, password);//actual.getPath(), password);
 
             files.add(created);
         }
@@ -177,5 +180,33 @@ public class Gallery {
         byte[] bytes = outputStream.toByteArray();
 
         return Base64.encodeToString(bytes, Base64.DEFAULT);
+    }
+
+    private String getDataFromUri(Uri uri) {
+        String res = null;
+        try {
+            InputStream fis = activity.getContentResolver().openInputStream(uri);
+
+            if (fis != null) {
+
+                ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
+                int read = fis.read();
+                System.out.println("Starting to read.");
+                while (read != -1) {
+                    byteOutputStream.write(read);
+                    read = fis.read();
+                }
+                System.out.println("Finished reading.");
+
+                byte[] data = byteOutputStream.toByteArray();
+
+                res = java.util.Base64.getEncoder().encodeToString(data);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return res;
     }
 }

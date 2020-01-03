@@ -2,8 +2,8 @@ package com.example.cripto_photoaffix.Security;
 
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.Visitors.EncryptedFilesVisitors.EncryptedFileVisitor;
-
 import java.io.Serializable;
+import java.util.Vector;
 
 public abstract class EncryptedFile implements Serializable {
     protected byte[] data, salt, iv;
@@ -21,6 +21,20 @@ public abstract class EncryptedFile implements Serializable {
         this.data = null;
         this.salt = null;
         this.iv = null;
+    }
+
+    public String decrypt(String password) {
+        MyEncryptor encryptor = new MyEncryptor();
+        return encryptor.decrypt(this, password);
+    }
+
+    public void encrypt(String data, String passowrd) {
+        MyEncryptor encryptor = new MyEncryptor();
+        Vector<byte[]> vector = encryptor.encrypt(data, passowrd);
+
+        this.data = vector.get(0);
+        this.iv = vector.get(1);
+        this.salt = vector.get(2);
     }
 
     public byte[] getData() {
@@ -62,10 +76,6 @@ public abstract class EncryptedFile implements Serializable {
     public void setPath(String path) {
         this.path = path;
     }
-
-    public abstract void encrypt(String data, String password);
-
-    public abstract String decrypt(String password);
 
     public abstract Media accept(EncryptedFileVisitor visitor);
 }

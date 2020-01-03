@@ -19,10 +19,12 @@ public class MediaSelectorVisitor implements EncryptedFileVisitor {
     }
 
     public Media visit(EncryptedPicture picture) {
+        System.out.println("Picture: " + picture.getPath() + "/" + picture.getFileName());
         return new Picture(stringToBitmap(picture.decrypt(password)));
     }
 
     public Media visit(EncryptedVideo video) {
+        System.out.println("Video: " + video.getPath() + "/" + video.getFileName());
         return new Video(video.decrypt(password));
     }
 

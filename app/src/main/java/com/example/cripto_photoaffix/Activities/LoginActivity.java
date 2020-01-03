@@ -47,7 +47,7 @@ public class LoginActivity extends MyActivity {
     public void loginSuccessful(String password) {
         Gallery gallery;
 
-        if (picturesToEncrypt.isEmpty())
+        if (picturesToEncrypt.isEmpty() && videosToEncrypt.isEmpty())
             gallery = new Gallery(this, password);
         else
             gallery = new Gallery(this, password, picturesToEncrypt, videosToEncrypt);
@@ -146,7 +146,7 @@ public class LoginActivity extends MyActivity {
 
     private void handleVideo(Intent intent) {
         Uri video = intent.getParcelableExtra(Intent.EXTRA_STREAM);
-
+        System.out.println("Received videos!!!");
         if (video != null)
             videosToEncrypt.add(video);
     }

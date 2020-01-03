@@ -18,6 +18,10 @@ public class MyImageButton extends AppCompatImageButton {
         this.media = media;
     }
 
+    public Media getMedia() {
+        return media;
+    }
+
     public Bitmap getPreview() {
         return media.getPreview();
     }

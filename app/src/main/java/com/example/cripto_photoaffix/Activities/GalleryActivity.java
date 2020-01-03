@@ -1,27 +1,22 @@
 package com.example.cripto_photoaffix.Activities;
 
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import com.example.cripto_photoaffix.DataTransferer;
-import com.example.cripto_photoaffix.Factories.IntentsFactory.ImageViewerIntentFactory;
-import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
 import com.example.cripto_photoaffix.Gallery.Gallery;
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.MyImageButton;
 import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
+import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaOpenerVisitor;
+import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.View;
 import androidx.gridlayout.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 import com.example.cripto_photoaffix.R;
-
-import java.util.LinkedList;
 import java.util.List;
 
 public class GalleryActivity extends MyActivity {
@@ -90,12 +85,9 @@ public class GalleryActivity extends MyActivity {
 
         @Override
         public void onClick(View v) {
-            IntentFactory factory = new ImageViewerIntentFactory(GalleryActivity.this);
-
-            DataTransferer transferer = DataTransferer.getInstance();
-            transferer.setData(button.getPreview());
-
-            startActivity(factory.create());
+            MediaVisitor visitor = new MediaOpenerVisitor(GalleryActivity.this);
+            Media buttonMedia = button.getMedia();
+            buttonMedia.accept(visitor);
         }
     }
 }
