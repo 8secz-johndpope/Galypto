@@ -2,7 +2,7 @@ package com.example.cripto_photoaffix.FileManagement;
 
 import android.content.Context;
 import com.example.cripto_photoaffix.Activities.MyActivity;
-import com.example.cripto_photoaffix.Security.EncryptedFile;
+import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;

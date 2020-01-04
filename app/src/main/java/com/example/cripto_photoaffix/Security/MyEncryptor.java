@@ -1,5 +1,7 @@
 package com.example.cripto_photoaffix.Security;
 
+import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
+
 import java.security.AlgorithmParameters;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;

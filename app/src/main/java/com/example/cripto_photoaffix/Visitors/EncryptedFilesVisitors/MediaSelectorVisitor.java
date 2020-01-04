@@ -7,9 +7,9 @@ import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.Gallery.Picture;
 import com.example.cripto_photoaffix.Gallery.Text;
 import com.example.cripto_photoaffix.Gallery.Video;
-import com.example.cripto_photoaffix.Security.EncryptedPassword;
-import com.example.cripto_photoaffix.Security.EncryptedPicture;
-import com.example.cripto_photoaffix.Security.EncryptedVideo;
+import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedPassword;
+import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedPicture;
+import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedVideo;
 
 public class MediaSelectorVisitor implements EncryptedFileVisitor {
     private String password;

@@ -1,7 +1,7 @@
 package com.example.cripto_photoaffix.Authenticators;
 
 import com.example.cripto_photoaffix.Activities.MyActivity;
-import com.example.cripto_photoaffix.Security.EncryptedFile;
+import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
 
 public abstract class Authenticator {
     protected MyActivity activity;

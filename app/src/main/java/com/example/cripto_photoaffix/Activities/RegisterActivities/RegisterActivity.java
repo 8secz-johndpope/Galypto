@@ -17,7 +17,7 @@ import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
 import com.example.cripto_photoaffix.Gallery.Gallery;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Security.BCrypt;
-import com.example.cripto_photoaffix.Security.EncryptedFile;
+import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
 import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
 import java.security.SecureRandom;
 
