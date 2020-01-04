@@ -2,13 +2,7 @@ package com.example.cripto_photoaffix.Activities.GalleryActivities;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.VideoView;
-
-import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.R;
 
 public class ImageViewerActivity extends ContentViewerActivity {
@@ -40,18 +34,5 @@ public class ImageViewerActivity extends ContentViewerActivity {
         imageView.setImageBitmap(media.getPreview());
 
         initializeButtons();
-    }
-
-    protected void initializeButtons() {
-        LinearLayout layout = findViewById(R.id.fullscreen_content_controls);
-        Button delete = layout.findViewById(R.id.delete_button);
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FilesManager manager = new FilesManager(ImageViewerActivity.this);
-                System.out.println("Removing: " + media.getPath());
-                manager.removeFile(media.getPath());
-            }
-        });
     }
 }
