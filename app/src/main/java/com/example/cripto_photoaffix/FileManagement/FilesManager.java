@@ -162,7 +162,7 @@ public class FilesManager {
         }
     }
 
-    private List<String> getMedia() {
+    public List<String> getMedia() {
         String[] media;
 
         File folder = new File(activity.getFilesDir() + "/pictures");
@@ -215,6 +215,13 @@ public class FilesManager {
 
         if (password.exists())
             password.delete();
+    }
+
+    public void removeFile(String path) {
+        File file = new File(path);
+
+        if (file.exists())
+            file.delete();
     }
 
     public void storePassword(EncryptedFile password) {
