@@ -7,20 +7,19 @@
     tools:context=".Activities.ContentViewerActivity">
 
     <!-- This is the video view. -->
-    <FrameLayout
+    <VideoView
+        android:id="@+id/videoView"
+        android:background="@android:color/transparent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <VideoView
-            android:id="@+id/videoView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </FrameLayout>
+        android:layout_height="match_parent"
+        android:layout_gravity="center"/>
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/transparent"
         android:fitsSystemWindows="true">
 
         <LinearLayout
@@ -29,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_overlay"
+            android:background="@android:color/transparent"
             android:orientation="horizontal"
             tools:ignore="UselessParent">
 
