@@ -1,8 +1,7 @@
-package com.example.cripto_photoaffix.Activities;
+package com.example.cripto_photoaffix.Activities.GalleryActivities;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.VideoView;
 import com.example.cripto_photoaffix.R;

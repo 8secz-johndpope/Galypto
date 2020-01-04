@@ -1,8 +1,9 @@
-package com.example.cripto_photoaffix.Activities;
+package com.example.cripto_photoaffix.Activities.GalleryActivities;
 
 import android.graphics.Color;
 import android.os.Bundle;
 
+import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.Commands.Command;
 import com.example.cripto_photoaffix.Commands.RemoveVideos;
 import com.example.cripto_photoaffix.DataTransferer;

@@ -20,12 +20,27 @@ public class MediaSelectorVisitor implements EncryptedFileVisitor {
 
     public Media visit(EncryptedPicture picture) {
         System.out.println("Picture: " + picture.getPath() + "/" + picture.getFileName());
-        return new Picture(stringToBitmap(picture.decrypt(password)));
+        Media pic = new Picture(stringToBitmap(picture.decrypt(password)));
+
+        if (picture.getPath().endsWith("/"))
+            pic.setPath(picture.getPath()+picture.getFileName());
+        else
+            pic.setPath(picture.getPath()+"/"+picture.getFileName());
+
+        return pic;
     }
 
     public Media visit(EncryptedVideo video) {
         System.out.println("Video: " + video.getPath() + "/" + video.getFileName());
-        return new Video(video.decrypt(password));
+
+        Media vid = new Video(video.decrypt(password));
+
+        if (video.getPath().endsWith("/"))
+            vid.setPath(video.getPath()+video.getFileName());
+        else
+            vid.setPath(video.getPath()+"/"+video.getFileName());
+
+        return vid;
     }
 
     public Media visit(EncryptedPassword password) {

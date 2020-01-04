@@ -1,4 +1,4 @@
-package com.example.cripto_photoaffix.Activities;
+package com.example.cripto_photoaffix.Activities.GalleryActivities;
 
 import android.annotation.SuppressLint;
 import androidx.appcompat.app.ActionBar;

@@ -1,7 +1,7 @@
 package com.example.cripto_photoaffix.Factories.IntentsFactory;
 
 import android.content.Intent;
-import com.example.cripto_photoaffix.Activities.ImageViewerActivity;
+import com.example.cripto_photoaffix.Activities.GalleryActivities.ImageViewerActivity;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 
 public class ImageViewerIntentFactory extends IntentFactory {

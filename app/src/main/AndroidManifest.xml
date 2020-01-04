@@ -19,17 +19,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activities.ContentViewerActivity"
+            android:name=".Activities.GalleryActivities.ContentViewerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_image_viewer"
             android:theme="@style/FullscreenTheme"></activity>
         <activity
-            android:name=".Activities.GalleryActivity"
+            android:name=".Activities.GalleryActivities.GalleryActivity"
             android:label="@string/title_activity_gallery"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".Activities.RegisterActivities.RegisterActivity" />
-        <activity android:name=".Activities.ImageViewerActivity" />
-        <activity android:name=".Activities.VideoViewerActivity" />
+        <activity android:name=".Activities.GalleryActivities.ImageViewerActivity" />
+        <activity android:name=".Activities.GalleryActivities.VideoViewerActivity" />
         <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
