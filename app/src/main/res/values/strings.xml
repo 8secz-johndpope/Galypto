@@ -118,4 +118,5 @@
     <string name="ShareButton">Share Button</string>
     <string name="Delete">Delete</string>
     <string name="save_to_device">Save to device</string>
+    <string name="imageView">TODO</string>
 </resources>

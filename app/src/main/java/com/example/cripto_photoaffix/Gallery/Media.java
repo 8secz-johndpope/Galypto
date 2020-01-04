@@ -6,6 +6,7 @@ import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 
 public abstract class Media {
     protected Bitmap preview;
+    protected String path;
 
     public abstract void open();
 
@@ -14,4 +15,8 @@ public abstract class Media {
     }
 
     public abstract void accept(MediaVisitor visitor);
+
+    public String getPath() {
+        return path;
+    }
 }

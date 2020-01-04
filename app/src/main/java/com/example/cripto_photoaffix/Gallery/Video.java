@@ -6,7 +6,7 @@ import android.provider.MediaStore;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 
 public class Video extends Media {
-    protected String path;
+
     public Video(String path) {
         this.path = path;
         findPreview();
