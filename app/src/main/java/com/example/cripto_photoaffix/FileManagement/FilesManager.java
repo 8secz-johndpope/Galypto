@@ -78,6 +78,7 @@ public class FilesManager {
                     read = bufferedReader.readLine();
                 }
 
+                bufferedReader.close();
                 reader.close();
             }
         } catch (IOException exception) {
@@ -157,6 +158,9 @@ public class FilesManager {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
 
             objectOutputStream.writeObject(object);
+
+            outputStream.close();
+            objectOutputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
