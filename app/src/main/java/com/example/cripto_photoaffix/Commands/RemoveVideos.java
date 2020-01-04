@@ -2,7 +2,6 @@ package com.example.cripto_photoaffix.Commands;
 
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
-
 import java.util.List;
 
 public class RemoveVideos implements Command {
@@ -17,8 +16,11 @@ public class RemoveVideos implements Command {
         List<String> media = manager.getMedia();
 
         for (String file: media) {
-            if (file.endsWith(".mp4"))
+            System.out.println(file);
+            if (file.endsWith(".mp4")) {
                 manager.removeFile(file);
+                System.out.println(file + " removed!");
+            }
         }
     }
 }

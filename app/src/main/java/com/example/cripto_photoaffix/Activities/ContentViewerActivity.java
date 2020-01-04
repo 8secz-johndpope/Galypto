@@ -9,7 +9,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import com.example.cripto_photoaffix.DataTransferer;
 import com.example.cripto_photoaffix.Gallery.Media;
-import com.example.cripto_photoaffix.R;
 
 public class ContentViewerActivity extends AppCompatActivity {
     protected Media media;
