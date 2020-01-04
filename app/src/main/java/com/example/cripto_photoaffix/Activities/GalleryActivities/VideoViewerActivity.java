@@ -48,17 +48,4 @@ public class VideoViewerActivity extends ContentViewerActivity {
 
         initializeButtons();
     }
-
-    protected void initializeButtons() {
-        LinearLayout layout = findViewById(R.id.fullscreen_content_controls);
-        Button delete = layout.findViewById(R.id.delete_button);
-
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FilesManager manager = new FilesManager(VideoViewerActivity.this);
-                manager.removeFile(media.getPath());
-            }
-        });
-    }
 }
