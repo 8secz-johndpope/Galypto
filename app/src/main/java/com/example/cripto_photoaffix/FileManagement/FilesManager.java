@@ -120,13 +120,19 @@ public class FilesManager {
         try {
             EncryptedFile file;
             for (String name: names) {
-                FileInputStream inputStream = new FileInputStream(name);
-                ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-                file = (EncryptedFile) objectInputStream.readObject();
-                files.add(file);
+                if (!name.endsWith(".mp4")) {
+                    FileInputStream inputStream = new FileInputStream(name);
+                    ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+                    file = (EncryptedFile) objectInputStream.readObject();
+                    files.add(file);
 
-                inputStream.close();
-                objectInputStream.close();
+                    inputStream.close();
+                    objectInputStream.close();
+                }
+                else {
+                    System.out.println("Removing file: " + name);
+                    removeFile(name);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
