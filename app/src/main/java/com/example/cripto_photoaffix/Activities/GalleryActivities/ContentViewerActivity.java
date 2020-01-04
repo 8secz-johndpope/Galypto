@@ -2,15 +2,21 @@ package com.example.cripto_photoaffix.Activities.GalleryActivities;
 
 import android.annotation.SuppressLint;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
-import com.example.cripto_photoaffix.DataTransferer;
-import com.example.cripto_photoaffix.Gallery.Media;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
-public class ContentViewerActivity extends AppCompatActivity {
+import com.example.cripto_photoaffix.Activities.MyActivity;
+import com.example.cripto_photoaffix.DataTransferer;
+import com.example.cripto_photoaffix.FileManagement.FilesManager;
+import com.example.cripto_photoaffix.Gallery.Media;
+import com.example.cripto_photoaffix.R;
+import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
+
+public abstract class ContentViewerActivity extends MyActivity {
     protected Media media;
 
     /**
@@ -144,4 +150,8 @@ public class ContentViewerActivity extends AppCompatActivity {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
+
+    protected abstract void initializeButtons();
+
+    public void accept(ActivityVisitor visitor) {}
 }
