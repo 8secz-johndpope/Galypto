@@ -16,7 +16,7 @@ public class EncryptedVideo extends EncryptedFile {
     }
 
     public String decrypt(String password) {
-        String finalPath = path + "/" + fileName + "dec.mp4";
+        String finalPath = path + "/" + fileName + ".mp4";
 
         try {
 

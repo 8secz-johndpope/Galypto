@@ -12,9 +12,6 @@ public class Video extends Media {
         findPreview();
     }
 
-    @Override
-    public void open() {}
-
     private void findPreview() {
         preview = ThumbnailUtils.createVideoThumbnail(path, MediaStore.Video.Thumbnails.MICRO_KIND);
     }

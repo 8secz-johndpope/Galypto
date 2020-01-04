@@ -39,22 +39,24 @@ public class VideoViewerActivity extends ContentViewerActivity {
         String videoPath = media.getPath();
 
         if (videoPath != null) {
+            videoPath = videoPath + ".mp4";
             videoView.setVideoPath(videoPath);
             controller = new MediaController(this);
             videoView.setMediaController(controller);
             controller.setAnchorView(videoView);
         }
+
+        initializeButtons();
     }
 
     protected void initializeButtons() {
         LinearLayout layout = findViewById(R.id.fullscreen_content_controls);
         Button delete = layout.findViewById(R.id.delete_button);
-        System.out.println("Delete: " + delete);
+
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FilesManager manager = new FilesManager(VideoViewerActivity.this);
-                System.out.println("Removing: " + media.getPath());
                 manager.removeFile(media.getPath());
             }
         });

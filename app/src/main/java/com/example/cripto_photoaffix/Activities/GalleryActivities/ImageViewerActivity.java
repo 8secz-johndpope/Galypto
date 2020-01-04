@@ -45,7 +45,6 @@ public class ImageViewerActivity extends ContentViewerActivity {
     protected void initializeButtons() {
         LinearLayout layout = findViewById(R.id.fullscreen_content_controls);
         Button delete = layout.findViewById(R.id.delete_button);
-        System.out.println("Delete: " + delete);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

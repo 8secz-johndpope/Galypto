@@ -9,9 +9,6 @@ public class Picture extends Media {
         preview = bitmap;
     }
 
-    @Override
-    public void open() {}
-
     public Bitmap getImage() {
         return preview;
     }

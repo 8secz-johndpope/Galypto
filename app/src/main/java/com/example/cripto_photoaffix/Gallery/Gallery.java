@@ -202,6 +202,7 @@ public class Gallery {
 
                 res = java.util.Base64.getEncoder().encodeToString(data);
 
+                fis.close();
             }
         } catch (Exception e) {
             e.printStackTrace();

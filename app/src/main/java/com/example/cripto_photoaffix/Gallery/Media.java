@@ -8,8 +8,6 @@ public abstract class Media {
     protected Bitmap preview;
     protected String path;
 
-    public abstract void open();
-
     public Bitmap getPreview() {
         return preview;
     }
