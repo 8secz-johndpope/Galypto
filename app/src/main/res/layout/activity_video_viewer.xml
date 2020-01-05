@@ -32,7 +32,7 @@
             android:orientation="horizontal"
             tools:ignore="UselessParent">
 
-            <Button
+            <ImageButton
                 style="?metaButtonBarButtonStyle"
                 android:id="@+id/share_button"
                 android:layout_width="0dp"
@@ -40,7 +40,7 @@
                 android:layout_weight="1"
                 android:text="@string/ShareButton" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/save_button"
                 style="?metaButtonBarButtonStyle"
                 android:layout_width="0dp"
@@ -48,7 +48,7 @@
                 android:layout_weight="1"
                 android:text="@string/save_to_device" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/delete_button"
                 style="?metaButtonBarButtonStyle"
                 android:layout_width="0dp"

@@ -4,6 +4,7 @@ package com.example.cripto_photoaffix.Gallery;
 import android.media.ThumbnailUtils;
 import android.provider.MediaStore;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
+import java.io.File;
 
 public class Video extends Media {
 
@@ -18,5 +19,11 @@ public class Video extends Media {
 
     public void accept(MediaVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public File share(String sharingPath) {
+
+        return new File("");
     }
 }

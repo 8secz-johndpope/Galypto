@@ -164,5 +164,7 @@ public abstract class ContentViewerActivity extends MyActivity {
 
         factory = new StoreButtonFactory(this, layout, R.id.save_button);
         factory.create();
+
+        DataTransferer.getInstance().setData(media);
     }
 }

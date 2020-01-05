@@ -1,6 +1,7 @@
 package com.example.cripto_photoaffix.Factories.ButtonFactories;
 
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
@@ -20,12 +21,20 @@ public abstract class ButtonFactory {
         DisplayMetrics metrics = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-        Bitmap b = ((BitmapDrawable)drawable).getBitmap();
-        int height = (int)(metrics.heightPixels * 0.01);
-        int width = (int)(metrics.widthPixels * 0.02);
-        b = Bitmap.createScaledBitmap(b, height, width, false);
+        Bitmap originalBitmap = ((BitmapDrawable)drawable).getBitmap();
 
-        BitmapDrawable res = new BitmapDrawable(activity.getResources(), b);
-        return res;
+        int newHeight = (int)(metrics.heightPixels * 0.01);
+        int newWidth = (int)(metrics.widthPixels * 0.02);
+
+        float scaledHeight = (float)newHeight/originalBitmap.getHeight();
+        float scaledWidth = (float)newWidth/originalBitmap.getWidth();
+
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaledWidth, scaledHeight);
+
+        Bitmap bitmap = Bitmap.createBitmap(originalBitmap, 0, 0, originalBitmap.getWidth(), originalBitmap.getHeight(),
+                 matrix, true);
+
+        return new BitmapDrawable(activity.getResources(), bitmap);
     }
 }

@@ -1,8 +1,11 @@
 package com.example.cripto_photoaffix.Gallery;
 
-import android.graphics.Bitmap;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
+
+import java.io.File;
 
 public abstract class Media {
     protected Bitmap preview;
@@ -21,4 +24,6 @@ public abstract class Media {
     public void setPath(String path) {
         this.path = path;
     }
+
+    public abstract File share(String sharingPath);
 }
