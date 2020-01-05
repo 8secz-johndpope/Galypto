@@ -1,6 +1,5 @@
 package com.example.cripto_photoaffix.Gallery;
 
-
 import android.media.ThumbnailUtils;
 import android.provider.MediaStore;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;

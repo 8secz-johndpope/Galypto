@@ -1,12 +1,7 @@
 package com.example.cripto_photoaffix.Gallery;
 
-
-import android.graphics.Bitmap;
-
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 public class Text extends Media {
     public void accept(MediaVisitor visitor) {}

@@ -1,10 +1,7 @@
 package com.example.cripto_photoaffix.Gallery;
 
-
-import android.content.Intent;
 import android.graphics.Bitmap;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
-
 import java.io.File;
 
 public abstract class Media {
