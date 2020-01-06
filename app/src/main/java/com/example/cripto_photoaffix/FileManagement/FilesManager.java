@@ -247,11 +247,11 @@ public class FilesManager {
             FileInputStream input = new FileInputStream(origin);
             FileOutputStream output = new FileOutputStream(destination);
 
-            byte[] bytes = new byte[2048];
+            byte[] bytes = new byte[4096];
             int read = input.read(bytes);
 
             while (read != -1) {
-                output.write(bytes, 0, read);
+                output.write(bytes);
                 read = input.read(bytes);
             }
 

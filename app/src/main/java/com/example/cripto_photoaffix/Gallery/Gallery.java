@@ -151,6 +151,9 @@ public class Gallery {
 
             created.encrypt(actualContent, password);
 
+            actualContent = null;
+            System.gc();
+
             files.add(created);
         }
 
@@ -189,11 +192,12 @@ public class Gallery {
             if (fis != null) {
 
                 ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
-                int read = fis.read();
+                byte[] bytes = new byte[4096];
+                int read = fis.read(bytes);
                 System.out.println("Starting to read.");
                 while (read != -1) {
-                    byteOutputStream.write(read);
-                    read = fis.read();
+                    byteOutputStream.write(bytes);
+                    read = fis.read(bytes);
                 }
                 System.out.println("Finished reading.");
 

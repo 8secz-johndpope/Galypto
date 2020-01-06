@@ -35,7 +35,7 @@ public class MyEncryptor {
     }
 
     /**
-     * Returns a vector whose indexes contain is:
+     * Returns a vector whose indexes contain:
      *                                  0: Data encrypted.
      *                                  1: Initialization Vector.
      *                                  2: Salt.
