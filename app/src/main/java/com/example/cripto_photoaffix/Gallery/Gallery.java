@@ -149,8 +149,7 @@ public class Gallery {
             created = new EncryptedVideo();
             actualContent = getDataFromUri(actual);
 
-        //    System.out.println("Encrypting video in path: " + actual.getPath());
-            created.encrypt(actualContent, password);//actual.getPath(), password);
+            created.encrypt(actualContent, password);
 
             files.add(created);
         }
