@@ -2,6 +2,7 @@ package com.example.cripto_photoaffix.Factories.ButtonFactories;
 
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.ImageButton;
@@ -19,7 +20,7 @@ public class StoreButtonFactory extends LayoutButtonFactory {
         ImageButton button = layout.findViewById(layoutID);
         Drawable icon = ContextCompat.getDrawable(activity, R.drawable.restore);
 
-        button.setOnClickListener(new Listener(button));
+        button.setOnClickListener(new Listener());
 
         button.setImageDrawable(resizeDrawable(icon));
         button.setBackgroundColor(Color.TRANSPARENT);
@@ -28,19 +29,8 @@ public class StoreButtonFactory extends LayoutButtonFactory {
     }
 
     private class Listener implements View.OnClickListener {
-        private ImageButton button;
-
-        public Listener(ImageButton button) {
-            this.button = button;
-        }
-
         @Override
         public void onClick(View v) {
-            button.animate();
         }
-    }
-
-    private class MyAnimation extends Animation {
-
     }
 }

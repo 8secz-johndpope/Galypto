@@ -240,4 +240,30 @@ public class FilesManager {
         for (File f: activity.getFilesDir().listFiles())
             System.out.println("FILE: " + f.getName());
     }
+
+    public static File copy(String origin, String destination) {
+        File res = null;
+        try {
+            FileInputStream input = new FileInputStream(origin);
+            FileOutputStream output = new FileOutputStream(destination);
+
+            byte[] bytes = new byte[2048];
+            int read = input.read(bytes);
+
+            while (read != -1) {
+                output.write(bytes, 0, read);
+                read = input.read(bytes);
+            }
+
+            input.close();
+            output.flush();
+            output.close();
+
+            res = new File(destination);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return res;
+    }
 }
