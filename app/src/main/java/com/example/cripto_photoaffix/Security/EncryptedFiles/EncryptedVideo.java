@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.util.Base64;
 
 public class EncryptedVideo extends EncryptedFile {
+
     public EncryptedVideo(byte[] data, byte[] salt, byte[] iv, String fileName, String path) {
         super(data, salt, iv, fileName, path);
     }
