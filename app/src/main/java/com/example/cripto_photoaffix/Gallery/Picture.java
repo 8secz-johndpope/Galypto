@@ -47,11 +47,12 @@ public class Picture extends Media {
     }
 
     @Override
-    public void store(String path) {
+    public File store(String path) {
         File myDir = new File(path);
-        myDir.mkdirs();
+
         String fname = "Image-" + "storing";
         File file = new File(myDir, fname + ".jpg");
+
         int i = 0;
         while (file.exists()) {
             file = new File(myDir, fname + i + ".jpg");
@@ -60,11 +61,14 @@ public class Picture extends Media {
 
         try {
             FileOutputStream out = new FileOutputStream(file);
-            preview.compress(Bitmap.CompressFormat.JPEG, 90, out);
+            preview.compress(Bitmap.CompressFormat.JPEG, 100, out);
+
             out.flush();
             out.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return file;
     }
 }

@@ -2,9 +2,7 @@ package com.example.cripto_photoaffix.Factories.ButtonFactories;
 
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.provider.MediaStore;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import androidx.core.content.ContextCompat;
@@ -37,6 +35,7 @@ public class StoreButtonFactory extends LayoutButtonFactory {
         public void onClick(View v) {
             DataTransferer transferer = DataTransferer.getInstance();
             Command command = new StoreCommand(activity, (Media)transferer.getData());
+            command.execute();
         }
     }
 }

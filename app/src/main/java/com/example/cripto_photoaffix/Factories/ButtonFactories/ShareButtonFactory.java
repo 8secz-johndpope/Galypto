@@ -7,8 +7,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import androidx.core.content.ContextCompat;
 import com.example.cripto_photoaffix.Activities.MyActivity;
-import com.example.cripto_photoaffix.Commands.Command;
-import com.example.cripto_photoaffix.Commands.ShareCommand;
 import com.example.cripto_photoaffix.DataTransferer;
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.R;

@@ -37,6 +37,12 @@ public class Video extends Media {
     }
 
     @Override
-    public void store(String path) {
+    public File store(String path) {
+        File toSave = new File(path + "/video_to_save.mp4");
+
+        for (int i = 0; toSave.exists(); i++)
+            toSave = new File(path + "/video_to_share_" + i + ".mp4");
+
+        return FilesManager.copy(this.path + ".mp4", toSave.getPath());
     }
 }

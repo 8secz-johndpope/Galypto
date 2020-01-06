@@ -26,5 +26,5 @@ public abstract class Media {
 
     public abstract File share(String sharingPath);
 
-    public abstract void store(String path);
+    public abstract File store(String path);
 }
