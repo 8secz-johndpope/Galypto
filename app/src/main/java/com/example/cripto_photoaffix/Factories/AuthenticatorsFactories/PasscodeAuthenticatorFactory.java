@@ -1,7 +1,6 @@
 package com.example.cripto_photoaffix.Factories.AuthenticatorsFactories;
 
 import android.widget.EditText;
-
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.Authenticators.Authenticator;
 import com.example.cripto_photoaffix.Authenticators.PasscodeAuthenticator;

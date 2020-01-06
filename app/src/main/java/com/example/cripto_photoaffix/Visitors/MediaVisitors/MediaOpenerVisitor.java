@@ -1,6 +1,5 @@
 package com.example.cripto_photoaffix.Visitors.MediaVisitors;
 
-
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.DataTransferer;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.ImageViewerIntentFactory;

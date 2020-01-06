@@ -1,8 +1,6 @@
 package com.example.cripto_photoaffix.Gallery;
 
 import android.graphics.Bitmap;
-import android.os.Environment;
-
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 import java.io.File;
 import java.io.FileOutputStream;

@@ -2,11 +2,8 @@ package com.example.cripto_photoaffix.Activities.GalleryActivities;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.VideoView;
-import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.R;
 
 public class VideoViewerActivity extends ContentViewerActivity {

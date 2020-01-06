@@ -3,8 +3,6 @@ package com.example.cripto_photoaffix.Commands;
 import android.content.Intent;
 import android.net.Uri;
 import androidx.core.content.FileProvider;
-
-import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivity;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.ShareIntentFactory;

@@ -1,11 +1,8 @@
 package com.example.cripto_photoaffix.Commands;
 
-import android.content.ClipData;
 import android.content.Intent;
-
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.Gallery.Media;
-
 import java.io.File;
 
 public class VideoShareCommand extends ShareCommand {

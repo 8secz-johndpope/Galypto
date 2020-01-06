@@ -2,7 +2,6 @@ package com.example.cripto_photoaffix.Commands;
 
 import android.content.Intent;
 import android.net.Uri;
-
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.Gallery.Media;
 
