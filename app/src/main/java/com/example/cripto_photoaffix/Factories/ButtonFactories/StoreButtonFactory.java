@@ -9,6 +9,10 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import androidx.core.content.ContextCompat;
 import com.example.cripto_photoaffix.Activities.MyActivity;
+import com.example.cripto_photoaffix.Commands.Command;
+import com.example.cripto_photoaffix.Commands.StoreCommand;
+import com.example.cripto_photoaffix.DataTransferer;
+import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.R;
 
 public class StoreButtonFactory extends LayoutButtonFactory {
@@ -31,6 +35,8 @@ public class StoreButtonFactory extends LayoutButtonFactory {
     private class Listener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            DataTransferer transferer = DataTransferer.getInstance();
+            Command command = new StoreCommand(activity, (Media)transferer.getData());
         }
     }
 }

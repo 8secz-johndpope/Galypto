@@ -1,10 +1,15 @@
 package com.example.cripto_photoaffix.Gallery;
 
+import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
+
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 import java.io.File;
+import java.io.FileOutputStream;
 
 public class Video extends Media {
 
@@ -29,5 +34,9 @@ public class Video extends Media {
             toShare = new File(sharingPath + "/video_to_share_" + i + ".mp4");
 
         return FilesManager.copy(path + ".mp4", toShare.getPath());
+    }
+
+    @Override
+    public void store(String path) {
     }
 }

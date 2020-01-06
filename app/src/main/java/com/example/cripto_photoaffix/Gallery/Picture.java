@@ -1,6 +1,8 @@
 package com.example.cripto_photoaffix.Gallery;
 
 import android.graphics.Bitmap;
+import android.os.Environment;
+
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -42,5 +44,27 @@ public class Picture extends Media {
         }
 
         return file;
+    }
+
+    @Override
+    public void store(String path) {
+        File myDir = new File(path);
+        myDir.mkdirs();
+        String fname = "Image-" + "storing";
+        File file = new File(myDir, fname + ".jpg");
+        int i = 0;
+        while (file.exists()) {
+            file = new File(myDir, fname + i + ".jpg");
+            i++;
+        }
+
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            preview.compress(Bitmap.CompressFormat.JPEG, 90, out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -10,14 +10,10 @@ public class Text extends Media {
     public File share(String sharingPath) {
         File file = new File(sharingPath, "sharing.png");
 
-        int i = 0;
-
-        while (file.exists()) {
-            file = new File(sharingPath, "sharing" + i + ".mp4");
-            i++;
-        }
-
 
         return file;
     }
+
+    @Override
+    public void store(String path) {}
 }

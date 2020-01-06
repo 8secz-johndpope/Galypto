@@ -39,23 +39,10 @@ public class ShareButtonFactory extends LayoutButtonFactory {
             //Preguntar si esto esta bien. No me gusta para nada castear. Podria crear
             //para cada tipo de datos un transferer.
             Media media = (Media) DataTransferer.getInstance().getData();
+
             MediaVisitor visitor = new ShareVisitor(activity);
+
             media.accept(visitor);
-            /*
-            File file = media.share(activity.getCacheDir().getPath() + "/share/");
-
-            IntentFactory factory = new ShareIntentFactory();
-            Intent intent = factory.create();
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            intent.setType("image/jpg");
-
-            Uri path = FileProvider.getUriForFile(activity,
-                    "com.example.cripto_photoaffix.fileprovider", file);
-
-            intent.putExtra(Intent.EXTRA_STREAM, path);
-
-            activity.startActivity(Intent.createChooser(intent, "Share via:"));
-             */
         }
     }
 }
