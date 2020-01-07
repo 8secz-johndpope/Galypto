@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.ImageView;
 import com.example.cripto_photoaffix.R;
 
+import java.io.File;
+
 public class ImageViewerActivity extends ContentViewerActivity {
     protected ImageView imageView;
 
@@ -32,10 +34,11 @@ public class ImageViewerActivity extends ContentViewerActivity {
         findViewById(R.id.delete_button).setOnTouchListener(mDelayHideTouchListener);
 
         imageView = (ImageView) mContentView;
+        File file = new File(media.getPath() + ".jpg");
+        System.out.println(file.exists());
+        imageView.setImageBitmap(BitmapFactory.decodeFile(media.getPath() + ".jpg"));
 
-        imageView.setImageBitmap(BitmapFactory.decodeFile(media.getPath()));
-
-        imageView.setImageBitmap(media.getPreview());
+       // imageView.setImageBitmap(media.getPreview());
 
         initializeButtons();
     }

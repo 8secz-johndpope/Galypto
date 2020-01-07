@@ -3,6 +3,7 @@ package com.example.cripto_photoaffix.Gallery;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,8 +13,9 @@ public class Picture extends Media {
     public Picture(String path) {
         this.path = path;
 
-        preview = BitmapFactory.decodeFile(path);
-        preview = Bitmap.createScaledBitmap(preview, (int)(preview.getWidth()*0.5), (int)(preview.getHeight()*0.5), false);
+        System.out.println("Path: " + path + ".jpg");
+        preview = BitmapFactory.decodeFile(path + ".jpg");
+        preview = Bitmap.createScaledBitmap(preview, (int)(preview.getWidth()*0.3), (int)(preview.getHeight()*0.3), false);
     }
 
   /*  public Bitmap getImage() {
@@ -30,12 +32,12 @@ public class Picture extends Media {
         if (!path.exists())
             path.mkdir();
 
-        File file = new File(sharingPath, "sharing.png");
+        File file = new File(sharingPath, "sharing.jpg");
 
         int i = 0;
 
         while (file.exists()) {
-            file = new File(sharingPath, "sharing" + i + ".png");
+            file = new File(sharingPath, "sharing" + i + ".jpg");
             i++;
         }
 
@@ -62,15 +64,7 @@ public class Picture extends Media {
             i++;
         }
 
-        try {
-            FileOutputStream out = new FileOutputStream(file);
-            preview.compress(Bitmap.CompressFormat.JPEG, 100, out);
-
-            out.flush();
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        FilesManager.copy(this.path + ".jpg", file.getPath());
 
         return file;
     }

@@ -30,11 +30,14 @@ public class EncryptedPicture extends EncryptedFile {
         String data = encryptor.decrypt(this, password);
 
         Bitmap bitmap = stringToBitmap(data);
-        String pth = path + "/" + fileName + ".jpg";
+        String pth = path + "/" + fileName;
 
         try {
-            FileOutputStream out = new FileOutputStream(pth);
+            FileOutputStream out = new FileOutputStream(pth + ".jpg");
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+
+            out.flush();
+            out.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
