@@ -3,10 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_overlay"
+    android:background="@android:color/background_dark"
     tools:context=".Activities.GalleryActivities.ContentViewerActivity">
 
-    <!-- This is the video view. -->
     <VideoView
         android:id="@+id/videoView"
         android:background="@android:color/transparent"
@@ -37,24 +36,21 @@
                 android:id="@+id/share_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/ShareButton" />
+                android:layout_weight="1"/>
 
             <ImageButton
                 android:id="@+id/save_button"
                 style="?metaButtonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/save_to_device" />
+                android:layout_weight="1"/>
 
             <ImageButton
                 android:id="@+id/delete_button"
                 style="?metaButtonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/Delete" />
+                android:layout_weight="1"/>
 
         </LinearLayout>
 

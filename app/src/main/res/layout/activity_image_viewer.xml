@@ -3,25 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_overlay"
+    android:background="@android:color/background_dark"
     tools:context=".Activities.GalleryActivities.ContentViewerActivity">
 
-    <!-- This is the image view. -->
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/imageView"
         android:gravity="center"
-        android:background="@color/black_overlay"
-        tools:srcCompat="@tools:sample/avatars"
         android:keepScreenOn="true"
         android:textColor="#33b5e5"
         android:textSize="50sp"
         android:textStyle="bold"
-        android:contentDescription="@string/imageView" />
+        tools:srcCompat="@tools:sample/avatars" />
 
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_overlay"
+            android:background="@android:color/transparent"
             android:orientation="horizontal"
             tools:ignore="UselessParent">
 
