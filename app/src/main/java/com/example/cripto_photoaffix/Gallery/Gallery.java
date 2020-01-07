@@ -151,9 +151,6 @@ public class Gallery {
 
             created.encrypt(actualContent, password);
 
-            actualContent = null;
-            System.gc();
-
             files.add(created);
         }
 
