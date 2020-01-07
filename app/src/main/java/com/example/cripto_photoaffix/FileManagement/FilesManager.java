@@ -120,7 +120,8 @@ public class FilesManager {
         try {
             EncryptedFile file;
             for (String name: names) {
-                if (!name.endsWith(".mp4")) {
+                System.out.println(name);
+                if (!name.endsWith(".mp4") && !name.endsWith(".jpg")) {
                     FileInputStream inputStream = new FileInputStream(name);
                     ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
                     file = (EncryptedFile) objectInputStream.readObject();

@@ -4,20 +4,20 @@ import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import java.util.List;
 
-public class RemoveVideos implements Command {
+public class RemoveDecrypted implements Command {
     private FilesManager manager;
 
-    public RemoveVideos(MyActivity activity) {
+    public RemoveDecrypted(MyActivity activity) {
         manager = new FilesManager(activity);
     }
 
     @Override
     public void execute() {
         List<String> media = manager.getMedia();
-
+        System.out.println("Executing removal.");
         for (String file: media) {
             System.out.println(file);
-            if (file.endsWith(".mp4")) {
+            if (file.endsWith(".mp4") || file.endsWith(".jpg")) {
                 manager.removeFile(file);
                 System.out.println(file + " removed!");
             }

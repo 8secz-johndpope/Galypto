@@ -1,5 +1,6 @@
 package com.example.cripto_photoaffix.Activities.GalleryActivities;
 
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -31,6 +32,9 @@ public class ImageViewerActivity extends ContentViewerActivity {
         findViewById(R.id.delete_button).setOnTouchListener(mDelayHideTouchListener);
 
         imageView = (ImageView) mContentView;
+
+        imageView.setImageBitmap(BitmapFactory.decodeFile(media.getPath()));
+
         imageView.setImageBitmap(media.getPreview());
 
         initializeButtons();

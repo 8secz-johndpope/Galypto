@@ -1,19 +1,24 @@
 package com.example.cripto_photoaffix.Gallery;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class Picture extends Media {
-    public Picture(Bitmap bitmap) {
-        preview = bitmap;
+    public Picture(String path) {
+        this.path = path;
+
+        preview = BitmapFactory.decodeFile(path);
+        preview = Bitmap.createScaledBitmap(preview, (int)(preview.getWidth()*0.5), (int)(preview.getHeight()*0.5), false);
     }
 
-    public Bitmap getImage() {
+  /*  public Bitmap getImage() {
         return preview;
-    }
+    }*/
 
     public void accept(MediaVisitor visitor) {
         visitor.visit(this);
