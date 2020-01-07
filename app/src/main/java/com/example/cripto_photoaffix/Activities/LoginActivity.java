@@ -23,7 +23,7 @@ import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Gallery.Gallery;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
-
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Queue;
 import java.util.concurrent.LinkedTransferQueue;
@@ -104,12 +104,17 @@ public class LoginActivity extends MyActivity {
                 handleVideo((Uri)intent.getParcelableExtra(Intent.EXTRA_STREAM));
         }
         else if (Intent.ACTION_SEND_MULTIPLE.equals(action)) {
+            File f;
             ArrayList<Uri> list = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
-            for (Uri u: list) {
-                if (u.getPath().endsWith(".mp4"))
-                    handleVideo(u);
-                else
-                    handleImage(u);
+            try {
+                for (Uri u : list) {
+                    if (u.getPath().endsWith(".mp4"))
+                        handleVideo(u);
+                    else
+                        handleImage(u);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
