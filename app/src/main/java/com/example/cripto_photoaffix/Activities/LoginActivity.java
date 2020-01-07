@@ -104,7 +104,6 @@ public class LoginActivity extends MyActivity {
                 handleVideo((Uri)intent.getParcelableExtra(Intent.EXTRA_STREAM));
         }
         else if (Intent.ACTION_SEND_MULTIPLE.equals(action)) {
-            File f;
             ArrayList<Uri> list = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
             try {
                 for (Uri u : list) {

@@ -17,7 +17,7 @@ public class EncryptedVideo extends EncryptedFile {
     }
 
     public String decrypt(String password) {
-        String finalPath = path + "/" + fileName + ".mp4";
+        String finalPath = path + "/" + fileName;
 
         try {
 
@@ -26,7 +26,7 @@ public class EncryptedVideo extends EncryptedFile {
             String data = encryptor.decrypt(this, password);
             byte[] bytes = Base64.getDecoder().decode(data);
 
-            FileOutputStream fos = new FileOutputStream(finalPath);
+            FileOutputStream fos = new FileOutputStream(finalPath + ".mp4");
 
             fos.write(bytes);
             fos.flush();

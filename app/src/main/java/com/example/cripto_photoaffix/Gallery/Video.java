@@ -14,7 +14,7 @@ public class Video extends Media {
     }
 
     private void findPreview() {
-        preview = ThumbnailUtils.createVideoThumbnail(path, MediaStore.Video.Thumbnails.MICRO_KIND);
+        preview = ThumbnailUtils.createVideoThumbnail(path + ".mp4", MediaStore.Video.Thumbnails.MICRO_KIND);
     }
 
     public void accept(MediaVisitor visitor) {
