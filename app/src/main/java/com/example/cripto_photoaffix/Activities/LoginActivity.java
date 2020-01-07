@@ -23,6 +23,8 @@ import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Gallery.Gallery;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
+
+import java.util.ArrayList;
 import java.util.Queue;
 import java.util.concurrent.LinkedTransferQueue;
 
@@ -97,9 +99,18 @@ public class LoginActivity extends MyActivity {
 
         if (Intent.ACTION_SEND.equals(action) && type != null) {
             if (type.startsWith("image/"))
-                handleImage(intent);
+                handleImage((Uri)intent.getParcelableExtra(Intent.EXTRA_STREAM));
             else
-                handleVideo(intent);
+                handleVideo((Uri)intent.getParcelableExtra(Intent.EXTRA_STREAM));
+        }
+        else if (Intent.ACTION_SEND_MULTIPLE.equals(action)) {
+            ArrayList<Uri> list = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
+            for (Uri u: list) {
+                if (u.getPath().endsWith(".mp4"))
+                    handleVideo(u);
+                else
+                    handleImage(u);
+            }
         }
     }
 
@@ -136,16 +147,16 @@ public class LoginActivity extends MyActivity {
         factory.create();
     }
 
-    private void handleImage(Intent intent) {
-        Uri image = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+    private void handleImage(Uri image) {
+   //     Uri image = intent.getParcelableExtra(Intent.EXTRA_STREAM);
 
         if (image != null)
             picturesToEncrypt.add(image);
 
     }
 
-    private void handleVideo(Intent intent) {
-        Uri video = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+    private void handleVideo(Uri video) {
+ //       Uri video = intent.getParcelableExtra(Intent.EXTRA_STREAM);
 
         if (video != null)
             videosToEncrypt.add(video);

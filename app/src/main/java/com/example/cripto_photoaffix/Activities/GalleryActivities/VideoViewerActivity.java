@@ -1,5 +1,6 @@
 package com.example.cripto_photoaffix.Activities.GalleryActivities;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.MediaController;
@@ -40,7 +41,12 @@ public class VideoViewerActivity extends ContentViewerActivity {
             videoView.setVideoPath(videoPath);
             controller = new MediaController(this);
             videoView.setMediaController(controller);
-            controller.setAnchorView(videoView);
+            videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    controller.show();
+                }
+            });
         }
 
         initializeButtons();
