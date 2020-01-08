@@ -23,7 +23,6 @@ import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Gallery.Gallery;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Queue;
 import java.util.concurrent.LinkedTransferQueue;
@@ -105,13 +104,19 @@ public class LoginActivity extends MyActivity {
         }
         else if (Intent.ACTION_SEND_MULTIPLE.equals(action)) {
             ArrayList<Uri> list = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
+
             try {
+
                 for (Uri u : list) {
-                    if (u.getPath().endsWith(".mp4"))
+                    String typ = getContentResolver().getType(u);
+
+                    if (typ != null && typ.startsWith("video"))
                         handleVideo(u);
                     else
                         handleImage(u);
+
                 }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -152,16 +157,12 @@ public class LoginActivity extends MyActivity {
     }
 
     private void handleImage(Uri image) {
-   //     Uri image = intent.getParcelableExtra(Intent.EXTRA_STREAM);
-
         if (image != null)
             picturesToEncrypt.add(image);
 
     }
 
     private void handleVideo(Uri video) {
- //       Uri video = intent.getParcelableExtra(Intent.EXTRA_STREAM);
-
         if (video != null)
             videosToEncrypt.add(video);
     }

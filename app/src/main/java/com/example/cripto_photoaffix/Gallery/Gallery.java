@@ -12,7 +12,6 @@ import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedPicture;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedVideo;
 import com.example.cripto_photoaffix.Threads.DecryptorThread;
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
@@ -164,7 +163,8 @@ public class Gallery {
             InputStream inputStream = activity.getContentResolver().openInputStream(uri);
 
             bitmap = BitmapFactory.decodeStream(inputStream);
-        } catch (FileNotFoundException exception) {
+            inputStream.close();
+        } catch (Exception exception) {
             exception.printStackTrace();
             bitmap = null;
         }
@@ -203,6 +203,7 @@ public class Gallery {
                 res = java.util.Base64.getEncoder().encodeToString(data);
 
                 fis.close();
+                byteOutputStream.close();
             }
         } catch (Exception e) {
             e.printStackTrace();
