@@ -105,6 +105,7 @@ public class GalleryActivity extends MyActivity {
         removeDecryptedVideos.execute();
     }
 
+    @Override
     public void onRestart() {
         super.onRestart();
 

@@ -8,11 +8,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import com.example.cripto_photoaffix.Activities.MyActivity;
+import com.example.cripto_photoaffix.Commands.Command;
+import com.example.cripto_photoaffix.Commands.RemoveDecrypted;
 import com.example.cripto_photoaffix.DataTransferer;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.ButtonFactory;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.DeleteButtonFactory;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.ShareButtonFactory;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.StoreButtonFactory;
+import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
+import com.example.cripto_photoaffix.Factories.IntentsFactory.LoginIntentFactory;
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
@@ -161,5 +165,21 @@ public abstract class ContentViewerActivity extends MyActivity {
         factory.create();
 
         DataTransferer.getInstance().setData(media);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Command removeDecryptedVideos = new RemoveDecrypted(this);
+        removeDecryptedVideos.execute();
+    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+
+        IntentFactory factory = new LoginIntentFactory(this);
+        startActivity(factory.create());
+        finish();
     }
 }
