@@ -3,6 +3,8 @@ package com.example.cripto_photoaffix.Security.EncryptedFiles;
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.Security.MyEncryptor;
 import com.example.cripto_photoaffix.Visitors.EncryptedFilesVisitors.EncryptedFileVisitor;
+
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Base64;
 
@@ -18,23 +20,26 @@ public class EncryptedVideo extends EncryptedFile {
 
     public String decrypt(String password) {
         String finalPath = path + "/" + fileName;
+        File file = new File(finalPath + ".mp4");
 
-        try {
+        if (!file.exists()) {
+            try {
 
-            MyEncryptor encryptor = new MyEncryptor();
+                MyEncryptor encryptor = new MyEncryptor();
 
-            String data = encryptor.decrypt(this, password);
-            byte[] bytes = Base64.getDecoder().decode(data);
+                String data = encryptor.decrypt(this, password);
+                byte[] bytes = Base64.getDecoder().decode(data);
 
-            FileOutputStream fos = new FileOutputStream(finalPath + ".mp4");
+                FileOutputStream fos = new FileOutputStream(finalPath + ".mp4");
 
-            fos.write(bytes);
-            fos.flush();
-            fos.close();
+                fos.write(bytes);
+                fos.flush();
+                fos.close();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            finalPath = null;
+            } catch (Exception e) {
+                e.printStackTrace();
+                finalPath = null;
+            }
         }
 
         return finalPath;

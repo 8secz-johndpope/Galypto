@@ -8,6 +8,7 @@ import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.Security.MyEncryptor;
 import com.example.cripto_photoaffix.Visitors.EncryptedFilesVisitors.EncryptedFileVisitor;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -31,15 +32,18 @@ public class EncryptedPicture extends EncryptedFile {
 
         Bitmap bitmap = stringToBitmap(data);
         String pth = path + "/" + fileName;
+        File file = new File(pth + ".jpg");
 
-        try {
-            FileOutputStream out = new FileOutputStream(pth + ".jpg");
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+        if (!file.exists()) {
+            try {
+                FileOutputStream out = new FileOutputStream(pth + ".jpg");
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
 
-            out.flush();
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+                out.flush();
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         return pth;

@@ -6,6 +6,8 @@ import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.Commands.Command;
 import com.example.cripto_photoaffix.Commands.RemoveDecrypted;
 import com.example.cripto_photoaffix.DataTransferer;
+import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
+import com.example.cripto_photoaffix.Factories.IntentsFactory.LoginIntentFactory;
 import com.example.cripto_photoaffix.Gallery.Gallery;
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.MyImageButton;
@@ -25,6 +27,7 @@ import java.util.List;
 public class GalleryActivity extends MyActivity {
 
     private Gallery gallery;
+    private boolean openedImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +94,7 @@ public class GalleryActivity extends MyActivity {
             MediaVisitor visitor = new MediaOpenerVisitor(GalleryActivity.this);
             Media buttonMedia = button.getMedia();
             buttonMedia.accept(visitor);
+            openedImage = true;
         }
     }
 
@@ -99,5 +103,17 @@ public class GalleryActivity extends MyActivity {
         super.onDestroy();
         Command removeDecryptedVideos = new RemoveDecrypted(this);
         removeDecryptedVideos.execute();
+    }
+
+    public void onRestart() {
+        super.onRestart();
+
+        if (!openedImage) {
+            IntentFactory factory = new LoginIntentFactory(this);
+            startActivity(factory.create());
+            finish();
+        }
+        else
+            openedImage = false;
     }
 }
