@@ -32,12 +32,11 @@ public class Gallery {
         media.addAll(allMedia);
     }
 
-    public Gallery(MyActivity activity, String password, Queue<Uri> picturesToEncrypt, Queue<Uri> videosToEncrypt) {
+    public Gallery(MyActivity activity, String password, Queue<Uri> toEncrypt) {
         media = new LinkedList<Media>();
         this.activity = activity;
 
-        storePictures(picturesToEncrypt, password);
-        storeVideos(videosToEncrypt, password);
+        store(toEncrypt, password);
 
         List<Queue<EncryptedFile>> queues = divideDecryption();
         List<Media> allMedia = startThreading(queues, password);
@@ -67,7 +66,9 @@ public class Gallery {
         int pos = 0;
 
         for (int i = 0; i < cantQueues; i++) {
+
             actual = new LinkedTransferQueue<EncryptedFile>();
+
             for (int j = 0; j < encryptedFiles.size()/cantQueues; j++) {
                 actual.add(encryptedFiles.get(pos));
                 pos++;
@@ -76,7 +77,9 @@ public class Gallery {
             res.add(actual);
 
             if (pos < encryptedFiles.size() - 1 && i == cantQueues - 1) {
+
                 int queue = 0;
+
                 while (queue < cantQueues && pos < encryptedFiles.size()) {
                     res.get(queue).add(encryptedFiles.get(pos));
                     queue++;
@@ -117,38 +120,13 @@ public class Gallery {
         return media;
     }
 
-    private void storePictures(Queue<Uri> toEncrypt, String password) {
-        Bitmap bitmap;
-        List<EncryptedFile> files = new LinkedList<EncryptedFile>();
-        String bitmapString;
-        EncryptedFile created;
-
-        while (!toEncrypt.isEmpty()) {
-            bitmap = getThumbnail(toEncrypt.poll());
-            bitmapString = bitmapToString(bitmap);
-
-            created = new EncryptedPicture();
-            created.encrypt(bitmapString, password);
-
-            files.add(created);
-        }
-
-        FilesManager manager = new FilesManager(activity);
-        manager.store(files);
-    }
-
-    private void storeVideos(Queue<Uri> toEncrypt, String password) {
+    private void store(Queue<Uri> toEncrypt, String password) {
         List<EncryptedFile> files = new LinkedList<EncryptedFile>();
         EncryptedFile created;
-        Uri actual;
-        String actualContent;
-
+        System.out.println("To encrypt size " + toEncrypt.size());
         while (!toEncrypt.isEmpty()) {
-            actual = toEncrypt.poll();
-            created = new EncryptedVideo();
-            actualContent = getDataFromUri(actual);
-
-            created.encrypt(actualContent, password);
+            System.out.println("Storing!!");
+            created = encryptUri(toEncrypt.poll(), password);
 
             files.add(created);
         }
@@ -159,6 +137,7 @@ public class Gallery {
 
     private Bitmap getThumbnail(Uri uri) {
         Bitmap bitmap;
+
         try {
             InputStream inputStream = activity.getContentResolver().openInputStream(uri);
 
@@ -181,22 +160,51 @@ public class Gallery {
         return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
 
-    private String getDataFromUri(Uri uri) {
+    private EncryptedFile encryptUri(Uri uri, String password) {
+        EncryptedFile res = null;
+
+        String type = activity.getContentResolver().getType(uri);
+
+        if (type != null) {
+            String data;
+
+            if (type.startsWith("video")) {
+
+                data = getVideoData(uri);
+                res = new EncryptedVideo();
+                res.encrypt(data, password);
+
+            }
+            else {
+
+                data = getImageData(uri);
+                res = new EncryptedPicture();
+                res.encrypt(data, password);
+
+            }
+        }
+
+        return res;
+    }
+
+    private String getVideoData(Uri uri) {
         String res = null;
+
         try {
             InputStream fis = activity.getContentResolver().openInputStream(uri);
 
             if (fis != null) {
 
                 ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
+
                 byte[] bytes = new byte[4096];
                 int read = fis.read(bytes);
-                System.out.println("Starting to read.");
+
                 while (read != -1) {
                     byteOutputStream.write(bytes);
                     read = fis.read(bytes);
                 }
-                System.out.println("Finished reading.");
+
 
                 byte[] data = byteOutputStream.toByteArray();
 
@@ -210,5 +218,11 @@ public class Gallery {
         }
 
         return res;
+    }
+
+    private String getImageData(Uri uri) {
+        Bitmap bitmap = getThumbnail(uri);
+
+        return bitmapToString(bitmap);
     }
 }

@@ -30,15 +30,14 @@ import java.util.concurrent.LinkedTransferQueue;
 public class LoginActivity extends MyActivity {
     private EditText field;
     private Authenticator authenticator;
-    private Queue<Uri> picturesToEncrypt, videosToEncrypt;
+    private Queue<Uri> toEncrypt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        picturesToEncrypt = new LinkedTransferQueue<Uri>();
-        videosToEncrypt = new LinkedTransferQueue<Uri>();
+        toEncrypt = new LinkedTransferQueue<Uri>();
 
         initializePasswordField();
         choseActivity();
@@ -48,10 +47,10 @@ public class LoginActivity extends MyActivity {
     public void loginSuccessful(String password) {
         Gallery gallery;
 
-        if (picturesToEncrypt.isEmpty() && videosToEncrypt.isEmpty())
+        if (toEncrypt.isEmpty())
             gallery = new Gallery(this, password);
         else
-            gallery = new Gallery(this, password, picturesToEncrypt, videosToEncrypt);
+            gallery = new Gallery(this, password, toEncrypt);
 
         DataTransferer transferer = DataTransferer.getInstance();
         transferer.setData(gallery);
@@ -97,29 +96,16 @@ public class LoginActivity extends MyActivity {
         String type = intent.getType();
 
         if (Intent.ACTION_SEND.equals(action) && type != null) {
-            if (type.startsWith("image/"))
-                handleImage((Uri)intent.getParcelableExtra(Intent.EXTRA_STREAM));
-            else
-                handleVideo((Uri)intent.getParcelableExtra(Intent.EXTRA_STREAM));
+            Uri uri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+
+            toEncrypt.add(uri);
         }
         else if (Intent.ACTION_SEND_MULTIPLE.equals(action)) {
+
             ArrayList<Uri> list = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
 
-            try {
-
-                for (Uri u : list) {
-                    String typ = getContentResolver().getType(u);
-
-                    if (typ != null && typ.startsWith("video"))
-                        handleVideo(u);
-                    else
-                        handleImage(u);
-
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            if (list != null)
+                toEncrypt.addAll(list);
         }
     }
 
@@ -154,16 +140,5 @@ public class LoginActivity extends MyActivity {
 
         factory = new FingerprintAuthenticatorFactory(this);
         factory.create();
-    }
-
-    private void handleImage(Uri image) {
-        if (image != null)
-            picturesToEncrypt.add(image);
-
-    }
-
-    private void handleVideo(Uri video) {
-        if (video != null)
-            videosToEncrypt.add(video);
     }
 }
