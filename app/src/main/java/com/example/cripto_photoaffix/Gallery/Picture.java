@@ -14,7 +14,8 @@ public class Picture extends Media {
 
         System.out.println("Path: " + path + ".jpg");
         preview = BitmapFactory.decodeFile(path + ".jpg");
-        preview = Bitmap.createScaledBitmap(preview, (int)(preview.getWidth()*0.3), (int)(preview.getHeight()*0.3), false);
+        double d = getDiscount();
+        preview = Bitmap.createScaledBitmap(preview, (int)(preview.getWidth()*d), (int)(preview.getHeight()*d), false);
     }
 
     public void accept(MediaVisitor visitor) {
@@ -67,5 +68,20 @@ public class Picture extends Media {
         FilesManager.copy(this.path + ".jpg", file.getPath());
 
         return file;
+    }
+
+    private double getDiscount() {
+        double discount = 0.5;
+
+        if (discount*preview.getWidth() > 500) {
+            while (discount * preview.getWidth() > 500)
+                discount = discount * 0.5;
+        }
+        else if (discount * preview.getWidth() < 480) {
+            while (discount * preview.getWidth() <= 500 && discount < 1)
+                discount = discount + 0.05;
+        }
+
+        return discount;
     }
 }
