@@ -8,7 +8,7 @@ public class RemoveDecrypted implements Command {
     private FilesManager manager;
 
     public RemoveDecrypted(MyActivity activity) {
-        manager = new FilesManager(activity);
+        manager = FilesManager.getInstance(activity);
     }
 
     @Override

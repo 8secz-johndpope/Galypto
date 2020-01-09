@@ -96,7 +96,7 @@ public class FingerprintAuthenticator extends Authenticator {
     }
 
     public String getFinalPassword() {
-        FilesManager manager = new FilesManager(activity);
+        FilesManager manager = FilesManager.getInstance(activity);
 
         EncryptedFile finalPassword = manager.restorePassword("fingerprintFinalPassword");
 

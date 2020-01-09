@@ -54,7 +54,7 @@ public class Gallery {
     }
 
     private List<Queue<EncryptedFile>> divideDecryption() {
-        FilesManager manager = new FilesManager(activity);
+        FilesManager manager = FilesManager.getInstance(activity);
         List<EncryptedFile> encryptedFiles = manager.restoreMedia();
 
         List<Queue<EncryptedFile>> res = new LinkedList<Queue<EncryptedFile>>();
@@ -131,7 +131,7 @@ public class Gallery {
             files.add(created);
         }
 
-        FilesManager manager = new FilesManager(activity);
+        FilesManager manager = FilesManager.getInstance(activity);
         manager.store(files);
     }
 

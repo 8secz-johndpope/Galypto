@@ -26,7 +26,7 @@ public class DeleteButtonFactory extends LayoutButtonFactory {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FilesManager manager = new FilesManager(activity);
+                FilesManager manager = FilesManager.getInstance(activity);
                 System.out.println("Removing: " + media.getPath());
                 manager.removeFile(media.getPath());
             }

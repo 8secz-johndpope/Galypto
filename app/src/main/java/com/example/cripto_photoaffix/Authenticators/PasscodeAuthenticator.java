@@ -29,7 +29,7 @@ public class PasscodeAuthenticator extends Authenticator {
     public void authenticate() {
         String passcode = field.getText().toString();
 
-        FilesManager manager = new FilesManager(activity);
+        FilesManager manager = FilesManager.getInstance(activity);
 
         String hash = manager.getFileContent("passcodePassword");
 
@@ -59,7 +59,7 @@ public class PasscodeAuthenticator extends Authenticator {
     }
 
     public String getFinalPassword() {
-        FilesManager manager = new FilesManager(activity);
+        FilesManager manager = FilesManager.getInstance(activity);
 
         EncryptedFile finalPassword = manager.restorePassword("passcodeFinalPassword");
 

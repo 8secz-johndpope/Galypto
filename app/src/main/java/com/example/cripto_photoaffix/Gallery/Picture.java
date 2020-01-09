@@ -13,7 +13,9 @@ public class Picture extends Media {
         this.path = path;
 
         System.out.println("Path: " + path + ".jpg");
-        preview = BitmapFactory.decodeFile(path + ".jpg");
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 5;
+        preview = BitmapFactory.decodeFile(path + ".jpg", options);
         double d = getDiscount();
         preview = Bitmap.createScaledBitmap(preview, (int)(preview.getWidth()*d), (int)(preview.getHeight()*d), false);
     }

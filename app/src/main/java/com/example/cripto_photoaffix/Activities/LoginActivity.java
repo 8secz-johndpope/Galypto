@@ -111,7 +111,7 @@ public class LoginActivity extends MyActivity {
 
     private void choseActivity() {
         IntentFactory factory;
-        FilesManager manager = new FilesManager(this);
+        FilesManager manager = FilesManager.getInstance(this);
 
         boolean allFilesExist = manager.exists(getFilesDir() + "/passcodeFinalPassword") &&
                 manager.exists(getFilesDir() + "/passcodePassword");

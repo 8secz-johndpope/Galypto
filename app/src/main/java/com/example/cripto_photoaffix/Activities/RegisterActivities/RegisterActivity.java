@@ -91,7 +91,7 @@ public class RegisterActivity extends MyActivity {
         String salt = BCrypt.gensalt(12);
         String hashed = BCrypt.hashpw(password, salt);
 
-        FilesManager manager = new FilesManager(this);
+        FilesManager manager = FilesManager.getInstance(this);
 
         manager.writeToFile("passcodePassword", hashed);
     }
@@ -102,7 +102,7 @@ public class RegisterActivity extends MyActivity {
         EncryptedFile finalPass = authenticator.encrypt(passwordToEncrypt);
         finalPass.setFileName("passcodeFinalPassword");
 
-        FilesManager manager = new FilesManager(this);
+        FilesManager manager = FilesManager.getInstance(this);
         manager.storePassword(finalPass);
     }
 
@@ -110,7 +110,7 @@ public class RegisterActivity extends MyActivity {
         EncryptedFile file = fingerprint.encrypt(password);
         file.setFileName("fingerprintFinalPassword");
 
-        FilesManager manager = new FilesManager(this);
+        FilesManager manager = FilesManager.getInstance(this);
 
         manager.storePassword(file);
     }

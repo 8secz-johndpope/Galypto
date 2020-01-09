@@ -19,10 +19,18 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class FilesManager {
+    private static FilesManager instance;
     private MyActivity activity;
 
-    public FilesManager(MyActivity c) {
-        activity = c;
+    protected FilesManager(MyActivity activity) {
+        this.activity = activity;
+    }
+
+    public static FilesManager getInstance(MyActivity activity) {
+        if (instance == null)
+            instance = new FilesManager(activity);
+
+        return instance;
     }
 
     public void createFolder(String name) {
