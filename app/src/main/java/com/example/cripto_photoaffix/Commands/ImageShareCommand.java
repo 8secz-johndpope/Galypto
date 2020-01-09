@@ -13,8 +13,6 @@ public class ImageShareCommand extends ShareCommand {
 
     @Override
     public void execute() {
-        //Preguntar si esto esta bien. No me gusta para nada castear. Podria crear
-        //para cada tipo de datos un transferer.
         File file = media.share(activity.getCacheDir().getPath() + "/share/");
 
         Intent intent = createIntent(file);
