@@ -13,8 +13,13 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
 public class MyEncryptor {
+    private static final MyEncryptor instance = new MyEncryptor();
 
-    public MyEncryptor() {}
+    private MyEncryptor() {}
+
+    public static MyEncryptor getInstance() {
+        return instance;
+    }
 
     public String decrypt(EncryptedFile file, String password) {
         String decrypted = null;

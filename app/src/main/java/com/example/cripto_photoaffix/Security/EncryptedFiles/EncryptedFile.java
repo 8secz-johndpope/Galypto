@@ -25,12 +25,12 @@ public abstract class EncryptedFile implements Serializable {
     }
 
     public String decrypt(String password) {
-        MyEncryptor encryptor = new MyEncryptor();
+        MyEncryptor encryptor = MyEncryptor.getInstance();
         return encryptor.decrypt(this, password);
     }
 
     public void encrypt(String data, String passowrd) {
-        MyEncryptor encryptor = new MyEncryptor();
+        MyEncryptor encryptor = MyEncryptor.getInstance();
         Vector<byte[]> vector = encryptor.encrypt(data, passowrd);
 
         this.data = vector.get(0);

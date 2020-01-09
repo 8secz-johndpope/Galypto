@@ -24,7 +24,7 @@ public class EncryptedVideo extends EncryptedFile {
         if (!file.exists()) {
             try {
 
-                MyEncryptor encryptor = new MyEncryptor();
+                MyEncryptor encryptor = MyEncryptor.getInstance();
 
                 String data = encryptor.decrypt(this, password);
                 byte[] bytes = Base64.getDecoder().decode(data);

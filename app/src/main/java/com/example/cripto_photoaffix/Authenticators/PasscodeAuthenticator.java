@@ -53,7 +53,7 @@ public class PasscodeAuthenticator extends Authenticator {
     }
 
     public String decrypt(EncryptedFile file) {
-        MyEncryptor encryptor = new MyEncryptor();
+        MyEncryptor encryptor = MyEncryptor.getInstance();
 
         return encryptor.decrypt(file, field.getText().toString());
     }

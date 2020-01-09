@@ -25,7 +25,7 @@ public class EncryptedPicture extends EncryptedFile {
     }
 
     public String decrypt(String password) {
-        MyEncryptor encryptor = new MyEncryptor();
+        MyEncryptor encryptor = MyEncryptor.getInstance();
         String data = encryptor.decrypt(this, password);
 
         Bitmap bitmap = stringToBitmap(data);
