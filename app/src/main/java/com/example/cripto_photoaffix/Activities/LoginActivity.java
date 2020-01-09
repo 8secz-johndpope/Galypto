@@ -118,6 +118,7 @@ public class LoginActivity extends MyActivity {
 
 
         AuthenticatorFactory factory1 = new FingerprintAuthenticatorFactory(this);
+
         if (allFilesExist && factory1.create().canBeUsed())
             allFilesExist = manager.exists(getFilesDir() + "/fingerprintFinalPassword");
 
@@ -125,8 +126,11 @@ public class LoginActivity extends MyActivity {
             initializeAuthenticators();
         else {
             manager.removeEverything();
+
             factory = new RegisterIntentFactory(this);
+
             startActivity(factory.create());
+
             finish();
         }
     }

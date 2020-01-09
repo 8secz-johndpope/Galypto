@@ -15,12 +15,10 @@ public class RemoveDecrypted implements Command {
     public void execute() {
         List<String> media = manager.getMedia();
         System.out.println("Executing removal.");
+
         for (String file: media) {
-            System.out.println(file);
-            if (file.endsWith(".mp4") || file.endsWith(".jpg")) {
+            if (file.endsWith(".mp4") || file.endsWith(".jpg"))
                 manager.removeFile(file);
-                System.out.println(file + " removed!");
-            }
         }
     }
 }

@@ -74,7 +74,9 @@ public class RegisterActivity extends MyActivity {
         SecureRandom random = new SecureRandom();
 
         for (int i = 0; i < 64; i++) {
+
             int value = Math.abs((random.nextInt() % 127) + 33);
+
             while (value < 33 || value > 126)
                 value = (value % 127) + 33;
 
@@ -89,15 +91,9 @@ public class RegisterActivity extends MyActivity {
         String salt = BCrypt.gensalt(12);
         String hashed = BCrypt.hashpw(password, salt);
 
-        System.out.println("Hashed password: " + hashed);
-        System.out.println("Password: " + password);
-
         FilesManager manager = new FilesManager(this);
-        manager.createFile("", "passcodePassword");
 
         manager.writeToFile("passcodePassword", hashed);
-
-        System.out.println(manager.getFileContent("passcodePassword"));
     }
 
     private void encryptAndStoreForPassocde(EditText field, String passwordToEncrypt) {

@@ -3,11 +3,9 @@ package com.example.cripto_photoaffix.Security.EncryptedFiles;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
-
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.Security.MyEncryptor;
 import com.example.cripto_photoaffix.Visitors.EncryptedFilesVisitors.EncryptedFileVisitor;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

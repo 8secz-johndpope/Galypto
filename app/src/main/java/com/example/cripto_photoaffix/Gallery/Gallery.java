@@ -123,9 +123,8 @@ public class Gallery {
     private void store(Queue<Uri> toEncrypt, String password) {
         List<EncryptedFile> files = new LinkedList<EncryptedFile>();
         EncryptedFile created;
-        System.out.println("To encrypt size " + toEncrypt.size());
+
         while (!toEncrypt.isEmpty()) {
-            System.out.println("Storing!!");
             created = encryptUri(toEncrypt.poll(), password);
 
             files.add(created);

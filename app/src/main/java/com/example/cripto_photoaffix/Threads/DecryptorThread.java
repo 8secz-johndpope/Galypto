@@ -1,9 +1,6 @@
 package com.example.cripto_photoaffix.Threads;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Process;
-import android.util.Base64;
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
 import com.example.cripto_photoaffix.Visitors.EncryptedFilesVisitors.EncryptedFileVisitor;
@@ -43,13 +40,5 @@ public class DecryptorThread extends Thread {
 
     public List<Media> getMedia() {
         return result;
-    }
-
-    private Bitmap stringToBitmap(String bit) {
-        byte[] bytes = Base64.decode(bit, Base64.DEFAULT);
-
-        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
-        return bitmap;
     }
 }

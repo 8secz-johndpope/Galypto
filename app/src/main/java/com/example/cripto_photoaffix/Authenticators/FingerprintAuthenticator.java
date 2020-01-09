@@ -49,6 +49,7 @@ public class FingerprintAuthenticator extends Authenticator {
         EncryptedFile res = null;
 
         try {
+
             SecretKey secretKey = getSecretKey();
 
             Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
@@ -60,6 +61,7 @@ public class FingerprintAuthenticator extends Authenticator {
             res  = new EncryptedPassword();
             res.setIV(iv);
             res.setData(encrypted);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -70,6 +72,7 @@ public class FingerprintAuthenticator extends Authenticator {
     public String decrypt(EncryptedFile file) {
         String res = "";
         try {
+
             KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
             keyStore.load(null);
 
@@ -85,6 +88,7 @@ public class FingerprintAuthenticator extends Authenticator {
             byte[] decodedData = cipher.doFinal(file.getData());
 
             res = new String(decodedData, "UTF-8");
+
         } catch (Exception e) {
             e.printStackTrace();
         }

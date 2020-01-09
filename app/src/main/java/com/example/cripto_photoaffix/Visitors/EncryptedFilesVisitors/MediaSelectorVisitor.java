@@ -1,8 +1,5 @@
 package com.example.cripto_photoaffix.Visitors.EncryptedFilesVisitors;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.Gallery.Picture;
 import com.example.cripto_photoaffix.Gallery.Text;
@@ -45,13 +42,5 @@ public class MediaSelectorVisitor implements EncryptedFileVisitor {
 
     public Media visit(EncryptedPassword password) {
         return new Text();
-    }
-
-    private Bitmap stringToBitmap(String bit) {
-        byte[] bytes = Base64.decode(bit, Base64.DEFAULT);
-
-        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
-        return bitmap;
     }
 }

@@ -25,23 +25,6 @@ public class FilesManager {
         activity = c;
     }
 
-    public void createFile(String folder, String filename) {
-        File path = new File(activity.getFilesDir(), folder);
-
-        if (!path.exists())
-            path.mkdirs();
-
-        File file = new File(path, filename);
-
-        try {
-
-            file.createNewFile();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void createFolder(String name) {
         File path = new File(activity.getFilesDir(), name);
 
@@ -120,7 +103,7 @@ public class FilesManager {
         try {
             EncryptedFile file;
             for (String name: names) {
-                System.out.println(name);
+
                 if (!name.endsWith(".mp4") && !name.endsWith(".jpg")) {
                     FileInputStream inputStream = new FileInputStream(name);
                     ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
@@ -130,10 +113,8 @@ public class FilesManager {
                     inputStream.close();
                     objectInputStream.close();
                 }
-                else {
-                    System.out.println("Removing file: " + name);
+                else
                     removeFile(name);
-                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -196,9 +177,8 @@ public class FilesManager {
         File folder = new File(activity.getFilesDir() + "/pictures");
 
         if (folder.exists()) {
-            for (File file : folder.listFiles()) {
+            for (File file : folder.listFiles())
                 file.delete();
-            }
 
             folder.delete();
         }
@@ -237,14 +217,13 @@ public class FilesManager {
 
     public void storePassword(EncryptedFile password) {
         storeObject(password, activity.getFilesDir().toString(), password.getFileName());
-
-        for (File f: activity.getFilesDir().listFiles())
-            System.out.println("FILE: " + f.getName());
     }
 
     public static File copy(String origin, String destination) {
         File res = null;
+
         try {
+
             FileInputStream input = new FileInputStream(origin);
             FileOutputStream output = new FileOutputStream(destination);
 
@@ -261,6 +240,7 @@ public class FilesManager {
             output.close();
 
             res = new File(destination);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

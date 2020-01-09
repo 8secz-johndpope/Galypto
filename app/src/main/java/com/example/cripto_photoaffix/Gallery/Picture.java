@@ -2,7 +2,6 @@ package com.example.cripto_photoaffix.Gallery;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 import java.io.File;
@@ -18,10 +17,6 @@ public class Picture extends Media {
         preview = Bitmap.createScaledBitmap(preview, (int)(preview.getWidth()*0.3), (int)(preview.getHeight()*0.3), false);
     }
 
-  /*  public Bitmap getImage() {
-        return preview;
-    }*/
-
     public void accept(MediaVisitor visitor) {
         visitor.visit(this);
     }
@@ -29,6 +24,7 @@ public class Picture extends Media {
     @Override
     public File share(String sharingPath) {
         File path = new File(sharingPath);
+
         if (!path.exists())
             path.mkdir();
 
@@ -42,8 +38,12 @@ public class Picture extends Media {
         }
 
         try {
+
             FileOutputStream out = new FileOutputStream(file);
             preview.compress(Bitmap.CompressFormat.PNG, 100, out);
+
+            out.flush();
+            out.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -11,6 +11,7 @@ public class ShareIntentFactory extends IntentFactory {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
         return intent;
     }
 }

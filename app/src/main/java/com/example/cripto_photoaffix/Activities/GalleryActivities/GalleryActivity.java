@@ -61,11 +61,16 @@ public class GalleryActivity extends MyActivity {
         List<Media> galleryMedia = gallery.getMedia();
         gridLayout.setRowCount(galleryMedia.size()/3 + 1);
 
+        MyImageButton button;
+
         for (Media media : galleryMedia) {
-            MyImageButton button = new MyImageButton(media, this);
+            button = new MyImageButton(media, this);
+
             button.setScaleType(ImageView.ScaleType.CENTER_CROP);
             button.setBackgroundColor(Color.WHITE);
+
             gridLayout.addView(button, getScreenWidth()/3, getScreenHeigth()/6);
+
             button.setOnClickListener(new ButtonListener(button));
         }
     }
