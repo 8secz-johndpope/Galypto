@@ -123,8 +123,6 @@ public class FilesManager {
                     inputStream.close();
                     objectInputStream.close();
                 }
-                else
-                    removeFile(name);
             }
         } catch (Exception e) {
             e.printStackTrace();
