@@ -166,20 +166,4 @@ public abstract class ContentViewerActivity extends MyActivity {
 
         DataTransferer.getInstance().setData(media);
     }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Command removeDecryptedVideos = new RemoveDecrypted(this);
-        removeDecryptedVideos.execute();
-    }
-
-    @Override
-    public void onRestart() {
-        super.onRestart();
-
-        IntentFactory factory = new LoginIntentFactory(this);
-        startActivity(factory.create());
-        finish();
-    }
 }
