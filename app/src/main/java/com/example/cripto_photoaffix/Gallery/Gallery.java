@@ -95,9 +95,10 @@ public class Gallery {
         List<DecryptorThread> threads = new LinkedList<DecryptorThread>();
 
         Handler handler = new Handler();
+        DecryptorThread thread;
 
         for (Queue<EncryptedFile> queue: queues) {
-            DecryptorThread thread = new DecryptorThread(queue, passcode);
+            thread = new DecryptorThread(queue, passcode);
             thread.start();
             handler.post(thread);
             threads.add(thread);
@@ -105,8 +106,8 @@ public class Gallery {
 
         try {
 
-            for (Thread thread : threads)
-                thread.join();
+            for (Thread t : threads)
+                t.join();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -114,8 +115,8 @@ public class Gallery {
 
         List<Media> media = new LinkedList<Media>();
 
-        for (DecryptorThread thread: threads)
-            media.addAll(thread.getMedia());
+        for (DecryptorThread t: threads)
+            media.addAll(t.getMedia());
 
 
         return media;

@@ -71,6 +71,8 @@ public class FilesManager {
 
                 bufferedReader.close();
                 reader.close();
+
+                input.close();
             }
         } catch (IOException exception) {
             exception.printStackTrace();
