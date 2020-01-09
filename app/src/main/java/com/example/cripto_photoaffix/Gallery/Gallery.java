@@ -105,9 +105,8 @@ public class Gallery {
 
         try {
 
-            for (Thread thread : threads) {
+            for (Thread thread : threads)
                 thread.join();
-            }
 
         } catch (Exception e) {
             e.printStackTrace();
