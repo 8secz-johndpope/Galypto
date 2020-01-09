@@ -17,8 +17,10 @@ public class RemoveDecrypted implements Command {
         System.out.println("Executing removal.");
 
         for (String file: media) {
-            if (file.endsWith(".mp4") || file.endsWith(".jpg"))
+            if (file.endsWith(".mp4") || file.endsWith(".jpg")) {
+                System.out.println("Removing: " + file);
                 manager.removeFile(file);
+            }
         }
     }
 }

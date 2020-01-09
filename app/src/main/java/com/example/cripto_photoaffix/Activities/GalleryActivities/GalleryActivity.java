@@ -104,10 +104,12 @@ public class GalleryActivity extends MyActivity {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Command removeDecryptedVideos = new RemoveDecrypted(this);
-        removeDecryptedVideos.execute();
+    public void onPause() {
+        super.onPause();
+        if (!openedImage) {
+            Command removeDecryptedVideos = new RemoveDecrypted(this);
+            removeDecryptedVideos.execute();
+        }
     }
 
     @Override
