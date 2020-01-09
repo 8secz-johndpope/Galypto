@@ -50,8 +50,6 @@ public class EncryptedPicture extends EncryptedFile {
     private Bitmap stringToBitmap(String bit) {
         byte[] bytes = Base64.decode(bit, Base64.DEFAULT);
 
-        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
-        return bitmap;
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 }
