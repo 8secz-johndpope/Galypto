@@ -16,7 +16,11 @@ import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.LinkedTransferQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class Gallery {
     private List<Media> media;
@@ -96,7 +100,7 @@ public class Gallery {
 
         Handler handler = new Handler();
         DecryptorThread thread;
-
+        
         for (Queue<EncryptedFile> queue: queues) {
             thread = new DecryptorThread(queue, passcode);
             thread.start();
