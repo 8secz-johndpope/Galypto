@@ -103,12 +103,14 @@ public class Gallery {
             threads.add(thread);
         }
 
-        for (Thread thread: threads) {
-            try {
+        try {
+
+            for (Thread thread : threads) {
                 thread.join();
-            } catch (InterruptedException exception) {
-                exception.printStackTrace();
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         List<Media> media = new LinkedList<Media>();
