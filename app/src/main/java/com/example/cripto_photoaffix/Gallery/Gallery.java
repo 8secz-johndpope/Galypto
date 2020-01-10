@@ -230,4 +230,8 @@ public class Gallery {
 
         return bitmapToString(bitmap);
     }
+
+    public void remove(Media media) {
+        this.media.remove(media);
+    }
 }

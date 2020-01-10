@@ -8,6 +8,7 @@ import com.example.cripto_photoaffix.Commands.RemoveDecrypted;
 import com.example.cripto_photoaffix.DataTransferer;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.LoginIntentFactory;
+import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Gallery.Gallery;
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.MyImageButton;
@@ -22,12 +23,19 @@ import android.view.View;
 import androidx.gridlayout.widget.GridLayout;
 import android.widget.ImageView;
 import com.example.cripto_photoaffix.R;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.concurrent.LinkedTransferQueue;
 
 public class GalleryActivity extends MyActivity {
 
     private Gallery gallery;
     private boolean openedImage;
+    private GridLayout gridLayout;
+    private Map<String, MyImageButton> pathButtons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +54,7 @@ public class GalleryActivity extends MyActivity {
             }
         });
 
+        pathButtons = new HashMap<String, MyImageButton>();
         initialize();
     }
 
@@ -55,24 +64,44 @@ public class GalleryActivity extends MyActivity {
         DataTransferer transferer = DataTransferer.getInstance();
         gallery = (Gallery)transferer.getData();
 
-        GridLayout gridLayout = findViewById(R.id.grid_layout);
+        gridLayout = findViewById(R.id.grid_layout);
         gridLayout.setColumnCount(3);
 
         List<Media> galleryMedia = gallery.getMedia();
         gridLayout.setRowCount(galleryMedia.size()/3 + 1);
 
+        updateButtons(galleryMedia);
+    }
+
+    private void updateButtons(List<Media> galleryMedia) {
         MyImageButton button;
+        FilesManager manager = FilesManager.getInstance(this);
+        Queue<Media> toRemove = new LinkedTransferQueue<Media>();
 
         for (Media media : galleryMedia) {
-            button = new MyImageButton(media, this);
+            if (manager.exists(media.getPath())) {
+                if (pathButtons.get(media.getPath()) == null) {
+                    button = new MyImageButton(media, this);
 
-            button.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            button.setBackgroundColor(Color.WHITE);
+                    button.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    button.setBackgroundColor(Color.WHITE);
 
-            gridLayout.addView(button, getScreenWidth()/3, getScreenHeigth()/6);
+                    gridLayout.addView(button, getScreenWidth() / 3, getScreenHeigth() / 6);
 
-            button.setOnClickListener(new ButtonListener(button));
+                    button.setOnClickListener(new ButtonListener(button));
+
+                    pathButtons.put(media.getPath(), button);
+                }
+            }
+            else {
+                toRemove.add(media);
+                gridLayout.removeView(pathButtons.get(media.getPath()));
+                pathButtons.remove(media.getPath());
+            }
         }
+
+        while (!toRemove.isEmpty())
+            gallery.remove(toRemove.poll());
     }
 
     private int getScreenWidth() {
@@ -121,7 +150,9 @@ public class GalleryActivity extends MyActivity {
             startActivity(factory.create());
             finish();
         }
-        else
+        else {
+            updateButtons(gallery.getMedia());
             openedImage = false;
+        }
     }
 }

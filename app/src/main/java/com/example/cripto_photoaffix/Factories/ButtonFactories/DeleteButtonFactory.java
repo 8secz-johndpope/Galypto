@@ -29,6 +29,7 @@ public class DeleteButtonFactory extends LayoutButtonFactory {
                 FilesManager manager = FilesManager.getInstance(activity);
                 System.out.println("Removing: " + media.getPath());
                 manager.removeFile(media.getPath());
+                activity.onBackPressed();
             }
         });
         button.setImageDrawable(resizeDrawable(icon));
