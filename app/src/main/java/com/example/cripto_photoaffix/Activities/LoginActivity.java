@@ -24,12 +24,14 @@ import com.example.cripto_photoaffix.Gallery.Gallery;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Queue;
+import java.util.Vector;
 import java.util.concurrent.LinkedTransferQueue;
 
 public class LoginActivity extends MyActivity {
     private EditText field;
-    private Authenticator authenticator;
+    private Vector<Authenticator> authenticators;
     private Queue<Uri> toEncrypt;
 
     @Override
@@ -38,8 +40,10 @@ public class LoginActivity extends MyActivity {
         setContentView(R.layout.activity_login);
 
         toEncrypt = new LinkedTransferQueue<Uri>();
+        field = findViewById(R.id.loginPasscode);
+        authenticators = new Vector<Authenticator>();
 
-        initializePasswordField();
+        initializeAuthenticators();
         choseActivity();
         checkForIncomingIntents();
     }
@@ -76,20 +80,6 @@ public class LoginActivity extends MyActivity {
         activityVisitor.visit(this);
     }
 
-    private void initializePasswordField() {
-        field = findViewById(R.id.loginPasscode);
-
-        field.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE)
-                    authenticator.authenticate();
-
-                return true;
-            }
-        });
-    }
-
     private void checkForIncomingIntents() {
         Intent intent = getIntent();
         String action = intent.getAction();
@@ -110,24 +100,27 @@ public class LoginActivity extends MyActivity {
     }
 
     private void choseActivity() {
-        IntentFactory factory;
-        FilesManager manager = FilesManager.getInstance(this);
+        boolean canLogin = true;
 
-        boolean allFilesExist = manager.exists(getFilesDir() + "/passcodeFinalPassword") &&
-                manager.exists(getFilesDir() + "/passcodePassword");
+        Iterator<Authenticator> it = authenticators.iterator();
+        Authenticator authenticator = it.hasNext()?it.next():null;
 
+        if (authenticator != null) {
+            while (canLogin && authenticator != null) {
+                canLogin = authenticator.canBeUsed();
+                authenticator = it.hasNext() ? it.next() : null;
+            }
+        }
+        else
+            canLogin = false;
 
-        AuthenticatorFactory factory1 = new FingerprintAuthenticatorFactory(this);
-
-        if (allFilesExist && factory1.create().canBeUsed())
-            allFilesExist = manager.exists(getFilesDir() + "/fingerprintFinalPassword");
-
-        if (allFilesExist)
+        if (canLogin)
             initializeAuthenticators();
         else {
+            FilesManager manager = FilesManager.getInstance(this);
             manager.removeEverything();
 
-            factory = new RegisterIntentFactory(this);
+            IntentFactory factory = new RegisterIntentFactory(this);
 
             startActivity(factory.create());
 
@@ -139,10 +132,24 @@ public class LoginActivity extends MyActivity {
         AuthenticatorFactory factory = new PasscodeAuthenticatorFactory(this, field);
         Authenticator created = factory.create();
 
-        if (created.canBeUsed())
-            authenticator = created;
+        if (created.canBeUsed()) {
+            authenticators.add(created);
+
+            field.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_DONE)
+                        authenticators.get(0).authenticate();
+
+                    return true;
+                }
+            });
+        }
 
         factory = new FingerprintAuthenticatorFactory(this);
-        factory.create();
+        created = factory.create();
+
+        if (created.canBeUsed())
+            authenticators.add(created);
     }
 }
