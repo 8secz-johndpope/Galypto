@@ -95,13 +95,17 @@ public class GalleryActivity extends MyActivity {
             }
             else {
                 toRemove.add(media);
-                gridLayout.removeView(pathButtons.get(media.getPath()));
                 pathButtons.remove(media.getPath());
             }
         }
 
-        while (!toRemove.isEmpty())
-            gallery.remove(toRemove.poll());
+        Media m;
+
+        while (!toRemove.isEmpty()) {
+            m = toRemove.poll();
+            gallery.remove(m);
+            gridLayout.removeView(pathButtons.get(m.getPath()));
+        }
     }
 
     private int getScreenWidth() {
