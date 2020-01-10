@@ -84,7 +84,6 @@ public class GalleryActivity extends MyActivity {
                     button = new MyImageButton(media, this);
 
                     button.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                    button.setBackgroundColor(Color.WHITE);
 
                     gridLayout.addView(button, getScreenWidth() / 3, getScreenHeigth() / 6);
 
