@@ -24,7 +24,6 @@ import com.example.cripto_photoaffix.Gallery.Gallery;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Queue;
 import java.util.Vector;
 import java.util.concurrent.LinkedTransferQueue;
