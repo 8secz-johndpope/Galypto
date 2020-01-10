@@ -100,23 +100,7 @@ public class LoginActivity extends MyActivity {
     }
 
     private void choseActivity() {
-        boolean canLogin = true;
-
-        Iterator<Authenticator> it = authenticators.iterator();
-        Authenticator authenticator = it.hasNext()?it.next():null;
-
-        if (authenticator != null) {
-            while (canLogin && authenticator != null) {
-                canLogin = authenticator.canBeUsed();
-                authenticator = it.hasNext() ? it.next() : null;
-            }
-        }
-        else
-            canLogin = false;
-
-        if (canLogin)
-            initializeAuthenticators();
-        else {
+        if (authenticators.isEmpty()) {
             FilesManager manager = FilesManager.getInstance(this);
             manager.removeEverything();
 
