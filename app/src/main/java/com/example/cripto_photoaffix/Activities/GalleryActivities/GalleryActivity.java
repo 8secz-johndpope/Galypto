@@ -91,6 +91,8 @@ public class GalleryActivity extends MyActivity {
                     button.setOnClickListener(new ButtonListener(button));
 
                     pathButtons.put(media.getPath(), button);
+
+                    button.setBackgroundColor(Color.BLACK);
                 }
             }
             else {
