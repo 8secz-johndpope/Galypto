@@ -1,0 +1,13 @@
+namespace EncryptedFilesFBS;
+
+attribute "priority";
+
+table EncryptedFileFBS {
+    data: [ubyte];
+    salt: [ubyte];
+    iv: [ubyte];
+    path: string;
+    filename: string;
+}
+
+root_type EncryptedFileFBS;
