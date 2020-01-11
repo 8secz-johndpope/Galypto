@@ -34,10 +34,14 @@ public class FingerprintAuthenticator extends Authenticator {
 
     public boolean canBeUsed() {
         BiometricManager biometricManager = androidx.biometric.BiometricManager.from(activity);
+
+        return biometricManager.canAuthenticate() == BiometricManager.BIOMETRIC_SUCCESS;
+    }
+
+    public boolean filesReady() {
         FilesManager manager = FilesManager.getInstance(activity);
 
-        return biometricManager.canAuthenticate() == BiometricManager.BIOMETRIC_SUCCESS
-                && manager.exists(activity.getFilesDir() + "/fingerprintFinalPassword");
+        return manager.exists(activity.getFilesDir() + "/fingerprintFinalPassword");
     }
 
     public void initialize() {

@@ -2,18 +2,25 @@ package com.example.cripto_photoaffix.FileManagement;
 
 import android.content.Context;
 import com.example.cripto_photoaffix.Activities.MyActivity;
+import com.example.cripto_photoaffix.Deserialazator;
+import com.example.cripto_photoaffix.Flatbuffers.ByteVector;
+import com.example.cripto_photoaffix.Flatbuffers.FlatBufferBuilder;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
+import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFileFBS;
+import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedPassword;
+import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedPicture;
+import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedVideo;
+
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
-import java.io.Serializable;
+import java.nio.ByteBuffer;
 import java.security.SecureRandom;
 import java.util.LinkedList;
 import java.util.List;
@@ -112,16 +119,31 @@ public class FilesManager {
 
         try {
             EncryptedFile file;
+            ByteBuffer byteBuffer;
+            EncryptedFileFBS flatbuffered;
+            Deserialazator deserialazator = new Deserialazator();
             for (String name: names) {
 
                 if (!name.endsWith(".mp4") && !name.endsWith(".jpg")) {
-                    FileInputStream inputStream = new FileInputStream(name);
-                    ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-                    file = (EncryptedFile) objectInputStream.readObject();
-                    files.add(file);
+                    FileInputStream fis = new FileInputStream(name);
+                    ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
 
-                    inputStream.close();
-                    objectInputStream.close();
+                    byte[] bytes = new byte[4096];
+                    int read = fis.read(bytes);
+
+                    while (read != -1) {
+                        byteOutputStream.write(bytes);
+                        read = fis.read(bytes);
+                    }
+
+                    byte[] data = byteOutputStream.toByteArray();
+
+                    byteBuffer = ByteBuffer.wrap(data);
+                    flatbuffered = EncryptedFileFBS.getRootAsEncryptedFileFBS(byteBuffer);
+
+                    file = deserialazator.deserialize(flatbuffered);
+
+                    files.add(file);
                 }
             }
         } catch (Exception e) {
@@ -137,12 +159,18 @@ public class FilesManager {
         EncryptedFile file = null;
 
         try {
-            FileInputStream inputStream = new FileInputStream(activity.getFilesDir() + "/" + name);
-            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-            file = (EncryptedFile) objectInputStream.readObject();
+            File f = new File(activity.getFilesDir() + "/" + name);
+            FileInputStream fis = new FileInputStream(f);
 
-            inputStream.close();
-            objectInputStream.close();
+            byte[] data = new byte[(int) f.length()];
+            fis.read(data);
+            fis.close();
+
+            ByteBuffer byteBuffer = ByteBuffer.wrap(data);
+            EncryptedFileFBS fbs = EncryptedFileFBS.getRootAsEncryptedFileFBS(byteBuffer);
+            Deserialazator deserialazator = new Deserialazator();
+
+            file = deserialazator.deserialize(fbs);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -150,15 +178,20 @@ public class FilesManager {
         return file;
     }
 
-    private void storeObject(Serializable object, String path, String name) {
+    private void storeObject(EncryptedFile file, String path, String name) {
+        FlatBufferBuilder builder = file.serialize();
+
+        byte[] bytes = builder.sizedByteArray();
+
         try {
+
             FileOutputStream outputStream = new FileOutputStream(path + '/' + name);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
 
-            objectOutputStream.writeObject(object);
+            outputStream.write(bytes);
 
+            outputStream.flush();
             outputStream.close();
-            objectOutputStream.close();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -228,6 +261,7 @@ public class FilesManager {
     }
 
     public void storePassword(EncryptedFile password) {
+        password.setPath(activity.getFilesDir().toString());
         storeObject(password, activity.getFilesDir().toString(), password.getFileName());
     }
 

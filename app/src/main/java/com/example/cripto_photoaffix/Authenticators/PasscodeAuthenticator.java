@@ -23,6 +23,10 @@ public class PasscodeAuthenticator extends Authenticator {
     public void initialize() {}
 
     public boolean canBeUsed() {
+        return true;
+    }
+
+    public boolean filesReady() {
         FilesManager manager = FilesManager.getInstance(activity);
         return manager.exists(activity.getFilesDir() + "/passcodeFinalPassword") &&
                 manager.exists(activity.getFilesDir() + "/passcodePassword");

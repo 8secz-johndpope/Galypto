@@ -8,6 +8,7 @@ table EncryptedFileFBS {
     iv: [ubyte];
     path: string;
     filename: string;
+    type: string;
 }
 
 root_type EncryptedFileFBS;

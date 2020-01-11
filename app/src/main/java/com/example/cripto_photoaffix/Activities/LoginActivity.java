@@ -115,7 +115,7 @@ public class LoginActivity extends MyActivity {
         AuthenticatorFactory factory = new PasscodeAuthenticatorFactory(this, field);
         Authenticator created = factory.create();
 
-        if (created.canBeUsed()) {
+        if (created.canBeUsed() && created.filesReady()) {
             authenticators.add(created);
 
             field.setOnEditorActionListener(new EditText.OnEditorActionListener() {
@@ -132,7 +132,7 @@ public class LoginActivity extends MyActivity {
         factory = new FingerprintAuthenticatorFactory(this);
         created = factory.create();
 
-        if (created.canBeUsed())
+        if (created.canBeUsed() && created.filesReady())
             authenticators.add(created);
     }
 

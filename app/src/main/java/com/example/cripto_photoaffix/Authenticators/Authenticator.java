@@ -21,4 +21,6 @@ public abstract class Authenticator {
     public abstract String decrypt(EncryptedFile file);
 
     public abstract String getFinalPassword();
+
+    public abstract boolean filesReady();
 }

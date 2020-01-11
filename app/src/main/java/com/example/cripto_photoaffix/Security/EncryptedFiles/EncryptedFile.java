@@ -1,12 +1,12 @@
 package com.example.cripto_photoaffix.Security.EncryptedFiles;
 
+import com.example.cripto_photoaffix.Flatbuffers.FlatBufferBuilder;
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.Security.MyEncryptor;
 import com.example.cripto_photoaffix.Visitors.EncryptedFilesVisitors.EncryptedFileVisitor;
-import java.io.Serializable;
 import java.util.Vector;
 
-public abstract class EncryptedFile implements Serializable {
+public abstract class EncryptedFile {
     protected byte[] data, salt, iv;
     protected String fileName, path;
 
@@ -19,9 +19,11 @@ public abstract class EncryptedFile implements Serializable {
     }
 
     protected EncryptedFile() {
-        this.data = null;
-        this.salt = null;
-        this.iv = null;
+        this.data = new byte[10];
+        this.salt = new byte[10];
+        this.iv = new byte[10];
+        this.fileName = "";
+        this.path = "";
     }
 
     public String decrypt(String password) {
@@ -81,4 +83,8 @@ public abstract class EncryptedFile implements Serializable {
     }
 
     public abstract Media accept(EncryptedFileVisitor visitor);
+
+    public abstract EncryptedFile clone();
+
+    public abstract FlatBufferBuilder serialize();
 }

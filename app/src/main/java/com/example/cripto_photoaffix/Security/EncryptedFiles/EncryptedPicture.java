@@ -3,6 +3,8 @@ package com.example.cripto_photoaffix.Security.EncryptedFiles;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+
+import com.example.cripto_photoaffix.Flatbuffers.FlatBufferBuilder;
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.Security.MyEncryptor;
 import com.example.cripto_photoaffix.Visitors.EncryptedFilesVisitors.EncryptedFileVisitor;
@@ -55,5 +57,36 @@ public class EncryptedPicture extends EncryptedFile {
         bytes = null;
 
         return res;
+    }
+
+    public EncryptedFile clone() {
+        return new EncryptedPicture(data, salt, iv, fileName, path);
+    }
+
+    public FlatBufferBuilder serialize() {
+        assert data != null && iv != null && salt != null && fileName != null && path != null;
+        FlatBufferBuilder builder = new FlatBufferBuilder();
+
+        int filename = builder.createString(fileName);
+        int pth = builder.createString(path);
+        int data = builder.createByteVector(this.data);
+        int salt = builder.createByteVector(this.salt);
+        int iv = builder.createByteVector(this.iv);
+        int type = builder.createString("image");
+
+        EncryptedFileFBS.startEncryptedFileFBS(builder);
+
+        EncryptedFileFBS.addData(builder, data);
+        EncryptedFileFBS.addSalt(builder, salt);
+        EncryptedFileFBS.addIv(builder, iv);
+        EncryptedFileFBS.addFilename(builder, filename);
+        EncryptedFileFBS.addPath(builder, pth);
+        EncryptedFileFBS.addType(builder, type);
+
+        int created = EncryptedFileFBS.endEncryptedFileFBS(builder);
+
+        builder.finish(created);
+
+        return builder;
     }
 }

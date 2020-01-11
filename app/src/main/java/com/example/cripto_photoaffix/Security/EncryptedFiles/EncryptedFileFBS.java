@@ -44,14 +44,19 @@ public final class EncryptedFileFBS extends Table {
   public String filename() { int o = __offset(12); return o != 0 ? __string(o + bb_pos) : null; }
   public ByteBuffer filenameAsByteBuffer() { return __vector_as_bytebuffer(12, 1); }
   public ByteBuffer filenameInByteBuffer(ByteBuffer _bb) { return __vector_in_bytebuffer(_bb, 12, 1); }
+  public String type() { int o = __offset(14); return o != 0 ? __string(o + bb_pos) : null; }
+  public ByteBuffer typeAsByteBuffer() { return __vector_as_bytebuffer(14, 1); }
+  public ByteBuffer typeInByteBuffer(ByteBuffer _bb) { return __vector_in_bytebuffer(_bb, 14, 1); }
 
   public static int createEncryptedFileFBS(FlatBufferBuilder builder,
-      int dataOffset,
-      int saltOffset,
-      int ivOffset,
-      int pathOffset,
-      int filenameOffset) {
-    builder.startTable(5);
+                                           int dataOffset,
+                                           int saltOffset,
+                                           int ivOffset,
+                                           int pathOffset,
+                                           int filenameOffset,
+                                           int typeOffset) {
+    builder.startTable(6);
+    EncryptedFileFBS.addType(builder, typeOffset);
     EncryptedFileFBS.addFilename(builder, filenameOffset);
     EncryptedFileFBS.addPath(builder, pathOffset);
     EncryptedFileFBS.addIv(builder, ivOffset);
@@ -60,7 +65,7 @@ public final class EncryptedFileFBS extends Table {
     return EncryptedFileFBS.endEncryptedFileFBS(builder);
   }
 
-  public static void startEncryptedFileFBS(FlatBufferBuilder builder) { builder.startTable(5); }
+  public static void startEncryptedFileFBS(FlatBufferBuilder builder) { builder.startTable(6); }
   public static void addData(FlatBufferBuilder builder, int dataOffset) { builder.addOffset(0, dataOffset, 0); }
   public static int createDataVector(FlatBufferBuilder builder, byte[] data) { return builder.createByteVector(data); }
   public static int createDataVector(FlatBufferBuilder builder, ByteBuffer data) { return builder.createByteVector(data); }
@@ -75,6 +80,7 @@ public final class EncryptedFileFBS extends Table {
   public static void startIvVector(FlatBufferBuilder builder, int numElems) { builder.startVector(1, numElems, 1); }
   public static void addPath(FlatBufferBuilder builder, int pathOffset) { builder.addOffset(3, pathOffset, 0); }
   public static void addFilename(FlatBufferBuilder builder, int filenameOffset) { builder.addOffset(4, filenameOffset, 0); }
+  public static void addType(FlatBufferBuilder builder, int typeOffset) { builder.addOffset(5, typeOffset, 0); }
   public static int endEncryptedFileFBS(FlatBufferBuilder builder) {
     int o = builder.endTable();
     return o;
