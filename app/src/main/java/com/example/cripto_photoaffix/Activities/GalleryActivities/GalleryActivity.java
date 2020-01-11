@@ -71,6 +71,7 @@ public class GalleryActivity extends MyActivity {
         gridLayout.setRowCount(galleryMedia.size()/3 + 1);
 
         updateButtons(galleryMedia);
+        galleryMedia.clear();
     }
 
     private void updateButtons(List<Media> galleryMedia) {
@@ -112,12 +113,14 @@ public class GalleryActivity extends MyActivity {
     private int getScreenWidth() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
         return displayMetrics.widthPixels;
     }
 
     private int getScreenHeigth() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
         return displayMetrics.heightPixels;
     }
 
@@ -140,6 +143,7 @@ public class GalleryActivity extends MyActivity {
     @Override
     public void onPause() {
         super.onPause();
+
         if (!openedImage) {
             Command removeDecryptedVideos = new RemoveDecrypted(this);
             removeDecryptedVideos.execute();

@@ -32,7 +32,6 @@ public class Gallery {
         media.addAll(allMedia);
         allMedia.clear();
         queues.clear();
-        System.gc();
     }
 
     public Gallery(MyActivity activity, String password, Queue<Uri> toEncrypt) {
@@ -46,6 +45,7 @@ public class Gallery {
 
         media.addAll(allMedia);
         allMedia.clear();
+        queues.clear();
         System.gc();
     }
 
@@ -129,6 +129,8 @@ public class Gallery {
             t.clear();
         }
 
+        threads.clear();
+
         return media;
     }
 
@@ -144,6 +146,7 @@ public class Gallery {
 
         FilesManager manager = FilesManager.getInstance(activity);
         manager.store(files);
+        files.clear();
     }
 
     private Bitmap getThumbnail(Uri uri) {
@@ -163,10 +166,18 @@ public class Gallery {
     }
 
     private String bitmapToString(Bitmap bitmap) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+        byte [] bytes = null;
 
-        byte[] bytes = outputStream.toByteArray();
+        try {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+
+            bytes = outputStream.toByteArray();
+
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return Base64.encodeToString(bytes, Base64.DEFAULT);
     }

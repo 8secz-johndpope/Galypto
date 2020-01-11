@@ -128,6 +128,8 @@ public class FilesManager {
             e.printStackTrace();
         }
 
+        names.clear();
+
         return files;
     }
 
@@ -175,8 +177,10 @@ public class FilesManager {
 
         List<String> res = new LinkedList<String>();
 
-        for (String s: media)
-            res.add(activity.getFilesDir() + "/pictures/" + s);
+        if (media != null) {
+            for (String s : media)
+                res.add(activity.getFilesDir() + "/pictures/" + s);
+        }
 
         return res;
     }

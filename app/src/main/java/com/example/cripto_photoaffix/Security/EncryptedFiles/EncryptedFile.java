@@ -36,6 +36,8 @@ public abstract class EncryptedFile implements Serializable {
         this.data = vector.get(0);
         this.iv = vector.get(1);
         this.salt = vector.get(2);
+
+        vector.removeAllElements();
     }
 
     public byte[] getData() {
