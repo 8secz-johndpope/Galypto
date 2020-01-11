@@ -16,11 +16,7 @@ import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.LinkedTransferQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 public class Gallery {
     private List<Media> media;
@@ -34,6 +30,9 @@ public class Gallery {
         List<Media> allMedia = startThreading(queues, password);
 
         media.addAll(allMedia);
+        allMedia.clear();
+        queues.clear();
+        System.gc();
     }
 
     public Gallery(MyActivity activity, String password, Queue<Uri> toEncrypt) {
@@ -46,6 +45,8 @@ public class Gallery {
         List<Media> allMedia = startThreading(queues, password);
 
         media.addAll(allMedia);
+        allMedia.clear();
+        System.gc();
     }
 
     public Gallery(MyActivity activity) {
@@ -92,6 +93,8 @@ public class Gallery {
             }
         }
 
+        encryptedFiles.clear();
+
         return res;
     }
 
@@ -108,6 +111,8 @@ public class Gallery {
             threads.add(thread);
         }
 
+        queues.clear();
+
         try {
 
             for (Thread t : threads)
@@ -119,9 +124,10 @@ public class Gallery {
 
         List<Media> media = new LinkedList<Media>();
 
-        for (DecryptorThread t: threads)
+        for (DecryptorThread t: threads) {
             media.addAll(t.getMedia());
-
+            t.clear();
+        }
 
         return media;
     }

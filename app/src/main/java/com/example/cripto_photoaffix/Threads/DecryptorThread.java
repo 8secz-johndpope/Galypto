@@ -41,4 +41,9 @@ public class DecryptorThread extends Thread {
     public List<Media> getMedia() {
         return result;
     }
+
+    public void clear() {
+        encryptedFiles.clear();
+        result.clear();
+    }
 }

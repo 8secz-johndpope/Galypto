@@ -135,4 +135,13 @@ public class LoginActivity extends MyActivity {
         if (created.canBeUsed())
             authenticators.add(created);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        authenticators.clear();
+        authenticators = null;
+        field = null;
+    }
 }
