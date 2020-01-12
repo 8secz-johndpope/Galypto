@@ -68,7 +68,7 @@ public class Gallery {
 
         List<Queue<EncryptedFile>> res = new LinkedList<Queue<EncryptedFile>>();
 
-        int cantQueues = encryptedFiles.size() > 20?20:encryptedFiles.size();
+        int cantQueues = encryptedFiles.size() > 5?5:encryptedFiles.size();
 
         Queue<EncryptedFile> actual;
 

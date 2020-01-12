@@ -35,6 +35,8 @@ public class DecryptorThread extends Thread {
             media = file.accept(visitor);
 
             result.add(media);
+
+            file.clear();
         }
     }
 

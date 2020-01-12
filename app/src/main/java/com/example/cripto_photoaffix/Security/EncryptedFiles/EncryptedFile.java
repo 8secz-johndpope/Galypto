@@ -87,4 +87,12 @@ public abstract class EncryptedFile {
     public abstract EncryptedFile clone();
 
     public abstract FlatBufferBuilder serialize();
+
+    public void clear() {
+        data = null;
+        salt = null;
+        iv = null;
+        fileName = null;
+        path = null;
+    }
 }
