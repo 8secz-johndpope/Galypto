@@ -23,7 +23,6 @@ import android.view.View;
 import androidx.gridlayout.widget.GridLayout;
 import android.widget.ImageView;
 import com.example.cripto_photoaffix.R;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,10 +64,10 @@ public class GalleryActivity extends MyActivity {
         gallery = (Gallery)transferer.getData();
 
         gridLayout = findViewById(R.id.grid_layout);
-        gridLayout.setColumnCount(3);
+        gridLayout.setColumnCount(4);
 
         List<Media> galleryMedia = gallery.getMedia();
-        gridLayout.setRowCount(galleryMedia.size()/3 + 1);
+        gridLayout.setRowCount(galleryMedia.size()/4 + 1);
 
         updateButtons(galleryMedia);
         galleryMedia.clear();
@@ -86,7 +85,7 @@ public class GalleryActivity extends MyActivity {
 
                     button.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-                    gridLayout.addView(button, getScreenWidth() / 3, getScreenHeigth() / 6);
+                    gridLayout.addView(button, getScreenWidth() / 4, getScreenHeigth() / 8);
 
                     button.setOnClickListener(new ButtonListener(button));
 

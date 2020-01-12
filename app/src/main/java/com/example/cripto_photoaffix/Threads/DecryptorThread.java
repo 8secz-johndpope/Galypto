@@ -45,5 +45,6 @@ public class DecryptorThread extends Thread {
     public void clear() {
         encryptedFiles.clear();
         result.clear();
+        passcode = null;
     }
 }
