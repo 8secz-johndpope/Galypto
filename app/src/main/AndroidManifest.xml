@@ -26,12 +26,15 @@
             android:theme="@style/FullscreenTheme"></activity>
         <activity
             android:name=".Activities.GalleryActivities.GalleryActivity"
+            android:launchMode="singleTask"
             android:label="@string/title_activity_gallery"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".Activities.RegisterActivities.RegisterActivity" />
-        <activity android:name=".Activities.GalleryActivities.ImageViewerActivity" />
-        <activity android:name=".Activities.GalleryActivities.VideoViewerActivity" />
-        <activity android:name=".Activities.LoginActivity">
+        <activity android:name=".Activities.GalleryActivities.ImageViewerActivity"
+                  android:launchMode="singleTask" />
+        <activity android:name=".Activities.GalleryActivities.VideoViewerActivity"
+                  android:launchMode="singleTask"/>
+        <activity android:name=".Activities.LoginActivity" android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
