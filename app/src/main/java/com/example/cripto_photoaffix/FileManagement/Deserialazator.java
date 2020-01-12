@@ -10,13 +10,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Deserialazator {
-    private Map<String, EncryptedFile> database;
+    private static Map<String, EncryptedFile> database;
+    private static final Deserialazator instance = new Deserialazator();
 
-    public Deserialazator() {
+    private Deserialazator() {
+        initialize();
+    }
+
+    private static void initialize() {
         database = new HashMap<String, EncryptedFile>();
         database.put("image", new EncryptedPicture());
         database.put("video", new EncryptedVideo());
         database.put("text", new EncryptedPassword());
+    }
+
+    public static Deserialazator getInstance() {
+        if (database == null)
+            initialize();
+
+        return instance;
     }
 
     public EncryptedFile deserialize(EncryptedFileFBS file) {
@@ -38,6 +50,11 @@ public class Deserialazator {
         System.out.println("It took " + (double)(finish-start)/1000 + " seconds.");
 
         return res;
+    }
+
+    public void free() {
+        database.clear();
+        database = null;
     }
 
     private byte[] byteVectorToArray(ByteVector vector) {

@@ -115,7 +115,7 @@ public class FilesManager {
             EncryptedFile file;
             ByteBuffer byteBuffer;
             EncryptedFileFBS flatbuffered;
-            Deserialazator deserialazator = new Deserialazator();
+            Deserialazator deserialazator = Deserialazator.getInstance();
             for (String name: names) {
 
                 if (!name.endsWith(".mp4") && !name.endsWith(".jpg")) {
@@ -165,7 +165,7 @@ public class FilesManager {
 
             ByteBuffer byteBuffer = ByteBuffer.wrap(data);
             EncryptedFileFBS fbs = EncryptedFileFBS.getRootAsEncryptedFileFBS(byteBuffer);
-            Deserialazator deserialazator = new Deserialazator();
+            Deserialazator deserialazator = Deserialazator.getInstance();
 
             file = deserialazator.deserialize(fbs);
         } catch (Exception e) {

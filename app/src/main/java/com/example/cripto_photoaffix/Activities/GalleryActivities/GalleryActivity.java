@@ -34,7 +34,7 @@ public class GalleryActivity extends MyActivity {
     private Gallery gallery;
     private boolean openedImage;
     private GridLayout gridLayout;
-    private Map<String, MyImageButton> pathButtons;
+    private Map<Media, MyImageButton> pathButtons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class GalleryActivity extends MyActivity {
             }
         });
 
-        pathButtons = new HashMap<String, MyImageButton>();
+        pathButtons = new HashMap<Media, MyImageButton>();
         initialize();
     }
 
@@ -64,13 +64,12 @@ public class GalleryActivity extends MyActivity {
         gallery = (Gallery)transferer.getData();
 
         gridLayout = findViewById(R.id.grid_layout);
-        gridLayout.setColumnCount(4);
+        gridLayout.setColumnCount(3);
 
         List<Media> galleryMedia = gallery.getMedia();
-        gridLayout.setRowCount(galleryMedia.size()/4 + 1);
+        gridLayout.setRowCount(galleryMedia.size()/3 + 1);
 
         updateButtons(galleryMedia);
-        galleryMedia.clear();
     }
 
     private void updateButtons(List<Media> galleryMedia) {
@@ -79,34 +78,31 @@ public class GalleryActivity extends MyActivity {
         Queue<Media> toRemove = new LinkedTransferQueue<Media>();
 
         for (Media media : galleryMedia) {
+
             if (manager.exists(media.getPath())) {
-                if (pathButtons.get(media.getPath()) == null) {
+                if (pathButtons.get(media) == null) {
                     button = new MyImageButton(media, this);
 
                     button.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-                    gridLayout.addView(button, getScreenWidth() / 4, getScreenHeigth() / 8);
+                    gridLayout.addView(button, getScreenWidth() / 3, getScreenHeigth() / 6);
 
                     button.setOnClickListener(new ButtonListener(button));
 
-                    pathButtons.put(media.getPath(), button);
+                    pathButtons.put(media, button);
 
                     button.setBackgroundColor(Color.BLACK);
                 }
             }
             else {
                 toRemove.add(media);
-                pathButtons.remove(media.getPath());
+                gridLayout.removeView(pathButtons.get(media));
+                pathButtons.remove(media);
             }
         }
 
-        Media m;
-
-        while (!toRemove.isEmpty()) {
-            m = toRemove.poll();
-            gallery.remove(m);
-            gridLayout.removeView(pathButtons.get(m.getPath()));
-        }
+        while (!toRemove.isEmpty())
+            gallery.remove(toRemove.poll());
     }
 
     private int getScreenWidth() {

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.util.Base64;
 import com.example.cripto_photoaffix.Activities.MyActivity;
+import com.example.cripto_photoaffix.FileManagement.Deserialazator;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedPicture;
@@ -32,6 +33,8 @@ public class Gallery {
         media.addAll(allMedia);
         allMedia.clear();
         queues.clear();
+
+        Deserialazator.getInstance().free();
     }
 
     public Gallery(MyActivity activity, String password, Queue<Uri> toEncrypt) {
@@ -46,6 +49,8 @@ public class Gallery {
         media.addAll(allMedia);
         allMedia.clear();
         queues.clear();
+
+        Deserialazator.getInstance().free();
     }
 
     public Gallery(MyActivity activity) {

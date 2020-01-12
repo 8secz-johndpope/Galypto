@@ -12,7 +12,6 @@ public class Picture extends Media {
     public Picture(String path) {
         this.path = path;
 
-        System.out.println("Path: " + path + ".jpg");
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 5;
         preview = BitmapFactory.decodeFile(path + ".jpg", options);
@@ -77,13 +76,14 @@ public class Picture extends Media {
 
         int value = preview.getHeight() > preview.getWidth()? preview.getWidth(): preview.getHeight();
 
-        if (discount*value > 280) {
-            while (discount * value > 280)
+        if (discount*value > 480) {
+            while (discount * value > 480)
                 discount = discount * 0.5;
         }
-        else if (discount * value < 250) {
-            while (discount * value <= 258 && discount < 1)
-                discount = discount + 0.05;
+        else if (discount * value < 450) {
+
+            while (discount * value <= 450 && discount < 1)
+                discount = discount + 0.25;
         }
 
         return discount;
