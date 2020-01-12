@@ -46,7 +46,6 @@ public class Gallery {
         media.addAll(allMedia);
         allMedia.clear();
         queues.clear();
-        System.gc();
     }
 
     public Gallery(MyActivity activity) {

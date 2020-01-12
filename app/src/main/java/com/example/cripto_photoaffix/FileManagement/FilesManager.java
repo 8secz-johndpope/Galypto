@@ -2,15 +2,9 @@ package com.example.cripto_photoaffix.FileManagement;
 
 import android.content.Context;
 import com.example.cripto_photoaffix.Activities.MyActivity;
-import com.example.cripto_photoaffix.Deserialazator;
-import com.example.cripto_photoaffix.Flatbuffers.ByteVector;
 import com.example.cripto_photoaffix.Flatbuffers.FlatBufferBuilder;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFileFBS;
-import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedPassword;
-import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedPicture;
-import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedVideo;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -137,6 +131,9 @@ public class FilesManager {
                     }
 
                     byte[] data = byteOutputStream.toByteArray();
+
+                    fis.close();
+                    byteOutputStream.close();
 
                     byteBuffer = ByteBuffer.wrap(data);
                     flatbuffered = EncryptedFileFBS.getRootAsEncryptedFileFBS(byteBuffer);

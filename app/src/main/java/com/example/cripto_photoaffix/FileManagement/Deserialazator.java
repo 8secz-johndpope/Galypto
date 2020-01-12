@@ -1,4 +1,4 @@
-package com.example.cripto_photoaffix;
+package com.example.cripto_photoaffix.FileManagement;
 
 import com.example.cripto_photoaffix.Flatbuffers.ByteVector;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
@@ -6,7 +6,6 @@ import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFileFBS;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedPassword;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedPicture;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedVideo;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +21,7 @@ public class Deserialazator {
 
     public EncryptedFile deserialize(EncryptedFileFBS file) {
         EncryptedFile res = database.get(file.type());
+        long start = System.currentTimeMillis();
 
         if (res != null) {
             res = res.clone();
@@ -32,6 +32,10 @@ public class Deserialazator {
             res.setSalt(byteVectorToArray(file.saltVector()));
             res.setIV(byteVectorToArray(file.ivVector()));
         }
+
+        long finish = System.currentTimeMillis();
+
+        System.out.println("It took " + (double)(finish-start)/1000 + " seconds.");
 
         return res;
     }
