@@ -24,21 +24,21 @@ import com.example.cripto_photoaffix.Gallery.Gallery;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
 import java.util.ArrayList;
-import java.util.Queue;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Vector;
-import java.util.concurrent.LinkedTransferQueue;
 
 public class LoginActivity extends MyActivity {
     private EditText field;
     private Vector<Authenticator> authenticators;
-    private Queue<Uri> toEncrypt;
+    private List<Uri> toEncrypt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        toEncrypt = new LinkedTransferQueue<Uri>();
+        toEncrypt = new LinkedList<Uri>();
         field = findViewById(R.id.loginPasscode);
         authenticators = new Vector<Authenticator>();
 
@@ -96,6 +96,8 @@ public class LoginActivity extends MyActivity {
             if (list != null)
                 toEncrypt.addAll(list);
         }
+
+        System.out.println("Size: " + toEncrypt.size());
     }
 
     private void choseActivity() {

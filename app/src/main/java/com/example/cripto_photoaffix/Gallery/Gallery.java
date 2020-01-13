@@ -1,19 +1,13 @@
 package com.example.cripto_photoaffix.Gallery;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Handler;
-import android.util.Base64;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.FileManagement.Deserialazator;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
-import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedPicture;
-import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedVideo;
 import com.example.cripto_photoaffix.Threads.DecryptorThread;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
+import com.example.cripto_photoaffix.Threads.EncryptorThread;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -37,7 +31,7 @@ public class Gallery {
         Deserialazator.getInstance().free();
     }
 
-    public Gallery(MyActivity activity, String password, Queue<Uri> toEncrypt) {
+    public Gallery(MyActivity activity, String password, List<Uri> toEncrypt) {
         media = new LinkedList<Media>();
         this.activity = activity;
 
@@ -138,118 +132,76 @@ public class Gallery {
         return media;
     }
 
-    private void store(Queue<Uri> toEncrypt, String password) {
-        List<EncryptedFile> files = new LinkedList<EncryptedFile>();
-        EncryptedFile created;
+    private void store(List<Uri> toEncrypt, String password) {
+        List<Queue<Uri>> queues = divideEncryption(toEncrypt);
+        List<EncryptorThread> threads = new LinkedList<EncryptorThread>();
 
-        while (!toEncrypt.isEmpty()) {
-            created = encryptUri(toEncrypt.poll(), password);
+        EncryptorThread thread;
 
-            files.add(created);
+        for (Queue<Uri> queue: queues) {
+            thread = new EncryptorThread(queue, password, activity);
+            thread.start();
+            threads.add(thread);
         }
+
+        queues.clear();
+
+        try {
+            for (Thread t: threads)
+                t.join();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        List<EncryptedFile> encryptedFiles = new LinkedList<EncryptedFile>();
+
+        for (EncryptorThread t: threads) {
+            encryptedFiles.addAll(t.getEncrypted());
+            t.clear();
+        }
+
+        threads.clear();
 
         FilesManager manager = FilesManager.getInstance(activity);
-        manager.store(files);
-        files.clear();
+        manager.store(encryptedFiles);
     }
 
-    private Bitmap getThumbnail(Uri uri) {
-        Bitmap bitmap;
+    private List<Queue<Uri>> divideEncryption(List<Uri> uris) {
 
-        try {
-            InputStream inputStream = activity.getContentResolver().openInputStream(uri);
+        List<Queue<Uri>> res = new LinkedList<Queue<Uri>>();
 
-            bitmap = BitmapFactory.decodeStream(inputStream);
-            inputStream.close();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            bitmap = null;
-        }
+        int cantQueues = uris.size() > 5?5:uris.size();
 
-        return bitmap;
-    }
+        Queue<Uri> actual;
 
-    private String bitmapToString(Bitmap bitmap) {
-        byte [] bytes = null;
+        int pos = 0;
 
-        try {
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+        for (int i = 0; i < cantQueues; i++) {
 
-            bytes = outputStream.toByteArray();
+            actual = new LinkedTransferQueue<Uri>();
 
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return Base64.encodeToString(bytes, Base64.DEFAULT);
-    }
-
-    private EncryptedFile encryptUri(Uri uri, String password) {
-        EncryptedFile res = null;
-
-        String type = activity.getContentResolver().getType(uri);
-
-        if (type != null) {
-            String data;
-
-            if (type.startsWith("video")) {
-
-                data = getVideoData(uri);
-                res = new EncryptedVideo();
-                res.encrypt(data, password);
-
+            for (int j = 0; j < uris.size()/cantQueues; j++) {
+                actual.add(uris.get(pos));
+                pos++;
             }
-            else {
 
-                data = getImageData(uri);
-                res = new EncryptedPicture();
-                res.encrypt(data, password);
+            res.add(actual);
 
-            }
-        }
+            if (pos < uris.size() && i == cantQueues - 1) {
 
-        return res;
-    }
+                int queue = 0;
 
-    private String getVideoData(Uri uri) {
-        String res = null;
-
-        try {
-            InputStream fis = activity.getContentResolver().openInputStream(uri);
-
-            if (fis != null) {
-
-                ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
-
-                byte[] bytes = new byte[4096];
-                int read = fis.read(bytes);
-
-                while (read != -1) {
-                    byteOutputStream.write(bytes);
-                    read = fis.read(bytes);
+                while (queue < cantQueues && pos < uris.size()) {
+                    res.get(queue).add(uris.get(pos));
+                    queue++;
+                    pos++;
                 }
-
-
-                byte[] data = byteOutputStream.toByteArray();
-
-                res = java.util.Base64.getEncoder().encodeToString(data);
-
-                fis.close();
-                byteOutputStream.close();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
+        uris.clear();
+
         return res;
-    }
-
-    private String getImageData(Uri uri) {
-        Bitmap bitmap = getThumbnail(uri);
-
-        return bitmapToString(bitmap);
     }
 
     public void remove(Media media) {
