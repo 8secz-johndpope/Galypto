@@ -23,25 +23,25 @@ public class Video extends Media {
 
     @Override
     public File share(String sharingPath) {
-        File toShare = new File(sharingPath + "/video_to_share.mp4");
+        File toShare = new File(sharingPath, filename + ".mp4");
 
         for (int i = 0; toShare.exists(); i++)
-            toShare = new File(sharingPath + "/video_to_share_" + i + ".mp4");
+            toShare = new File(sharingPath, filename + i + ".mp4");
 
-        return FilesManager.copy(path + ".mp4", toShare.getPath());
+        return FilesManager.copy(getFullPath(), toShare.getPath());
     }
 
     @Override
     public File store(String path) {
-        File toSave = new File(path + "/video_to_save.mp4");
+        File toSave = new File(path, filename + ".mp4");
 
         for (int i = 0; toSave.exists(); i++)
-            toSave = new File(path + "/video_to_share_" + i + ".mp4");
+            toSave = new File(path, filename + i + ".mp4");
 
-        return FilesManager.copy(this.path + ".mp4", toSave.getPath());
+        return FilesManager.copy(getFullPath(), toSave.getPath());
     }
 
     public String getFullPath() {
-        return super.getFullPath() + ".jpg";
+        return super.getFullPath() + ".mp4";
     }
 }

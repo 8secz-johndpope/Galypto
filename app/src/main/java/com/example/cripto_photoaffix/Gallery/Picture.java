@@ -30,12 +30,12 @@ public class Picture extends Media {
         if (!path.exists())
             path.mkdir();
 
-        File file = new File(sharingPath, "sharing.jpg");
+        File file = new File(sharingPath, filename + ".jpg");
 
         int i = 0;
 
         while (file.exists()) {
-            file = new File(sharingPath, "sharing" + i + ".jpg");
+            file = new File(sharingPath, filename + i + ".jpg");
             i++;
         }
 

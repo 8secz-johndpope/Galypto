@@ -37,7 +37,6 @@ public class VideoViewerActivity extends ContentViewerActivity {
         String videoPath = media.getFullPath();
 
         if (videoPath != null) {
-            videoPath = videoPath + ".mp4";
             videoView.setVideoPath(videoPath);
             controller = new MediaController(this);
             videoView.setMediaController(controller);

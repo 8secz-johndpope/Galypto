@@ -23,7 +23,7 @@ public abstract class Media {
     }
 
     public String getFullPath() {
-        return path + "/" + filename;
+        return path + filename;
     }
 
     public void setPath(String path) {
