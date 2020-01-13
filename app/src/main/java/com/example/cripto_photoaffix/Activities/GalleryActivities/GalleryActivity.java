@@ -34,7 +34,7 @@ public class GalleryActivity extends MyActivity {
     private Gallery gallery;
     private boolean openedImage;
     private GridLayout gridLayout;
-    private Map<Media, MyImageButton> pathButtons;
+    private Map<Media, MyImageButton> buttons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class GalleryActivity extends MyActivity {
             }
         });
 
-        pathButtons = new HashMap<Media, MyImageButton>();
+        buttons = new HashMap<Media, MyImageButton>();
         initialize();
     }
 
@@ -66,13 +66,13 @@ public class GalleryActivity extends MyActivity {
         gridLayout = findViewById(R.id.grid_layout);
         gridLayout.setColumnCount(3);
 
-        List<Media> galleryMedia = gallery.getMedia();
-        gridLayout.setRowCount(galleryMedia.size()/3 + 1);
+        gridLayout.setRowCount(gallery.getMedia().size()/3 + 1);
 
-        updateButtons(galleryMedia);
+        updateButtons();
     }
 
-    private void updateButtons(List<Media> galleryMedia) {
+    private void updateButtons() {
+        List<Media> galleryMedia = gallery.getMedia();
         MyImageButton button;
         FilesManager manager = FilesManager.getInstance(this);
         Queue<Media> toRemove = new LinkedTransferQueue<Media>();
@@ -80,7 +80,7 @@ public class GalleryActivity extends MyActivity {
         for (Media media : galleryMedia) {
 
             if (manager.exists(media.getPath())) {
-                if (pathButtons.get(media) == null) {
+                if (buttons.get(media) == null) {
                     button = new MyImageButton(media, this);
 
                     button.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -89,15 +89,15 @@ public class GalleryActivity extends MyActivity {
 
                     button.setOnClickListener(new ButtonListener(button));
 
-                    pathButtons.put(media, button);
+                    buttons.put(media, button);
 
                     button.setBackgroundColor(Color.BLACK);
                 }
             }
             else {
                 toRemove.add(media);
-                gridLayout.removeView(pathButtons.get(media));
-                pathButtons.remove(media);
+                gridLayout.removeView(buttons.get(media));
+                buttons.remove(media);
             }
         }
 
@@ -155,7 +155,7 @@ public class GalleryActivity extends MyActivity {
             finish();
         }
         else {
-            updateButtons(gallery.getMedia());
+            updateButtons();
             openedImage = false;
         }
     }
