@@ -34,13 +34,6 @@ public class FilesManager {
         return instance;
     }
 
-    public void createFolder(String name) {
-        File path = new File(activity.getFilesDir(), name);
-
-        if (!path.exists())
-            path.mkdirs();
-    }
-
     public void writeToFile(String path, String data) {
         try {
             OutputStreamWriter writer = new OutputStreamWriter(activity.openFileOutput(path, Context.MODE_PRIVATE));
@@ -152,48 +145,6 @@ public class FilesManager {
         return files;
     }
 
-    public EncryptedFile restorePassword(String name) {
-        EncryptedFile file = null;
-
-        try {
-            File f = new File(activity.getFilesDir() + "/" + name);
-            FileInputStream fis = new FileInputStream(f);
-
-            byte[] data = new byte[(int) f.length()];
-            fis.read(data);
-            fis.close();
-
-            ByteBuffer byteBuffer = ByteBuffer.wrap(data);
-            EncryptedFileFBS fbs = EncryptedFileFBS.getRootAsEncryptedFileFBS(byteBuffer);
-            Deserialazator deserialazator = Deserialazator.getInstance();
-
-            file = deserialazator.deserialize(fbs);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return file;
-    }
-
-    private void storeObject(EncryptedFile file, String path, String name) {
-        FlatBufferBuilder builder = file.serialize();
-
-        byte[] bytes = builder.sizedByteArray();
-
-        try {
-
-            FileOutputStream outputStream = new FileOutputStream(path + '/' + name);
-
-            outputStream.write(bytes);
-
-            outputStream.flush();
-            outputStream.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public List<String> getMedia() {
         String[] media;
 
@@ -289,5 +240,54 @@ public class FilesManager {
         }
 
         return res;
+    }
+
+    public EncryptedFile restorePassword(String name) {
+        EncryptedFile file = null;
+
+        try {
+            File f = new File(activity.getFilesDir() + "/" + name);
+            FileInputStream fis = new FileInputStream(f);
+
+            byte[] data = new byte[(int) f.length()];
+            fis.read(data);
+            fis.close();
+
+            ByteBuffer byteBuffer = ByteBuffer.wrap(data);
+            EncryptedFileFBS fbs = EncryptedFileFBS.getRootAsEncryptedFileFBS(byteBuffer);
+            Deserialazator deserialazator = Deserialazator.getInstance();
+
+            file = deserialazator.deserialize(fbs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return file;
+    }
+
+    private void storeObject(EncryptedFile file, String path, String name) {
+        FlatBufferBuilder builder = file.serialize();
+
+        byte[] bytes = builder.sizedByteArray();
+
+        try {
+
+            FileOutputStream outputStream = new FileOutputStream(path + '/' + name);
+
+            outputStream.write(bytes);
+
+            outputStream.flush();
+            outputStream.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createFolder(String name) {
+        File path = new File(activity.getFilesDir(), name);
+
+        if (!path.exists())
+            path.mkdirs();
     }
 }
