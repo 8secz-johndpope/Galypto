@@ -79,7 +79,7 @@ public class GalleryActivity extends MyActivity {
 
         for (Media media : galleryMedia) {
 
-            if (manager.exists(media.getPath())) {
+            if (manager.exists(media.getFullPath())) {
                 if (buttons.get(media) == null) {
                     button = new MyImageButton(media, this);
 

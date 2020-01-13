@@ -34,7 +34,7 @@ public class VideoViewerActivity extends ContentViewerActivity {
         findViewById(R.id.delete_button).setOnTouchListener(mDelayHideTouchListener);
 
         videoView = (VideoView) mContentView;
-        String videoPath = media.getPath();
+        String videoPath = media.getFullPath();
 
         if (videoPath != null) {
             videoPath = videoPath + ".mp4";

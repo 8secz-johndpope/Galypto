@@ -40,4 +40,8 @@ public class Video extends Media {
 
         return FilesManager.copy(this.path + ".mp4", toSave.getPath());
     }
+
+    public String getFullPath() {
+        return super.getFullPath() + ".jpg";
+    }
 }

@@ -20,9 +20,11 @@ public class MediaSelectorVisitor implements EncryptedFileVisitor {
         Media pic = new Picture(picture.decrypt(password));
 
         if (picture.getPath().endsWith("/"))
-            pic.setPath(picture.getPath()+picture.getFileName());
+            pic.setPath(picture.getPath());
         else
-            pic.setPath(picture.getPath()+"/"+picture.getFileName());
+            pic.setPath(picture.getPath() + "/");
+
+        pic.setFilename(picture.getFileName());
 
         return pic;
     }
@@ -33,9 +35,11 @@ public class MediaSelectorVisitor implements EncryptedFileVisitor {
         Media vid = new Video(video.decrypt(password));
 
         if (video.getPath().endsWith("/"))
-            vid.setPath(video.getPath()+video.getFileName());
+            vid.setPath(video.getPath());
         else
-            vid.setPath(video.getPath()+"/"+video.getFileName());
+            vid.setPath(video.getPath() + "/");
+
+        vid.setFilename(video.getFileName());
 
         return vid;
     }

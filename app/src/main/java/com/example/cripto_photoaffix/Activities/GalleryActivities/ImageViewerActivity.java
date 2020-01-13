@@ -32,7 +32,7 @@ public class ImageViewerActivity extends ContentViewerActivity {
         findViewById(R.id.delete_button).setOnTouchListener(mDelayHideTouchListener);
 
         imageView = (ImageView) mContentView;
-        imageView.setImageBitmap(BitmapFactory.decodeFile(media.getPath() + ".jpg"));
+        imageView.setImageBitmap(BitmapFactory.decodeFile(media.getFullPath()));
 
         initializeButtons();
     }

@@ -6,7 +6,7 @@ import java.io.File;
 
 public abstract class Media {
     protected Bitmap preview;
-    protected String path;
+    protected String path, filename;
 
     public Bitmap getPreview() {
         return preview;
@@ -18,8 +18,20 @@ public abstract class Media {
         return path;
     }
 
+    public String getFilename() {
+        return filename;
+    }
+
+    public String getFullPath() {
+        return path + "/" + filename;
+    }
+
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public void setFilename(String name) {
+        filename = name;
     }
 
     public abstract File share(String sharingPath);

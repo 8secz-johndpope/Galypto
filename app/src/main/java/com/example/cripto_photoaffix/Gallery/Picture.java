@@ -66,7 +66,7 @@ public class Picture extends Media {
             i++;
         }
 
-        FilesManager.copy(this.path + ".jpg", file.getPath());
+        FilesManager.copy(getFullPath(), file.getPath());
 
         return file;
     }
@@ -87,5 +87,9 @@ public class Picture extends Media {
         }
 
         return discount;
+    }
+
+    public String getFullPath() {
+        return super.getFullPath() + ".jpg";
     }
 }
