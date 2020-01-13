@@ -85,7 +85,7 @@ public class Gallery {
 
             res.add(actual);
 
-            if (pos < encryptedFiles.size() - 1 && i == cantQueues - 1) {
+            if (pos < encryptedFiles.size() && i == cantQueues - 1) {
 
                 int queue = 0;
 

@@ -78,10 +78,9 @@ public class GalleryActivity extends MyActivity {
         Queue<Media> toRemove = new LinkedTransferQueue<Media>();
 
         for (Media media : galleryMedia) {
-
             if (manager.exists(media.getFullPath())) {
-                System.out.println(media.getFullPath());
                 if (buttons.get(media) == null) {
+                    System.out.println(media.getFullPath());
                     button = new MyImageButton(media, this);
 
                     button.setScaleType(ImageView.ScaleType.CENTER_CROP);

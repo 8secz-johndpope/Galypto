@@ -88,6 +88,7 @@ public class FilesManager {
             createFolder("pictures");
 
         for (EncryptedFile file: files) {
+            System.out.println("Storing: " + file.getPath() + "/" + file.getFileName());
             String name = random.nextInt() + "";
 
             while (exists(activity.getFilesDir() + "/pictures/" + name))
