@@ -15,13 +15,6 @@ import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVis
 public class PasscodeAuthenticator extends Authenticator {
     protected EditText field;
 
-    /*
-    public PasscodeAuthenticator(MyActivity activity, EditText field) {
-        super(activity);
-
-        this.field = field;
-    }*/
-
     public PasscodeAuthenticator(EditText field) {
         this.field = field;
     }
