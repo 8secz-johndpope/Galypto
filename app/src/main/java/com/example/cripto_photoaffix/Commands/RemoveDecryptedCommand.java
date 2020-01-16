@@ -4,10 +4,10 @@ import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import java.util.List;
 
-public class RemoveDecrypted implements Command {
+public class RemoveDecryptedCommand implements Command {
     private FilesManager manager;
 
-    public RemoveDecrypted(MyActivity activity) {
+    public RemoveDecryptedCommand(MyActivity activity) {
         manager = FilesManager.getInstance(activity);
     }
 

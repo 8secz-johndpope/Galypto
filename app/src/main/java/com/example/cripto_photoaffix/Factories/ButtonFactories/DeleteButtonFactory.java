@@ -7,19 +7,19 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import androidx.core.content.ContextCompat;
 import com.example.cripto_photoaffix.Activities.MyActivity;
+import com.example.cripto_photoaffix.DataTransferer;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.R;
 
 public class DeleteButtonFactory extends LayoutButtonFactory {
-    private Media media;
 
-    public DeleteButtonFactory(MyActivity activity, LinearLayout layout, int layoutID, Media media) {
+    public DeleteButtonFactory(MyActivity activity, LinearLayout layout, int layoutID) {
         super(activity, layout, layoutID);
-        this.media = media;
     }
 
     public ImageButton create() {
+        final Media media = (Media)DataTransferer.getInstance().getData();
         ImageButton button = layout.findViewById(layoutID);
         Drawable icon = ContextCompat.getDrawable(activity, R.drawable.trash);
 

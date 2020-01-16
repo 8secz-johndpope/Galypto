@@ -8,15 +8,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import com.example.cripto_photoaffix.Activities.MyActivity;
-import com.example.cripto_photoaffix.Commands.Command;
-import com.example.cripto_photoaffix.Commands.RemoveDecrypted;
 import com.example.cripto_photoaffix.DataTransferer;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.ButtonFactory;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.DeleteButtonFactory;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.ShareButtonFactory;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.StoreButtonFactory;
-import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
-import com.example.cripto_photoaffix.Factories.IntentsFactory.LoginIntentFactory;
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
@@ -155,7 +151,7 @@ public abstract class ContentViewerActivity extends MyActivity {
 
     protected void initializeButtons() {
         LinearLayout layout = findViewById(R.id.fullscreen_content_controls);
-        ButtonFactory factory = new DeleteButtonFactory(this, layout, R.id.delete_button, media);
+        ButtonFactory factory = new DeleteButtonFactory(this, layout, R.id.delete_button);
         factory.create();
 
         factory = new ShareButtonFactory(this, layout, R.id.share_button);

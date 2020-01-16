@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.Gallery.Media;
-
 import java.io.File;
 
 public class StoreCommand implements Command {

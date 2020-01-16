@@ -4,7 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.Commands.Command;
-import com.example.cripto_photoaffix.Commands.RemoveDecrypted;
+import com.example.cripto_photoaffix.Commands.RemoveDecryptedCommand;
 import com.example.cripto_photoaffix.DataTransferer;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.LoginIntentFactory;
@@ -140,7 +140,7 @@ public class GalleryActivity extends MyActivity {
         super.onPause();
 
         if (!openedImage) {
-            Command removeDecryptedVideos = new RemoveDecrypted(this);
+            Command removeDecryptedVideos = new RemoveDecryptedCommand(this);
             removeDecryptedVideos.execute();
         }
     }
