@@ -3,10 +3,6 @@ package com.example.cripto_photoaffix.Factories.IntentsFactory;
 import android.content.Intent;
 
 public class ShareIntentFactory extends IntentFactory {
-    public ShareIntentFactory() {
-        super(null);
-    }
-
     public Intent create() {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);

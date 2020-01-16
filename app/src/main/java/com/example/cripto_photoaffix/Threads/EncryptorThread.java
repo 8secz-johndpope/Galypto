@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Process;
 import android.util.Base64;
 import com.example.cripto_photoaffix.Activities.MyActivity;
+import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedPicture;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedVideo;
@@ -19,14 +20,12 @@ public class EncryptorThread extends Thread {
     private Queue<Uri> toEncrypt;
     private List<EncryptedFile> result;
     private String passcode;
-    private MyActivity activity;
 
-    public EncryptorThread(Queue<Uri> files, String passcode, MyActivity activity) {
+    public EncryptorThread(Queue<Uri> files, String passcode) {
         super();
         this.toEncrypt = files;
         result = new LinkedList<EncryptedFile>();
         this.passcode = passcode;
-        this.activity = activity;
     }
 
     @Override
@@ -57,6 +56,7 @@ public class EncryptorThread extends Thread {
 
     private EncryptedFile encryptUri(Uri uri, String password) {
         EncryptedFile res = null;
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
         String type = activity.getContentResolver().getType(uri);
 
@@ -84,6 +84,7 @@ public class EncryptorThread extends Thread {
 
     private String getVideoData(Uri uri) {
         String res = null;
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
         try {
             InputStream fis = activity.getContentResolver().openInputStream(uri);
@@ -123,6 +124,7 @@ public class EncryptorThread extends Thread {
 
     private Bitmap getThumbnail(Uri uri) {
         Bitmap bitmap;
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
         try {
             InputStream inputStream = activity.getContentResolver().openInputStream(uri);

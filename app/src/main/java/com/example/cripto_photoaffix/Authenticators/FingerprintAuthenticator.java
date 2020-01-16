@@ -7,6 +7,7 @@ import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 import com.example.cripto_photoaffix.Activities.MyActivity;
+import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedPassword;
@@ -23,9 +24,14 @@ import javax.crypto.spec.GCMParameterSpec;
 public class FingerprintAuthenticator extends Authenticator {
     protected BiometricPrompt.PromptInfo promptInfo;
 
+    /*
     public FingerprintAuthenticator(MyActivity activity) {
         super(activity);
 
+        if (canBeUsed())
+            initialize();
+    }*/
+    public FingerprintAuthenticator() {
         if (canBeUsed())
             initialize();
     }
@@ -33,18 +39,23 @@ public class FingerprintAuthenticator extends Authenticator {
     public void authenticate() {}
 
     public boolean canBeUsed() {
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
         BiometricManager biometricManager = androidx.biometric.BiometricManager.from(activity);
 
         return biometricManager.canAuthenticate() == BiometricManager.BIOMETRIC_SUCCESS;
     }
 
     public boolean filesReady() {
-        FilesManager manager = FilesManager.getInstance(activity);
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
+
+        FilesManager manager = FilesManager.getInstance();
 
         return manager.exists(activity.getFilesDir() + "/fingerprintFinalPassword");
     }
 
     public void initialize() {
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
+
         Executor executor = ContextCompat.getMainExecutor(activity);
         initializePromptInfo();
         BiometricPrompt prompt = new BiometricPrompt(activity, executor, new MyAuthenticatorCallback());
@@ -102,7 +113,9 @@ public class FingerprintAuthenticator extends Authenticator {
     }
 
     public String getFinalPassword() {
-        FilesManager manager = FilesManager.getInstance(activity);
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
+
+        FilesManager manager = FilesManager.getInstance();
 
         EncryptedFile finalPassword = manager.restorePassword("fingerprintFinalPassword");
 
@@ -125,6 +138,8 @@ public class FingerprintAuthenticator extends Authenticator {
         @Override
         public void onAuthenticationFailed() {
             super.onAuthenticationFailed();
+
+            MyActivity activity = ActivityTransferer.getInstance().getActivity();
             ActivityVisitor activityVisitor = new FingerprintUnsuccessfulAuthenticationActivityVisitor();
             activity.accept(activityVisitor);
         }
@@ -133,6 +148,7 @@ public class FingerprintAuthenticator extends Authenticator {
         public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
             super.onAuthenticationSucceeded(result);
 
+            MyActivity activity = ActivityTransferer.getInstance().getActivity();
             ActivityVisitor activityVisitor = new FingerprintSuccessfulAuthenticationActivityVisitor(FingerprintAuthenticator.this);
             activity.accept(activityVisitor);
         }

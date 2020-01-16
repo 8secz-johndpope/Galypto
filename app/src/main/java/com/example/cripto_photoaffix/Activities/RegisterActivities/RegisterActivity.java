@@ -40,7 +40,7 @@ public class RegisterActivity extends MyActivity {
             }
         });
 
-        AuthenticatorFactory factory = new FingerprintAuthenticatorFactory(this);
+        AuthenticatorFactory factory = new FingerprintAuthenticatorFactory();
         factory.create();
     }
 
@@ -55,7 +55,7 @@ public class RegisterActivity extends MyActivity {
 
         encryptAndStoreForPassocde(field, finalPassword);
 
-        AuthenticatorFactory fingerprintAuthenticatorFactory = new FingerprintAuthenticatorFactory(this);
+        AuthenticatorFactory fingerprintAuthenticatorFactory = new FingerprintAuthenticatorFactory();
         Authenticator fingerprint = fingerprintAuthenticatorFactory.create();
 
         if (fingerprint.canBeUsed())
@@ -64,7 +64,7 @@ public class RegisterActivity extends MyActivity {
         DataTransferer transferer = DataTransferer.getInstance();
         transferer.setData(new Gallery(this));
 
-        IntentFactory factory = new GalleryIntentFactory(this);
+        IntentFactory factory = new GalleryIntentFactory();
         startActivity(factory.create());
         finish();
     }
@@ -91,18 +91,18 @@ public class RegisterActivity extends MyActivity {
         String salt = BCrypt.gensalt(12);
         String hashed = BCrypt.hashpw(password, salt);
 
-        FilesManager manager = FilesManager.getInstance(this);
+        FilesManager manager = FilesManager.getInstance();
 
         manager.writeToFile("passcodePassword", hashed);
     }
 
     private void encryptAndStoreForPassocde(EditText field, String passwordToEncrypt) {
-        Authenticator authenticator = new PasscodeAuthenticator(this, field);
+        Authenticator authenticator = new PasscodeAuthenticator(field);
 
         EncryptedFile finalPass = authenticator.encrypt(passwordToEncrypt);
         finalPass.setFileName("passcodeFinalPassword");
 
-        FilesManager manager = FilesManager.getInstance(this);
+        FilesManager manager = FilesManager.getInstance();
         manager.storePassword(finalPass);
     }
 
@@ -110,7 +110,7 @@ public class RegisterActivity extends MyActivity {
         EncryptedFile file = fingerprint.encrypt(password);
         file.setFileName("fingerprintFinalPassword");
 
-        FilesManager manager = FilesManager.getInstance(this);
+        FilesManager manager = FilesManager.getInstance();
 
         manager.storePassword(file);
     }

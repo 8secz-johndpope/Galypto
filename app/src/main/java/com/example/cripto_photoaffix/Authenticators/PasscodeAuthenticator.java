@@ -2,6 +2,7 @@ package com.example.cripto_photoaffix.Authenticators;
 
 import android.widget.EditText;
 import com.example.cripto_photoaffix.Activities.MyActivity;
+import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Security.BCrypt;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
@@ -14,9 +15,14 @@ import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVis
 public class PasscodeAuthenticator extends Authenticator {
     protected EditText field;
 
+    /*
     public PasscodeAuthenticator(MyActivity activity, EditText field) {
         super(activity);
 
+        this.field = field;
+    }*/
+
+    public PasscodeAuthenticator(EditText field) {
         this.field = field;
     }
 
@@ -27,7 +33,9 @@ public class PasscodeAuthenticator extends Authenticator {
     }
 
     public boolean filesReady() {
-        FilesManager manager = FilesManager.getInstance(activity);
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
+        FilesManager manager = FilesManager.getInstance();
+
         return manager.exists(activity.getFilesDir() + "/passcodeFinalPassword") &&
                 manager.exists(activity.getFilesDir() + "/passcodePassword");
     }
@@ -35,7 +43,8 @@ public class PasscodeAuthenticator extends Authenticator {
     public void authenticate() {
         String passcode = field.getText().toString();
 
-        FilesManager manager = FilesManager.getInstance(activity);
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
+        FilesManager manager = FilesManager.getInstance();
 
         String hash = manager.getFileContent("passcodePassword");
 
@@ -65,7 +74,7 @@ public class PasscodeAuthenticator extends Authenticator {
     }
 
     public String getFinalPassword() {
-        FilesManager manager = FilesManager.getInstance(activity);
+        FilesManager manager = FilesManager.getInstance();
 
         EncryptedFile finalPassword = manager.restorePassword("passcodeFinalPassword");
 

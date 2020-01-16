@@ -7,17 +7,14 @@ import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
 import android.widget.ImageButton;
 import com.example.cripto_photoaffix.Activities.MyActivity;
+import com.example.cripto_photoaffix.ActivityTransferer;
 
 public abstract class ButtonFactory {
-    protected MyActivity activity;
-
-    protected ButtonFactory(MyActivity activity) {
-        this.activity = activity;
-    }
-
     public abstract ImageButton create();
 
     protected Drawable resizeDrawable(Drawable drawable) {
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
+
         DisplayMetrics metrics = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
 

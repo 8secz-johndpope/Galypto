@@ -3,6 +3,7 @@ package com.example.cripto_photoaffix.Activities.GalleryActivities;
 import android.graphics.Color;
 import android.os.Bundle;
 import com.example.cripto_photoaffix.Activities.MyActivity;
+import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Commands.Command;
 import com.example.cripto_photoaffix.Commands.RemoveDecryptedCommand;
 import com.example.cripto_photoaffix.DataTransferer;
@@ -74,14 +75,14 @@ public class GalleryActivity extends MyActivity {
     private void updateButtons() {
         List<Media> galleryMedia = gallery.getMedia();
         MyImageButton button;
-        FilesManager manager = FilesManager.getInstance(this);
+        FilesManager manager = FilesManager.getInstance();
         Queue<Media> toRemove = new LinkedTransferQueue<Media>();
 
         for (Media media : galleryMedia) {
             if (manager.exists(media.getFullPath())) {
                 if (buttons.get(media) == null) {
                     System.out.println(media.getFullPath());
-                    button = new MyImageButton(media, this);
+                    button = new MyImageButton(media);
 
                     button.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
@@ -128,7 +129,7 @@ public class GalleryActivity extends MyActivity {
 
         @Override
         public void onClick(View v) {
-            MediaVisitor visitor = new MediaOpenerVisitor(GalleryActivity.this);
+            MediaVisitor visitor = new MediaOpenerVisitor();
             Media buttonMedia = button.getMedia();
             buttonMedia.accept(visitor);
             openedImage = true;
@@ -149,8 +150,11 @@ public class GalleryActivity extends MyActivity {
     public void onRestart() {
         super.onRestart();
 
+        ActivityTransferer activityTransferer = ActivityTransferer.getInstance();
+        activityTransferer.setActivity(this);
+
         if (!openedImage) {
-            IntentFactory factory = new LoginIntentFactory(this);
+            IntentFactory factory = new LoginIntentFactory();
             startActivity(factory.create());
             finish();
         }

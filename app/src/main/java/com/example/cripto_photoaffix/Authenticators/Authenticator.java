@@ -4,11 +4,13 @@ import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
 
 public abstract class Authenticator {
+    /*
+    Mejor solucion encontrada (creo).
     protected MyActivity activity;
 
     protected Authenticator(MyActivity c) {
         activity = c;
-    }
+    }*/
 
     public abstract void authenticate();
 

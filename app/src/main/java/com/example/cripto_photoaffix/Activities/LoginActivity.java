@@ -51,14 +51,14 @@ public class LoginActivity extends MyActivity {
         Gallery gallery;
 
         if (toEncrypt.isEmpty())
-            gallery = new Gallery(this, password);
+            gallery = new Gallery(password);
         else
-            gallery = new Gallery(this, password, toEncrypt);
+            gallery = new Gallery(password, toEncrypt);
 
         DataTransferer transferer = DataTransferer.getInstance();
         transferer.setData(gallery);
 
-        IntentFactory factory = new GalleryIntentFactory(this);
+        IntentFactory factory = new GalleryIntentFactory();
         startActivity(factory.create());
 
         finish();
@@ -102,10 +102,10 @@ public class LoginActivity extends MyActivity {
 
     private void choseActivity() {
         if (authenticators.isEmpty()) {
-            FilesManager manager = FilesManager.getInstance(this);
+            FilesManager manager = FilesManager.getInstance();
             manager.removeEverything();
 
-            IntentFactory factory = new RegisterIntentFactory(this);
+            IntentFactory factory = new RegisterIntentFactory();
 
             startActivity(factory.create());
 
@@ -114,7 +114,7 @@ public class LoginActivity extends MyActivity {
     }
 
     private void initializeAuthenticators() {
-        AuthenticatorFactory factory = new PasscodeAuthenticatorFactory(this, field);
+        AuthenticatorFactory factory = new PasscodeAuthenticatorFactory(field);
         Authenticator created = factory.create();
 
         if (created.canBeUsed() && created.filesReady()) {
@@ -131,7 +131,7 @@ public class LoginActivity extends MyActivity {
             });
         }
 
-        factory = new FingerprintAuthenticatorFactory(this);
+        factory = new FingerprintAuthenticatorFactory();
         created = factory.create();
 
         if (created.canBeUsed() && created.filesReady())

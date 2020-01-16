@@ -2,6 +2,7 @@ package com.example.cripto_photoaffix.FileManagement;
 
 import android.content.Context;
 import com.example.cripto_photoaffix.Activities.MyActivity;
+import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Flatbuffers.FlatBufferBuilder;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFileFBS;
@@ -21,20 +22,19 @@ import java.util.List;
 
 public class FilesManager {
     private static FilesManager instance;
-    private MyActivity activity;
 
-    protected FilesManager(MyActivity activity) {
-        this.activity = activity;
-    }
+    protected FilesManager() {}
 
-    public static FilesManager getInstance(MyActivity activity) {
+    public static FilesManager getInstance() {
         if (instance == null)
-            instance = new FilesManager(activity);
+            instance = new FilesManager();
 
         return instance;
     }
 
     public void writeToFile(String path, String data) {
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
+
         try {
             OutputStreamWriter writer = new OutputStreamWriter(activity.openFileOutput(path, Context.MODE_PRIVATE));
 
@@ -48,6 +48,7 @@ public class FilesManager {
 
     public String getFileContent(String path) {
         StringBuilder res = new StringBuilder();
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
         try {
             InputStream input = activity.openFileInput(path);
@@ -83,6 +84,7 @@ public class FilesManager {
 
     public void store(List<EncryptedFile> files) {
         SecureRandom random = new SecureRandom();
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
         if (!exists(activity.getFilesDir() + "/pictures"))
             createFolder("pictures");
@@ -148,6 +150,7 @@ public class FilesManager {
 
     public List<String> getMedia() {
         String[] media;
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
         File folder = new File(activity.getFilesDir() + "/pictures");
 
@@ -168,6 +171,7 @@ public class FilesManager {
     }
 
     public void removeEverything() {
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
         File folder = new File(activity.getFilesDir() + "/pictures");
 
         if (folder.exists()) {
@@ -210,6 +214,8 @@ public class FilesManager {
     }
 
     public void storePassword(EncryptedFile password) {
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
+
         password.setPath(activity.getFilesDir().toString());
         storeObject(password, activity.getFilesDir().toString(), password.getFileName());
     }
@@ -245,6 +251,7 @@ public class FilesManager {
 
     public EncryptedFile restorePassword(String name) {
         EncryptedFile file = null;
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
         try {
             File f = new File(activity.getFilesDir() + "/" + name);
@@ -286,6 +293,7 @@ public class FilesManager {
     }
 
     private void createFolder(String name) {
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
         File path = new File(activity.getFilesDir(), name);
 
         if (!path.exists())

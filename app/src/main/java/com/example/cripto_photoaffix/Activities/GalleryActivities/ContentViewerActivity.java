@@ -151,13 +151,13 @@ public abstract class ContentViewerActivity extends MyActivity {
 
     protected void initializeButtons() {
         LinearLayout layout = findViewById(R.id.fullscreen_content_controls);
-        ButtonFactory factory = new DeleteButtonFactory(this, layout, R.id.delete_button);
+        ButtonFactory factory = new DeleteButtonFactory(layout, R.id.delete_button);
         factory.create();
 
-        factory = new ShareButtonFactory(this, layout, R.id.share_button);
+        factory = new ShareButtonFactory(layout, R.id.share_button);
         factory.create();
 
-        factory = new StoreButtonFactory(this, layout, R.id.save_button);
+        factory = new StoreButtonFactory(layout, R.id.save_button);
         factory.create();
 
         DataTransferer.getInstance().setData(media);

@@ -3,6 +3,7 @@ package com.example.cripto_photoaffix.Gallery;
 import android.net.Uri;
 import android.os.Handler;
 import com.example.cripto_photoaffix.Activities.MyActivity;
+import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.FileManagement.Deserialazator;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
@@ -15,11 +16,9 @@ import java.util.concurrent.LinkedTransferQueue;
 
 public class Gallery {
     private List<Media> media;
-    private MyActivity activity;
 
-    public Gallery(MyActivity activity, String password) {
+    public Gallery(String password) {
         media = new LinkedList<Media>();
-        this.activity = activity;
 
         List<Queue<EncryptedFile>> queues = divideDecryption();
         List<Media> allMedia = startThreading(queues, password);
@@ -31,9 +30,8 @@ public class Gallery {
         Deserialazator.getInstance().free();
     }
 
-    public Gallery(MyActivity activity, String password, List<Uri> toEncrypt) {
+    public Gallery(String password, List<Uri> toEncrypt) {
         media = new LinkedList<Media>();
-        this.activity = activity;
 
         store(toEncrypt, password);
 
@@ -49,7 +47,6 @@ public class Gallery {
 
     public Gallery(MyActivity activity) {
         media = new LinkedList<Media>();
-        this.activity = activity;
     }
 
     public List<Media> getMedia() {
@@ -57,7 +54,9 @@ public class Gallery {
     }
 
     private List<Queue<EncryptedFile>> divideDecryption() {
-        FilesManager manager = FilesManager.getInstance(activity);
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
+
+        FilesManager manager = FilesManager.getInstance();
         List<EncryptedFile> encryptedFiles = manager.restoreMedia();
 
         List<Queue<EncryptedFile>> res = new LinkedList<Queue<EncryptedFile>>();
@@ -139,7 +138,7 @@ public class Gallery {
         EncryptorThread thread;
 
         for (Queue<Uri> queue: queues) {
-            thread = new EncryptorThread(queue, password, activity);
+            thread = new EncryptorThread(queue, password);
             thread.start();
             threads.add(thread);
         }
@@ -162,7 +161,7 @@ public class Gallery {
 
         threads.clear();
 
-        FilesManager manager = FilesManager.getInstance(activity);
+        FilesManager manager = FilesManager.getInstance();
         manager.store(encryptedFiles);
     }
 

@@ -7,8 +7,7 @@ public abstract class LayoutButtonFactory extends ButtonFactory {
     protected int layoutID;
     protected LinearLayout layout;
 
-    protected LayoutButtonFactory(MyActivity activity, LinearLayout layout, int layoutID) {
-        super(activity);
+    protected LayoutButtonFactory(LinearLayout layout, int layoutID) {
         this.layoutID = layoutID;
         this.layout = layout;
     }
