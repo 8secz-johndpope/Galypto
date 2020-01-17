@@ -1,7 +1,6 @@
 package com.example.cripto_photoaffix.Factories.ButtonFactories;
 
 import android.widget.LinearLayout;
-import com.example.cripto_photoaffix.Activities.MyActivity;
 
 public abstract class LayoutButtonFactory extends ButtonFactory {
     protected int layoutID;

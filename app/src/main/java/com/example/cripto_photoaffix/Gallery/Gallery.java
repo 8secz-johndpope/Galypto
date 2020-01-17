@@ -45,7 +45,7 @@ public class Gallery {
         Deserialazator.getInstance().free();
     }
 
-    public Gallery(MyActivity activity) {
+    public Gallery() {
         media = new LinkedList<Media>();
     }
 
@@ -54,8 +54,6 @@ public class Gallery {
     }
 
     private List<Queue<EncryptedFile>> divideDecryption() {
-        MyActivity activity = ActivityTransferer.getInstance().getActivity();
-
         FilesManager manager = FilesManager.getInstance();
         List<EncryptedFile> encryptedFiles = manager.restoreMedia();
 

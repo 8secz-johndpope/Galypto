@@ -8,7 +8,6 @@ import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.ShareIntentFactory;
 import com.example.cripto_photoaffix.Gallery.Media;
-
 import java.io.File;
 
 public abstract class ShareCommand implements Command {

@@ -1,13 +1,12 @@
 package com.example.cripto_photoaffix.Commands;
 
-import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import java.util.List;
 
 public class RemoveDecryptedCommand implements Command {
     private FilesManager manager;
 
-    public RemoveDecryptedCommand(MyActivity activity) {
+    public RemoveDecryptedCommand() {
         manager = FilesManager.getInstance();
     }
 

@@ -24,13 +24,6 @@ import javax.crypto.spec.GCMParameterSpec;
 public class FingerprintAuthenticator extends Authenticator {
     protected BiometricPrompt.PromptInfo promptInfo;
 
-    /*
-    public FingerprintAuthenticator(MyActivity activity) {
-        super(activity);
-
-        if (canBeUsed())
-            initialize();
-    }*/
     public FingerprintAuthenticator() {
         if (canBeUsed())
             initialize();

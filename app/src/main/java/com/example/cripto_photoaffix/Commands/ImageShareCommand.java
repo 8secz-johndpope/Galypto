@@ -7,11 +7,6 @@ import com.example.cripto_photoaffix.Gallery.Media;
 import java.io.File;
 
 public class ImageShareCommand extends ShareCommand {
-    /*
-    public ImageShareCommand(MyActivity activity, Media media) {
-        super(activity, media);
-    }
-     */
 
     public ImageShareCommand(Media media) {
         super(media);
