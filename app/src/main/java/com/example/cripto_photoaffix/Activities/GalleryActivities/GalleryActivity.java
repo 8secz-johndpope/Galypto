@@ -141,7 +141,7 @@ public class GalleryActivity extends MyActivity {
         super.onPause();
 
         if (!openedImage) {
-            Command removeDecryptedVideos = new RemoveDecryptedCommand(this);
+            Command removeDecryptedVideos = new RemoveDecryptedCommand();
             removeDecryptedVideos.execute();
         }
     }
