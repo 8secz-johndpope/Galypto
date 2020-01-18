@@ -213,7 +213,6 @@ public class GalleryActivity extends MyActivity {
                         butt.setOnClickListener(new ButtonSelectorListener(butt));
                 }
 
-                System.out.println("Showing");
                 for (FloatingActionButton b: actionButtons) {
                     params = (CoordinatorLayout.LayoutParams) b.getLayoutParams();
                     params.setBehavior(new FloatingActionButton.Behavior());
@@ -228,11 +227,12 @@ public class GalleryActivity extends MyActivity {
 
                 for (Media media: galleryMedia) {
                     butt = buttons.get(media);
-                    if (butt != null)
+                    if (butt != null) {
+                        butt.setSelected(false);
                         butt.setOnClickListener(new ButtonOpenerListener(butt));
+                    }
                 }
 
-                System.out.println("Hidding");
                 for (FloatingActionButton b: actionButtons) {
                     params = (CoordinatorLayout.LayoutParams) b.getLayoutParams();
                     params.setAnchorId(View.NO_ID);
