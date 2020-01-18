@@ -16,6 +16,7 @@ import com.example.cripto_photoaffix.MyImageButton;
 import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaOpenerVisitor;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -67,9 +68,6 @@ public class GalleryActivity extends MyActivity {
         gridLayout.setRowCount(gallery.getMedia().size()/3 + 1);
 
         updateButtons();
-
-        Switch selector = findViewById(R.id.selector);
-        selector.setOnCheckedChangeListener(new CheckListener());
     }
 
     private void updateButtons() {
@@ -77,6 +75,7 @@ public class GalleryActivity extends MyActivity {
         MyImageButton button;
         FilesManager manager = FilesManager.getInstance();
         Queue<Media> toRemove = new LinkedTransferQueue<Media>();
+        View.OnLongClickListener longClickListener = new LongClickListener();
 
         for (Media media: galleryMedia) {
             if (manager.exists(media.getFullPath())) {
@@ -89,6 +88,7 @@ public class GalleryActivity extends MyActivity {
                     gridLayout.addView(button, getScreenWidth() / 3, getScreenHeigth() / 6);
 
                     button.setOnClickListener(new ButtonOpenerListener(button));
+                    button.setOnLongClickListener(longClickListener);
 
                     buttons.put(media, button);
 
@@ -199,11 +199,11 @@ public class GalleryActivity extends MyActivity {
         }
     }
 
-    private class CheckListener implements Switch.OnCheckedChangeListener {
+    private class LongClickListener implements View.OnLongClickListener {
 
-        public void onCheckedChanged(CompoundButton button, boolean checked) {
+        public boolean onLongClick(View view) {
             CoordinatorLayout.LayoutParams params;
-            if (checked) {
+            if (!actionButtons.get(0).isShown()) {
                 List<Media> galleryMedia = gallery.getMedia();
                 MyImageButton butt;
 
@@ -240,7 +240,7 @@ public class GalleryActivity extends MyActivity {
                     b.hide();
                 }
             }
-
+            return true;
         }
     }
 
