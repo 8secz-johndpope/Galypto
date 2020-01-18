@@ -10,12 +10,14 @@ public class ShareVisitor implements MediaVisitor {
     private Command share;
 
     public void visit(Picture picture) {
-        share = new ImageShareCommand(picture);
+        share = new ImageShareCommand();
+        share.addMedia(picture);
         share.execute();
     }
 
     public void visit(Video video) {
-        share = new VideoShareCommand(video);
+        share = new VideoShareCommand();
+        share.addMedia(video);
         share.execute();
     }
 }

@@ -1,6 +1,8 @@
 package com.example.cripto_photoaffix;
 
 import android.graphics.Bitmap;
+import android.view.View;
+
 import androidx.appcompat.widget.AppCompatImageButton;
 import com.example.cripto_photoaffix.Gallery.Media;
 

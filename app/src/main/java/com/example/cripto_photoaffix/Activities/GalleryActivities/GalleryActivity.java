@@ -5,7 +5,10 @@ import android.os.Bundle;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Commands.Command;
+import com.example.cripto_photoaffix.Commands.DeleteCommand;
 import com.example.cripto_photoaffix.Commands.RemoveDecryptedMediaCommand;
+import com.example.cripto_photoaffix.Commands.ShareMultipleCommand;
+import com.example.cripto_photoaffix.Commands.StoreCommand;
 import com.example.cripto_photoaffix.DataTransferer;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.LoginIntentFactory;
@@ -110,17 +113,17 @@ public class GalleryActivity extends MyActivity {
         actionButtons = new LinkedList<FloatingActionButton>();
 
         FloatingActionButton button = findViewById(R.id.remove);
-        button.setOnClickListener(new FloatingButtonListener());
+        button.setOnClickListener(new FloatingButtonListener(new DeleteCommand()));
         button.hide();
         actionButtons.add(button);
 
         button = findViewById(R.id.store);
-        button.setOnClickListener(new FloatingButtonListener());
+        button.setOnClickListener(new FloatingButtonListener(new StoreCommand()));
         button.hide();
         actionButtons.add(button);
 
         button = findViewById(R.id.share);
-        button.setOnClickListener(new FloatingButtonListener());
+        button.setOnClickListener(new FloatingButtonListener(new ShareMultipleCommand()));
         button.hide();
         actionButtons.add(button);
     }
@@ -137,6 +140,17 @@ public class GalleryActivity extends MyActivity {
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
         return displayMetrics.heightPixels;
+    }
+
+    private void hideActionButtons() {
+        CoordinatorLayout.LayoutParams params;
+
+        for (FloatingActionButton b: actionButtons) {
+            params = (CoordinatorLayout.LayoutParams) b.getLayoutParams();
+            params.setAnchorId(View.NO_ID);
+            b.setLayoutParams(params);
+            b.hide();
+        }
     }
 
     @Override
@@ -200,9 +214,10 @@ public class GalleryActivity extends MyActivity {
     }
 
     private class LongClickListener implements View.OnLongClickListener {
-
         public boolean onLongClick(View view) {
             CoordinatorLayout.LayoutParams params;
+            view.setSelected(true);
+
             if (!actionButtons.get(0).isShown()) {
                 List<Media> galleryMedia = gallery.getMedia();
                 MyImageButton butt;
@@ -233,12 +248,7 @@ public class GalleryActivity extends MyActivity {
                     }
                 }
 
-                for (FloatingActionButton b: actionButtons) {
-                    params = (CoordinatorLayout.LayoutParams) b.getLayoutParams();
-                    params.setAnchorId(View.NO_ID);
-                    b.setLayoutParams(params);
-                    b.hide();
-                }
+                hideActionButtons();
             }
             return true;
         }
@@ -247,16 +257,24 @@ public class GalleryActivity extends MyActivity {
     private class FloatingButtonListener implements View.OnClickListener {
         private Command task;
 
+        public FloatingButtonListener(Command task) {
+            this.task = task;
+        }
+
         @Override
         public void onClick(View v) {
             List<Media> galleryMedia = gallery.getMedia();
 
             for (Media media: galleryMedia) {
                 if (buttons.get(media).isSelected())
-                    task.execute();
+                    task.addMedia(media);
             }
 
+            task.execute();
+
             updateButtons();
+
+            hideActionButtons();
         }
     }
 }

@@ -29,7 +29,8 @@ public class DeleteButtonFactory extends LayoutButtonFactory {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Command delete = new DeleteCommand(media);
+                Command delete = new DeleteCommand();
+                delete.addMedia(media);
                 delete.execute();
                 activity.onBackPressed();
             }

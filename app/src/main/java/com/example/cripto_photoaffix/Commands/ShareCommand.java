@@ -10,7 +10,7 @@ import com.example.cripto_photoaffix.Factories.IntentsFactory.ShareIntentFactory
 
 import java.io.File;
 
-public abstract class ShareCommand implements Command {
+public abstract class ShareCommand extends Command {
     protected Intent createIntent(File file) {
         IntentFactory factory = new ShareIntentFactory();
         Intent intent = factory.create();

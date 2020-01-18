@@ -7,21 +7,20 @@ import com.example.cripto_photoaffix.Gallery.Media;
 import java.io.File;
 
 public class ImageShareCommand extends ShareCommand {
-    private Media media;
-
-    public ImageShareCommand(Media media) {
-        this.media = media;
-    }
-
     @Override
     public void execute() {
-        MyActivity activity = ActivityTransferer.getInstance().getActivity();
+        Media media;
+        while (!toExecuteOn.isEmpty()) {
+            media = toExecuteOn.poll();
 
-        File file = media.share(activity.getCacheDir().getPath() + "/share/");
+            MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
-        Intent intent = createIntent(file);
-        intent.setType("image/jpg");
+            File file = media.share(activity.getCacheDir().getPath() + "/share/");
 
-        activity.startActivity(Intent.createChooser(intent, "Share via:"));
+            Intent intent = createIntent(file);
+            intent.setType("image/jpg");
+
+            activity.startActivity(Intent.createChooser(intent, "Share via:"));
+        }
     }
 }

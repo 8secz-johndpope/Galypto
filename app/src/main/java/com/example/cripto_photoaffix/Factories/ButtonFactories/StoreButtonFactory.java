@@ -36,7 +36,8 @@ public class StoreButtonFactory extends LayoutButtonFactory {
         @Override
         public void onClick(View v) {
             DataTransferer transferer = DataTransferer.getInstance();
-            Command command = new StoreCommand((Media)transferer.getData());
+            Command command = new StoreCommand();
+            command.addMedia((Media)transferer.getData());
             command.execute();
         }
     }
