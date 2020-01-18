@@ -1,7 +1,6 @@
 package com.example.cripto_photoaffix.Factories.ButtonFactories;
 
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageButton;
@@ -9,10 +8,10 @@ import android.widget.LinearLayout;
 import androidx.core.content.ContextCompat;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
+import com.example.cripto_photoaffix.Commands.MediaCommands.MediaCommand;
+import com.example.cripto_photoaffix.Commands.MediaCommands.DeleteMediaCommand;
 import com.example.cripto_photoaffix.DataTransferer;
-import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Gallery.Media;
-import com.example.cripto_photoaffix.R;
 
 public class DeleteButtonFactory extends LayoutButtonFactory {
 
@@ -30,10 +29,8 @@ public class DeleteButtonFactory extends LayoutButtonFactory {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FilesManager manager = FilesManager.getInstance();
-                System.out.println("Removing: " + media.getFullPath());
-                manager.removeFile(media.getFullPath());
-                manager.removeFile(media.getPath() + media.getFilename());
+                MediaCommand delete = new DeleteMediaCommand();
+                delete.execute(media);
                 activity.onBackPressed();
             }
         });
