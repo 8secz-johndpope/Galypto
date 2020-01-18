@@ -1,6 +1,7 @@
 package com.example.cripto_photoaffix.Factories.ButtonFactories;
 
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageButton;
@@ -24,7 +25,7 @@ public class DeleteButtonFactory extends LayoutButtonFactory {
         final Media media = (Media)DataTransferer.getInstance().getData();
 
         ImageButton button = layout.findViewById(layoutID);
-        Drawable icon = ContextCompat.getDrawable(activity, R.drawable.trash);
+        Drawable icon = ContextCompat.getDrawable(activity, android.R.drawable.ic_menu_delete);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,7 +37,7 @@ public class DeleteButtonFactory extends LayoutButtonFactory {
                 activity.onBackPressed();
             }
         });
-        button.setImageDrawable(resizeDrawable(icon));
+        button.setImageDrawable(icon);
         button.setBackgroundColor(Color.TRANSPARENT);
 
         return button;

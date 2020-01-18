@@ -62,7 +62,7 @@ public class RegisterActivity extends MyActivity {
             encryptAndStoreForFingerprint(fingerprint, finalPassword);
 
         DataTransferer transferer = DataTransferer.getInstance();
-        transferer.setData(new Gallery(this));
+        transferer.setData(new Gallery());
 
         IntentFactory factory = new GalleryIntentFactory();
         startActivity(factory.create());
