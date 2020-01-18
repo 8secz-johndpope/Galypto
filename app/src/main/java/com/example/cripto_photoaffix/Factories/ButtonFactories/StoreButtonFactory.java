@@ -8,8 +8,8 @@ import android.widget.LinearLayout;
 import androidx.core.content.ContextCompat;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
-import com.example.cripto_photoaffix.Commands.MediaCommands.MediaCommand;
-import com.example.cripto_photoaffix.Commands.MediaCommands.StoreMediaCommand;
+import com.example.cripto_photoaffix.Commands.Command;
+import com.example.cripto_photoaffix.Commands.StoreCommand;
 import com.example.cripto_photoaffix.DataTransferer;
 import com.example.cripto_photoaffix.Gallery.Media;
 
@@ -36,8 +36,8 @@ public class StoreButtonFactory extends LayoutButtonFactory {
         @Override
         public void onClick(View v) {
             DataTransferer transferer = DataTransferer.getInstance();
-            MediaCommand command = new StoreMediaCommand();
-            command.execute((Media)transferer.getData());
+            Command command = new StoreCommand((Media)transferer.getData());
+            command.execute();
         }
     }
 }

@@ -1,9 +1,10 @@
-package com.example.cripto_photoaffix.Commands.FilesManagerCommands;
+package com.example.cripto_photoaffix.Commands;
 
+import com.example.cripto_photoaffix.Commands.Command;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import java.util.List;
 
-public class RemoveDecryptedMediaCommand implements FilesManagerCommand {
+public class RemoveDecryptedMediaCommand implements Command {
 
     @Override
     public void execute() {

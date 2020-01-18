@@ -8,8 +8,8 @@ import android.widget.LinearLayout;
 import androidx.core.content.ContextCompat;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
-import com.example.cripto_photoaffix.Commands.MediaCommands.MediaCommand;
-import com.example.cripto_photoaffix.Commands.MediaCommands.DeleteMediaCommand;
+import com.example.cripto_photoaffix.Commands.Command;
+import com.example.cripto_photoaffix.Commands.DeleteCommand;
 import com.example.cripto_photoaffix.DataTransferer;
 import com.example.cripto_photoaffix.Gallery.Media;
 
@@ -29,8 +29,8 @@ public class DeleteButtonFactory extends LayoutButtonFactory {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MediaCommand delete = new DeleteMediaCommand();
-                delete.execute(media);
+                Command delete = new DeleteCommand(media);
+                delete.execute();
                 activity.onBackPressed();
             }
         });

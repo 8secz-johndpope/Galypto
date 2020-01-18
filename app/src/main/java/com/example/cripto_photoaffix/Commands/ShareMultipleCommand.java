@@ -1,4 +1,4 @@
-package com.example.cripto_photoaffix.Commands.MediaCommands;
+package com.example.cripto_photoaffix.Commands;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -11,14 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
-public class ShareMultipleMediaCommand implements MediaCommand {
+public class ShareMultipleCommand implements Command {
     private Queue<Media> toShare;
 
-    public ShareMultipleMediaCommand(List<Media> toShare) {
+    public ShareMultipleCommand(List<Media> toShare) {
         this.toShare.addAll(toShare);
     }
 
-    public void execute(Media media) {
+    public void execute() {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND_MULTIPLE);
         intent.setType("*/*");

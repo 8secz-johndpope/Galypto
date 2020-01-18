@@ -4,11 +4,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
-import com.example.cripto_photoaffix.Commands.FilesManagerCommands.FilesManagerCommand;
-import com.example.cripto_photoaffix.Commands.MediaCommands.DeleteMediaCommand;
-import com.example.cripto_photoaffix.Commands.MediaCommands.MediaCommand;
-import com.example.cripto_photoaffix.Commands.FilesManagerCommands.RemoveDecryptedMediaCommand;
-import com.example.cripto_photoaffix.Commands.MediaCommands.StoreMediaCommand;
+import com.example.cripto_photoaffix.Commands.Command;
+import com.example.cripto_photoaffix.Commands.RemoveDecryptedMediaCommand;
 import com.example.cripto_photoaffix.DataTransferer;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.LoginIntentFactory;
@@ -23,12 +20,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.View;
+
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.gridlayout.widget.GridLayout;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import com.example.cripto_photoaffix.R;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -40,6 +40,7 @@ public class GalleryActivity extends MyActivity {
     private boolean openedImage;
     private GridLayout gridLayout;
     private Map<Media, MyImageButton> buttons;
+    private List<FloatingActionButton> actionButtons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,11 +107,22 @@ public class GalleryActivity extends MyActivity {
     }
 
     private void initializeFloatingButtons() {
+        actionButtons = new LinkedList<FloatingActionButton>();
+
         FloatingActionButton button = findViewById(R.id.remove);
-        button.setOnClickListener(new FloatingButtonListener(new DeleteMediaCommand()));
+        button.setOnClickListener(new FloatingButtonListener());
+        button.hide();
+        actionButtons.add(button);
 
         button = findViewById(R.id.store);
-        button.setOnClickListener(new FloatingButtonListener(new StoreMediaCommand()));
+        button.setOnClickListener(new FloatingButtonListener());
+        button.hide();
+        actionButtons.add(button);
+
+        button = findViewById(R.id.share);
+        button.setOnClickListener(new FloatingButtonListener());
+        button.hide();
+        actionButtons.add(button);
     }
 
     private int getScreenWidth() {
@@ -132,7 +144,7 @@ public class GalleryActivity extends MyActivity {
         super.onPause();
 
         if (!openedImage) {
-            FilesManagerCommand removeDecryptedVideos = new RemoveDecryptedMediaCommand();
+            Command removeDecryptedVideos = new RemoveDecryptedMediaCommand();
             removeDecryptedVideos.execute();
         }
     }
@@ -190,6 +202,7 @@ public class GalleryActivity extends MyActivity {
     private class CheckListener implements Switch.OnCheckedChangeListener {
 
         public void onCheckedChanged(CompoundButton button, boolean checked) {
+            CoordinatorLayout.LayoutParams params;
             if (checked) {
                 List<Media> galleryMedia = gallery.getMedia();
                 MyImageButton butt;
@@ -198,6 +211,15 @@ public class GalleryActivity extends MyActivity {
                     butt = buttons.get(media);
                     if (butt != null)
                         butt.setOnClickListener(new ButtonSelectorListener(butt));
+                }
+
+                System.out.println("Showing");
+                for (FloatingActionButton b: actionButtons) {
+                    params = (CoordinatorLayout.LayoutParams) b.getLayoutParams();
+                    params.setBehavior(new FloatingActionButton.Behavior());
+                    params.setAnchorId(R.id.app_bar);
+                    b.setLayoutParams(params);
+                    b.show();
                 }
             }
             else {
@@ -209,17 +231,21 @@ public class GalleryActivity extends MyActivity {
                     if (butt != null)
                         butt.setOnClickListener(new ButtonOpenerListener(butt));
                 }
+
+                System.out.println("Hidding");
+                for (FloatingActionButton b: actionButtons) {
+                    params = (CoordinatorLayout.LayoutParams) b.getLayoutParams();
+                    params.setAnchorId(View.NO_ID);
+                    b.setLayoutParams(params);
+                    b.hide();
+                }
             }
 
         }
     }
 
     private class FloatingButtonListener implements View.OnClickListener {
-        private MediaCommand task;
-
-        public FloatingButtonListener(MediaCommand task) {
-            this.task = task;
-        }
+        private Command task;
 
         @Override
         public void onClick(View v) {
@@ -227,7 +253,7 @@ public class GalleryActivity extends MyActivity {
 
             for (Media media: galleryMedia) {
                 if (buttons.get(media).isSelected())
-                    task.execute(media);
+                    task.execute();
             }
 
             updateButtons();

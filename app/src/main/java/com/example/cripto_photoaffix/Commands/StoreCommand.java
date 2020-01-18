@@ -1,4 +1,4 @@
-package com.example.cripto_photoaffix.Commands.MediaCommands;
+package com.example.cripto_photoaffix.Commands;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -7,9 +7,15 @@ import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Gallery.Media;
 import java.io.File;
 
-public class StoreMediaCommand implements MediaCommand {
+public class StoreCommand implements Command {
+    private Media media;
+
+    public StoreCommand(Media media) {
+        this.media = media;
+    }
+
     @Override
-    public void execute(Media media) {
+    public void execute() {
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
         File file = media.store(activity.getExternalMediaDirs()[0].toString());

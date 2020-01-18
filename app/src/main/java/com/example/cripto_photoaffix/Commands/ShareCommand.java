@@ -1,4 +1,4 @@
-package com.example.cripto_photoaffix.Commands.MediaCommands;
+package com.example.cripto_photoaffix.Commands;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -10,7 +10,7 @@ import com.example.cripto_photoaffix.Factories.IntentsFactory.ShareIntentFactory
 
 import java.io.File;
 
-public abstract class ShareMediaCommand implements MediaCommand {
+public abstract class ShareCommand implements Command {
     protected Intent createIntent(File file) {
         IntentFactory factory = new ShareIntentFactory();
         Intent intent = factory.create();
