@@ -8,6 +8,10 @@ import com.example.cripto_photoaffix.Gallery.Media;
 import java.io.File;
 
 public class StoreCommand extends Command {
+    public StoreCommand() {
+        super();
+    }
+
     @Override
     public void execute() {
         Media media;

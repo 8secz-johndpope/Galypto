@@ -4,6 +4,10 @@ import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Gallery.Media;
 
 public class DeleteCommand extends Command {
+    public DeleteCommand() {
+        super();
+    }
+
     public void execute() {
         Media media;
         while (!toExecuteOn.isEmpty()) {

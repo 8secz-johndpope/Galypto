@@ -7,6 +7,10 @@ import com.example.cripto_photoaffix.Gallery.Media;
 import java.io.File;
 
 public class VideoShareCommand extends ShareCommand {
+    public VideoShareCommand() {
+        super();
+    }
+
     @Override
     public void execute() {
         MyActivity activity = ActivityTransferer.getInstance().getActivity();

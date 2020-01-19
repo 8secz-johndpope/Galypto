@@ -7,10 +7,13 @@ import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.ShareIntentFactory;
-
 import java.io.File;
 
 public abstract class ShareCommand extends Command {
+    public ShareCommand() {
+        super();
+    }
+
     protected Intent createIntent(File file) {
         IntentFactory factory = new ShareIntentFactory();
         Intent intent = factory.create();

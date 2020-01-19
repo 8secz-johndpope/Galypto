@@ -2,9 +2,7 @@ package com.example.cripto_photoaffix.Commands;
 
 import android.content.Intent;
 import android.net.Uri;
-
 import androidx.core.content.FileProvider;
-
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Gallery.Media;
@@ -12,6 +10,10 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class ShareMultipleCommand extends Command {
+    public ShareMultipleCommand() {
+        super();
+    }
+
     public void execute() {
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
