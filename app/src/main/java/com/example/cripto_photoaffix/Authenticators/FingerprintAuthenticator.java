@@ -21,7 +21,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 
-public class FingerprintAuthenticator extends Authenticator {
+public class FingerprintAuthenticator implements Authenticator {
     protected BiometricPrompt.PromptInfo promptInfo;
 
     public FingerprintAuthenticator() {

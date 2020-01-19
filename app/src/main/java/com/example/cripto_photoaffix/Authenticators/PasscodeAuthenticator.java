@@ -12,7 +12,7 @@ import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.PasscodeSuc
 import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.PasscodeUnsuccessfulAuthenticationActivityVisitor;
 import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
 
-public class PasscodeAuthenticator extends Authenticator {
+public class PasscodeAuthenticator implements Authenticator {
     protected EditText field;
 
     public PasscodeAuthenticator(EditText field) {
