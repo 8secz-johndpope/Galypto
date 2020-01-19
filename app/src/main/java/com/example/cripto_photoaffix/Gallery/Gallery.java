@@ -2,8 +2,6 @@ package com.example.cripto_photoaffix.Gallery;
 
 import android.net.Uri;
 import android.os.Handler;
-import com.example.cripto_photoaffix.Activities.MyActivity;
-import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.FileManagement.Deserialazator;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;

@@ -7,10 +7,8 @@ import com.example.cripto_photoaffix.Flatbuffers.ByteVector;
 import com.example.cripto_photoaffix.Flatbuffers.Constants;
 import com.example.cripto_photoaffix.Flatbuffers.FlatBufferBuilder;
 import com.example.cripto_photoaffix.Flatbuffers.Table;
-
 import java.nio.*;
 import java.lang.*;
-import java.util.*;
 
 @SuppressWarnings("unused")
 public final class EncryptedFileFBS extends Table {
