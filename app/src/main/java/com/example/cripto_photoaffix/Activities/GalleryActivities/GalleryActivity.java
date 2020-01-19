@@ -51,7 +51,9 @@ public class GalleryActivity extends MyActivity {
         setSupportActionBar(toolbar);
 
         buttons = new HashMap<Media, MyImageButton>();
+
         initialize();
+
         initializeFloatingButtons();
     }
 
@@ -77,9 +79,10 @@ public class GalleryActivity extends MyActivity {
         View.OnLongClickListener longClickListener = new LongClickListener();
 
         for (Media media: galleryMedia) {
+
             if (manager.exists(media.getFullPath())) {
+
                 if (buttons.get(media) == null) {
-                    System.out.println(media.getFullPath());
                     button = new MyImageButton(media);
 
                     button.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -93,10 +96,13 @@ public class GalleryActivity extends MyActivity {
 
                     button.setBackgroundColor(Color.BLACK);
                 }
+
             }
             else {
                 toRemove.add(media);
+
                 gridLayout.removeView(buttons.get(media));
+
                 buttons.remove(media);
             }
         }
@@ -146,6 +152,18 @@ public class GalleryActivity extends MyActivity {
             params.setAnchorId(View.NO_ID);
             b.setLayoutParams(params);
             b.hide();
+        }
+    }
+
+    private void showActionButtons() {
+        CoordinatorLayout.LayoutParams params;
+
+        for (FloatingActionButton b: actionButtons) {
+            params = (CoordinatorLayout.LayoutParams) b.getLayoutParams();
+            params.setBehavior(new FloatingActionButton.Behavior());
+            params.setAnchorId(R.id.app_bar);
+            b.setLayoutParams(params);
+            b.show();
         }
     }
 
@@ -211,7 +229,6 @@ public class GalleryActivity extends MyActivity {
 
     private class LongClickListener implements View.OnLongClickListener {
         public boolean onLongClick(View view) {
-            CoordinatorLayout.LayoutParams params;
             view.setSelected(true);
 
             if (!actionButtons.get(0).isShown()) {
@@ -220,17 +237,12 @@ public class GalleryActivity extends MyActivity {
 
                 for (Media media: galleryMedia) {
                     butt = buttons.get(media);
+
                     if (butt != null)
                         butt.setOnClickListener(new ButtonSelectorListener(butt));
                 }
 
-                for (FloatingActionButton b: actionButtons) {
-                    params = (CoordinatorLayout.LayoutParams) b.getLayoutParams();
-                    params.setBehavior(new FloatingActionButton.Behavior());
-                    params.setAnchorId(R.id.app_bar);
-                    b.setLayoutParams(params);
-                    b.show();
-                }
+                showActionButtons();
             }
             else {
                 List<Media> galleryMedia = gallery.getMedia();
@@ -238,6 +250,7 @@ public class GalleryActivity extends MyActivity {
 
                 for (Media media: galleryMedia) {
                     butt = buttons.get(media);
+
                     if (butt != null) {
                         butt.setSelected(false);
                         butt.setOnClickListener(new ButtonOpenerListener(butt));

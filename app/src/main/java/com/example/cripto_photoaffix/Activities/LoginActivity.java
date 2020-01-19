@@ -96,8 +96,6 @@ public class LoginActivity extends MyActivity {
             if (list != null)
                 toEncrypt.addAll(list);
         }
-
-        System.out.println("Size: " + toEncrypt.size());
     }
 
     private void choseActivity() {
