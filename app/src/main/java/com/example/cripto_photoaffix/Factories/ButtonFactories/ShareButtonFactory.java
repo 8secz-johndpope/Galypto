@@ -1,8 +1,6 @@
 package com.example.cripto_photoaffix.Factories.ButtonFactories;
 
 import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageButton;
@@ -12,7 +10,6 @@ import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.DataTransferer;
 import com.example.cripto_photoaffix.Gallery.Media;
-import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.ShareVisitor;
 

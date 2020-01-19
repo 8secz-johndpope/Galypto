@@ -19,17 +19,13 @@ import com.example.cripto_photoaffix.MyImageButton;
 import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaOpenerVisitor;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.View;
-
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.gridlayout.widget.GridLayout;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import com.example.cripto_photoaffix.R;
 import java.util.HashMap;
 import java.util.LinkedList;
