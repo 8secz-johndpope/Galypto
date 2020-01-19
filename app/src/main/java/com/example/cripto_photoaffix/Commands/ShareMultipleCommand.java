@@ -30,7 +30,8 @@ public class ShareMultipleCommand extends Command {
 
             File file = media.share(activity.getCacheDir().getPath() + "/share/");
 
-            Uri uri = FileProvider.getUriForFile(activity, activity.getApplicationContext().getPackageName() + ".fileprovider", file);
+            Uri uri = FileProvider.getUriForFile(activity,
+                    activity.getApplicationContext().getPackageName() + ".fileprovider", file);
             list.add(uri);
         }
 

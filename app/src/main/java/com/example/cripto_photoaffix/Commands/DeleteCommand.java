@@ -10,6 +10,7 @@ public class DeleteCommand extends Command {
 
     public void execute() {
         Media media;
+
         while (!toExecuteOn.isEmpty()) {
             media = toExecuteOn.poll();
 

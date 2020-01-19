@@ -13,11 +13,12 @@ public class ImageShareCommand extends ShareCommand {
 
     @Override
     public void execute() {
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
+
         Media media;
+
         while (!toExecuteOn.isEmpty()) {
             media = toExecuteOn.poll();
-
-            MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
             File file = media.share(activity.getCacheDir().getPath() + "/share/");
 

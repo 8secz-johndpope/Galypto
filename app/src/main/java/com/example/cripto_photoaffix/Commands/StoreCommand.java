@@ -14,11 +14,12 @@ public class StoreCommand extends Command {
 
     @Override
     public void execute() {
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
+
         Media media;
 
         while (!toExecuteOn.isEmpty()) {
             media = toExecuteOn.poll();
-            MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
             File file = media.store(activity.getExternalMediaDirs()[0].toString());
 
