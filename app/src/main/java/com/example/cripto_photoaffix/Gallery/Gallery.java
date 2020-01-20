@@ -1,7 +1,6 @@
 package com.example.cripto_photoaffix.Gallery;
 
 import android.net.Uri;
-import android.os.Handler;
 import com.example.cripto_photoaffix.FileManagement.Deserialazator;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
@@ -10,13 +9,20 @@ import com.example.cripto_photoaffix.Threads.EncryptorThread;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedTransferQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class Gallery {
     private List<Media> media;
+    private boolean done;
+    private ThreadPoolExecutor executor;
 
     public Gallery(String password) {
+        done = false;
         media = new ArrayList<Media>();
+        executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
 
         List<Queue<EncryptedFile>> queues = divideDecryption();
         List<Media> allMedia = startThreading(queues, password);
@@ -26,10 +32,14 @@ public class Gallery {
         queues.clear();
 
         Deserialazator.getInstance().free();
+
+        done = true;
     }
 
     public Gallery(String password, List<Uri> toEncrypt) {
+        done = false;
         media = new ArrayList<Media>();
+        executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
 
         store(toEncrypt, password);
 
@@ -41,6 +51,7 @@ public class Gallery {
         queues.clear();
 
         Deserialazator.getInstance().free();
+        done = true;
     }
 
     public Gallery() {
@@ -94,9 +105,7 @@ public class Gallery {
     private List<Media> startThreading(List<Queue<EncryptedFile>> queues, String passcode) {
         List<DecryptorThread> threads = new ArrayList<DecryptorThread>();
 
-        Handler handler = new Handler();
         DecryptorThread thread;
-
         int size = queues.size();
         Queue<EncryptedFile> queue;
         
@@ -104,21 +113,15 @@ public class Gallery {
             queue = queues.get(i);
 
             thread = new DecryptorThread(queue, passcode);
-            thread.start();
-            handler.post(thread);
+            executor.execute(thread);
             threads.add(thread);
         }
 
         queues.clear();
 
         try {
-            size = threads.size();
-
-            for (int i = 0; i < size; i++) {
-                thread = threads.get(i);
-
-                thread.join();
-            }
+            executor.shutdown();
+            executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -141,6 +144,7 @@ public class Gallery {
     private void store(List<Uri> toEncrypt, String password) {
         List<Queue<Uri>> queues = divideEncryption(toEncrypt);
         List<EncryptorThread> threads = new ArrayList<EncryptorThread>();
+        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
 
         EncryptorThread thread;
 
@@ -151,7 +155,7 @@ public class Gallery {
             queue = queues.get(i);
 
             thread = new EncryptorThread(queue, password);
-            thread.start();
+            executor.execute(thread);
             threads.add(thread);
         }
 
@@ -160,11 +164,8 @@ public class Gallery {
         size = threads.size();
 
         try {
-            for (int i = 0; i < size; i++) {
-                thread = threads.get(i);
-
-                thread.join();
-            }
+            executor.shutdown();
+            executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -224,5 +225,9 @@ public class Gallery {
 
     public void remove(Media media) {
         this.media.remove(media);
+    }
+
+    public boolean done() {
+        return done;
     }
 }

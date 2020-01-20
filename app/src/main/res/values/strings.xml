@@ -120,4 +120,5 @@
     <string name="save_to_device">Save to device</string>
     <string name="imageView">TODO</string>
     <string name="select">Select</string>
+    <string name="insert_password">Insert password</string>
 </resources>
