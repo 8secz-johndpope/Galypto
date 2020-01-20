@@ -8,10 +8,8 @@ import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.example.cripto_photoaffix.Authenticators.Authenticator;
 import com.example.cripto_photoaffix.DataTransferer;
@@ -43,20 +41,12 @@ public class LoginActivity extends MyActivity {
         field = findViewById(R.id.loginPasscode);
         authenticators = new Vector<Authenticator>();
 
-        ProgressBar bar = findViewById(R.id.progressBar);
-        bar.setVisibility(View.GONE);
-
         initializeAuthenticators();
         choseActivity();
         checkForIncomingIntents();
     }
 
     public void loginSuccessful(String password) {
-        ProgressBar bar = findViewById(R.id.progressBar);
-
-        if (bar.getVisibility() == View.GONE)
-            bar.setVisibility(View.VISIBLE);
-
         Gallery gallery;
 
         if (toEncrypt.isEmpty())
@@ -74,9 +64,6 @@ public class LoginActivity extends MyActivity {
     }
 
     public void loginUnsuccessful() {
-        ProgressBar bar = findViewById(R.id.progressBar);
-        bar.setVisibility(View.GONE);
-
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
