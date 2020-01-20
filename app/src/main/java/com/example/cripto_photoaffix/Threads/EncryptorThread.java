@@ -12,7 +12,7 @@ import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedPicture;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedVideo;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
@@ -24,7 +24,7 @@ public class EncryptorThread extends Thread {
     public EncryptorThread(Queue<Uri> files, String passcode) {
         super();
         this.toEncrypt = files;
-        result = new LinkedList<EncryptedFile>();
+        result = new ArrayList<EncryptedFile>();
         this.passcode = passcode;
     }
 

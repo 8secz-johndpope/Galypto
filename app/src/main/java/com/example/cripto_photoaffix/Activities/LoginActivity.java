@@ -24,7 +24,6 @@ import com.example.cripto_photoaffix.Gallery.Gallery;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
@@ -38,7 +37,7 @@ public class LoginActivity extends MyActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        toEncrypt = new LinkedList<Uri>();
+        toEncrypt = new ArrayList<Uri>();
         field = findViewById(R.id.loginPasscode);
         authenticators = new Vector<Authenticator>();
 

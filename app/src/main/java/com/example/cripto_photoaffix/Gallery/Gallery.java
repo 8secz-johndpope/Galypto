@@ -7,7 +7,7 @@ import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
 import com.example.cripto_photoaffix.Threads.DecryptorThread;
 import com.example.cripto_photoaffix.Threads.EncryptorThread;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.LinkedTransferQueue;
@@ -16,7 +16,7 @@ public class Gallery {
     private List<Media> media;
 
     public Gallery(String password) {
-        media = new LinkedList<Media>();
+        media = new ArrayList<Media>();
 
         List<Queue<EncryptedFile>> queues = divideDecryption();
         List<Media> allMedia = startThreading(queues, password);
@@ -29,7 +29,7 @@ public class Gallery {
     }
 
     public Gallery(String password, List<Uri> toEncrypt) {
-        media = new LinkedList<Media>();
+        media = new ArrayList<Media>();
 
         store(toEncrypt, password);
 
@@ -44,7 +44,7 @@ public class Gallery {
     }
 
     public Gallery() {
-        media = new LinkedList<Media>();
+        media = new ArrayList<Media>();
     }
 
     public List<Media> getMedia() {
@@ -55,7 +55,7 @@ public class Gallery {
         FilesManager manager = FilesManager.getInstance();
         List<EncryptedFile> encryptedFiles = manager.restoreMedia();
 
-        List<Queue<EncryptedFile>> res = new LinkedList<Queue<EncryptedFile>>();
+        List<Queue<EncryptedFile>> res = new ArrayList<Queue<EncryptedFile>>();
 
         int cantQueues = encryptedFiles.size() > 5?5:encryptedFiles.size();
 
@@ -92,12 +92,17 @@ public class Gallery {
     }
 
     private List<Media> startThreading(List<Queue<EncryptedFile>> queues, String passcode) {
-        List<DecryptorThread> threads = new LinkedList<DecryptorThread>();
+        List<DecryptorThread> threads = new ArrayList<DecryptorThread>();
 
         Handler handler = new Handler();
         DecryptorThread thread;
+
+        int size = queues.size();
+        Queue<EncryptedFile> queue;
         
-        for (Queue<EncryptedFile> queue: queues) {
+        for (int i = 0; i < size; i++) {
+            queue = queues.get(i);
+
             thread = new DecryptorThread(queue, passcode);
             thread.start();
             handler.post(thread);
@@ -107,19 +112,25 @@ public class Gallery {
         queues.clear();
 
         try {
+            size = threads.size();
 
-            for (Thread t : threads)
-                t.join();
+            for (int i = 0; i < size; i++) {
+                thread = threads.get(i);
+
+                thread.join();
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        List<Media> media = new LinkedList<Media>();
+        List<Media> media = new ArrayList<Media>();
 
-        for (DecryptorThread t: threads) {
-            media.addAll(t.getMedia());
-            t.clear();
+        for (int i = 0; i < size; i++) {
+            thread = threads.get(i);
+
+            media.addAll(thread.getMedia());
+            thread.clear();
         }
 
         threads.clear();
@@ -129,11 +140,16 @@ public class Gallery {
 
     private void store(List<Uri> toEncrypt, String password) {
         List<Queue<Uri>> queues = divideEncryption(toEncrypt);
-        List<EncryptorThread> threads = new LinkedList<EncryptorThread>();
+        List<EncryptorThread> threads = new ArrayList<EncryptorThread>();
 
         EncryptorThread thread;
 
-        for (Queue<Uri> queue: queues) {
+        int size = queues.size();
+        Queue<Uri> queue;
+
+        for (int i = 0; i < size; i++) {
+            queue = queues.get(i);
+
             thread = new EncryptorThread(queue, password);
             thread.start();
             threads.add(thread);
@@ -141,18 +157,25 @@ public class Gallery {
 
         queues.clear();
 
+        size = threads.size();
+
         try {
-            for (Thread t: threads)
-                t.join();
+            for (int i = 0; i < size; i++) {
+                thread = threads.get(i);
+
+                thread.join();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        List<EncryptedFile> encryptedFiles = new LinkedList<EncryptedFile>();
+        List<EncryptedFile> encryptedFiles = new ArrayList<EncryptedFile>();
 
-        for (EncryptorThread t: threads) {
-            encryptedFiles.addAll(t.getEncrypted());
-            t.clear();
+        for (int i = 0; i < size; i++) {
+            thread = threads.get(i);
+
+            encryptedFiles.addAll(thread.getEncrypted());
+            thread.clear();
         }
 
         threads.clear();
@@ -163,7 +186,7 @@ public class Gallery {
 
     private List<Queue<Uri>> divideEncryption(List<Uri> uris) {
 
-        List<Queue<Uri>> res = new LinkedList<Queue<Uri>>();
+        List<Queue<Uri>> res = new ArrayList<Queue<Uri>>();
 
         int cantQueues = uris.size() > 5?5:uris.size();
 

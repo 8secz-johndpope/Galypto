@@ -17,7 +17,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.ByteBuffer;
 import java.security.SecureRandom;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FilesManager {
@@ -89,7 +89,12 @@ public class FilesManager {
         if (!exists(activity.getFilesDir() + "/pictures"))
             createFolder("pictures");
 
-        for (EncryptedFile file: files) {
+        EncryptedFile file;
+        int size = files.size();
+
+        for (int i = 0; i < size; i++) {
+            file = files.get(i);
+
             System.out.println("Storing: " + file.getPath() + "/" + file.getFileName());
             String name = random.nextInt() + "";
 
@@ -104,7 +109,7 @@ public class FilesManager {
     }
 
     public List<EncryptedFile> restoreMedia() {
-        List<EncryptedFile> files = new LinkedList<EncryptedFile>();
+        List<EncryptedFile> files = new ArrayList<EncryptedFile>();
         List<String> names = getMedia();
 
         try {
@@ -112,7 +117,12 @@ public class FilesManager {
             ByteBuffer byteBuffer;
             EncryptedFileFBS flatbuffered;
             Deserialazator deserialazator = Deserialazator.getInstance();
-            for (String name: names) {
+
+            int size = names.size();
+            String name;
+
+            for (int i = 0; i < size; i++) {
+                name = names.get(i);
 
                 if (!name.endsWith(".mp4") && !name.endsWith(".jpg")) {
                     FileInputStream fis = new FileInputStream(name);
@@ -160,11 +170,17 @@ public class FilesManager {
 
         media = folder.list();
 
-        List<String> res = new LinkedList<String>();
+        List<String> res = new ArrayList<String>();
 
         if (media != null) {
-            for (String s : media)
+            String s;
+            int size = media.length;
+
+            for (int i = 0; i < size; i++) {
+                s = media[i];
+
                 res.add(activity.getFilesDir() + "/pictures/" + s);
+            }
         }
 
         return res;
@@ -175,8 +191,7 @@ public class FilesManager {
         File folder = new File(activity.getFilesDir() + "/pictures");
 
         if (folder.exists()) {
-            for (File file : folder.listFiles())
-                file.delete();
+            deleteFiles(folder.listFiles());
 
             folder.delete();
         }
@@ -184,8 +199,7 @@ public class FilesManager {
         folder = new File(activity.getFilesDir() + "/passwords");
 
         if (folder.exists()) {
-            for (File file: folder.listFiles())
-                file.delete();
+            deleteFiles(folder.listFiles());
 
             folder.delete();
         }
@@ -204,6 +218,20 @@ public class FilesManager {
 
         if (password.exists())
             password.delete();
+    }
+
+    private void deleteFiles(File [] files) {
+        int size = 0;
+
+        if (files != null)
+            size = files.length;
+
+        File file;
+
+        for (int i = 0; i < size; i++) {
+            file = files[i];
+            file.delete();
+        }
     }
 
     public void removeFile(String path) {

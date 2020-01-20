@@ -5,7 +5,7 @@ import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
 import com.example.cripto_photoaffix.Visitors.EncryptedFilesVisitors.EncryptedFileVisitor;
 import com.example.cripto_photoaffix.Visitors.EncryptedFilesVisitors.MediaSelectorVisitor;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
@@ -17,7 +17,7 @@ public class DecryptorThread extends Thread {
     public DecryptorThread(Queue<EncryptedFile> encryptedFiles, String passcode) {
         super();
         this.encryptedFiles = encryptedFiles;
-        result = new LinkedList<Media>();
+        result = new ArrayList<Media>();
         this.passcode = passcode;
     }
 

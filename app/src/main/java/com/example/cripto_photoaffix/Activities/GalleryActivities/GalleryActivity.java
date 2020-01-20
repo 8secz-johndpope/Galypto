@@ -27,8 +27,8 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.gridlayout.widget.GridLayout;
 import android.widget.ImageView;
 import com.example.cripto_photoaffix.R;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -78,7 +78,11 @@ public class GalleryActivity extends MyActivity {
         Queue<Media> toRemove = new LinkedTransferQueue<Media>();
         View.OnLongClickListener longClickListener = new LongClickListener();
 
-        for (Media media: galleryMedia) {
+        Media media;
+        int size = galleryMedia.size();
+
+        for (int i = 0; i < size; i++) {
+            media = galleryMedia.get(i);
 
             if (manager.exists(media.getFullPath())) {
 
@@ -112,7 +116,7 @@ public class GalleryActivity extends MyActivity {
     }
 
     private void initializeFloatingButtons() {
-        actionButtons = new LinkedList<FloatingActionButton>();
+        actionButtons = new ArrayList<FloatingActionButton>();
 
         FloatingActionButton button = findViewById(R.id.remove);
         button.setOnClickListener(new FloatingButtonListener(new DeleteCommand()));
@@ -146,8 +150,13 @@ public class GalleryActivity extends MyActivity {
 
     private void hideActionButtons() {
         CoordinatorLayout.LayoutParams params;
+        int size = actionButtons.size();
+        FloatingActionButton b;
 
-        for (FloatingActionButton b: actionButtons) {
+
+        for (int i = 0; i < size; i++) {
+            b = actionButtons.get(i);
+
             params = (CoordinatorLayout.LayoutParams) b.getLayoutParams();
             params.setAnchorId(View.NO_ID);
             b.setLayoutParams(params);
@@ -157,8 +166,12 @@ public class GalleryActivity extends MyActivity {
 
     private void showActionButtons() {
         CoordinatorLayout.LayoutParams params;
+        int size = actionButtons.size();
+        FloatingActionButton b;
 
-        for (FloatingActionButton b: actionButtons) {
+        for (int i = 0; i < size; i++) {
+            b = actionButtons.get(i);
+
             params = (CoordinatorLayout.LayoutParams) b.getLayoutParams();
             params.setBehavior(new FloatingActionButton.Behavior());
             params.setAnchorId(R.id.app_bar);
@@ -234,8 +247,12 @@ public class GalleryActivity extends MyActivity {
             if (!actionButtons.get(0).isShown()) {
                 List<Media> galleryMedia = gallery.getMedia();
                 MyImageButton butt;
+                int size = galleryMedia.size();
+                Media media;
 
-                for (Media media: galleryMedia) {
+                for (int i = 0; i < size; i++) {
+                    media = galleryMedia.get(i);
+
                     butt = buttons.get(media);
 
                     if (butt != null)
@@ -247,8 +264,12 @@ public class GalleryActivity extends MyActivity {
             else {
                 List<Media> galleryMedia = gallery.getMedia();
                 MyImageButton butt;
+                int size = galleryMedia.size();
+                Media media;
 
-                for (Media media: galleryMedia) {
+                for (int i = 0; i < size; i++) {
+                    media = galleryMedia.get(i);
+
                     butt = buttons.get(media);
 
                     if (butt != null) {
@@ -273,8 +294,12 @@ public class GalleryActivity extends MyActivity {
         @Override
         public void onClick(View v) {
             List<Media> galleryMedia = gallery.getMedia();
+            int size = galleryMedia.size();
+            Media media;
 
-            for (Media media: galleryMedia) {
+            for (int i = 0; i < size; i++) {
+                media = galleryMedia.get(i);
+
                 if (buttons.get(media).isSelected())
                     task.addMedia(media);
             }
