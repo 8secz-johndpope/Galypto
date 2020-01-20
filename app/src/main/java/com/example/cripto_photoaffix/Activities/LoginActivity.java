@@ -64,14 +64,6 @@ public class LoginActivity extends MyActivity {
         else
             gallery = new Gallery(password, toEncrypt);
 
-        while (!gallery.done()) {
-            try {
-                Thread.sleep(100);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
         DataTransferer transferer = DataTransferer.getInstance();
         transferer.setData(gallery);
 

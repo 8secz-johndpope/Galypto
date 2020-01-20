@@ -16,11 +16,9 @@ import java.util.concurrent.TimeUnit;
 
 public class Gallery {
     private List<Media> media;
-    private boolean done;
     private ThreadPoolExecutor executor;
 
     public Gallery(String password) {
-        done = false;
         media = new ArrayList<Media>();
         executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
 
@@ -32,12 +30,9 @@ public class Gallery {
         queues.clear();
 
         Deserialazator.getInstance().free();
-
-        done = true;
     }
 
     public Gallery(String password, List<Uri> toEncrypt) {
-        done = false;
         media = new ArrayList<Media>();
         executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
 
@@ -51,7 +46,6 @@ public class Gallery {
         queues.clear();
 
         Deserialazator.getInstance().free();
-        done = true;
     }
 
     public Gallery() {
@@ -225,9 +219,5 @@ public class Gallery {
 
     public void remove(Media media) {
         this.media.remove(media);
-    }
-
-    public boolean done() {
-        return done;
     }
 }
