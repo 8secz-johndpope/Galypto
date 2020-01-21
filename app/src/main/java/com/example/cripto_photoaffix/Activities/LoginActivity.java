@@ -25,8 +25,6 @@ import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVis
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 public class LoginActivity extends MyActivity {
     private EditText field;

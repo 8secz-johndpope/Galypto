@@ -6,7 +6,6 @@ import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
 import com.example.cripto_photoaffix.Threads.DecryptorThread;
 import com.example.cripto_photoaffix.Threads.EncryptorThread;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
