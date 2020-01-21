@@ -6,6 +6,7 @@ import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
 import com.example.cripto_photoaffix.Threads.DecryptorThread;
 import com.example.cripto_photoaffix.Threads.EncryptorThread;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
@@ -138,7 +139,6 @@ public class Gallery {
     private void store(List<Uri> toEncrypt, String password) {
         List<Queue<Uri>> queues = divideEncryption(toEncrypt);
         List<EncryptorThread> threads = new ArrayList<EncryptorThread>();
-        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
 
         EncryptorThread thread;
 

@@ -8,24 +8,25 @@ import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.example.cripto_photoaffix.Authenticators.Authenticator;
-import com.example.cripto_photoaffix.DataTransferer;
 import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.AuthenticatorFactory;
 import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.FingerprintAuthenticatorFactory;
 import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.PasscodeAuthenticatorFactory;
-import com.example.cripto_photoaffix.Factories.IntentsFactory.GalleryIntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.RegisterIntentFactory;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
-import com.example.cripto_photoaffix.Gallery.Gallery;
 import com.example.cripto_photoaffix.R;
+import com.example.cripto_photoaffix.Threads.GalleryInitializerThread;
 import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class LoginActivity extends MyActivity {
     private EditText field;
@@ -37,6 +38,8 @@ public class LoginActivity extends MyActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        findViewById(R.id.progressBar).setVisibility(View.GONE);
+
         toEncrypt = new ArrayList<Uri>();
         field = findViewById(R.id.loginPasscode);
         authenticators = new Vector<Authenticator>();
@@ -47,20 +50,10 @@ public class LoginActivity extends MyActivity {
     }
 
     public void loginSuccessful(String password) {
-        Gallery gallery;
+        findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
 
-        if (toEncrypt.isEmpty())
-            gallery = new Gallery(password);
-        else
-            gallery = new Gallery(password, toEncrypt);
-
-        DataTransferer transferer = DataTransferer.getInstance();
-        transferer.setData(gallery);
-
-        IntentFactory factory = new GalleryIntentFactory();
-        startActivity(factory.create());
-
-        finish();
+        GalleryInitializerThread galleryInitializer = new GalleryInitializerThread(toEncrypt, password);
+        galleryInitializer.start();
     }
 
     public void loginUnsuccessful() {
