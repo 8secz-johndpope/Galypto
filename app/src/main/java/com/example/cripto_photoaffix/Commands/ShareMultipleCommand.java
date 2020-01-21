@@ -10,10 +10,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class ShareMultipleCommand extends Command {
-    public ShareMultipleCommand() {
-        super();
-    }
-
     public void execute() {
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
