@@ -16,11 +16,9 @@ import java.util.concurrent.TimeUnit;
 
 public class Gallery {
     private List<Media> media;
-    private ThreadPoolExecutor executor;
 
     public Gallery(String password) {
         media = new ArrayList<Media>();
-        executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
 
         List<Queue<EncryptedFile>> queues = divideDecryption();
         List<Media> allMedia = startThreading(queues, password);
@@ -34,7 +32,6 @@ public class Gallery {
 
     public Gallery(String password, List<Uri> toEncrypt) {
         media = new ArrayList<Media>();
-        executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
 
         store(toEncrypt, password);
 
@@ -98,6 +95,7 @@ public class Gallery {
 
     private List<Media> startThreading(List<Queue<EncryptedFile>> queues, String passcode) {
         List<DecryptorThread> threads = new ArrayList<DecryptorThread>();
+        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
 
         DecryptorThread thread;
         int size = queues.size();
@@ -138,6 +136,7 @@ public class Gallery {
     private void store(List<Uri> toEncrypt, String password) {
         List<Queue<Uri>> queues = divideEncryption(toEncrypt);
         List<EncryptorThread> threads = new ArrayList<EncryptorThread>();
+        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
 
         EncryptorThread thread;
 
