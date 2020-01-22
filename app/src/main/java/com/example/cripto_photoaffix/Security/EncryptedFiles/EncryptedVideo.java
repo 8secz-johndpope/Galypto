@@ -1,12 +1,12 @@
 package com.example.cripto_photoaffix.Security.EncryptedFiles;
 
+import android.util.Base64;
 import com.example.cripto_photoaffix.Flatbuffers.FlatBufferBuilder;
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.Security.MyEncryptor;
 import com.example.cripto_photoaffix.Visitors.EncryptedFilesVisitors.EncryptedFileVisitor;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Base64;
 
 public class EncryptedVideo extends EncryptedFile {
 
@@ -28,7 +28,7 @@ public class EncryptedVideo extends EncryptedFile {
                 MyEncryptor encryptor = MyEncryptor.getInstance();
 
                 String data = encryptor.decrypt(this, password);
-                byte[] bytes = Base64.getDecoder().decode(data);
+                byte[] bytes = Base64.decode(data, Base64.DEFAULT);
 
                 FileOutputStream fos = new FileOutputStream(finalPath + ".mp4");
 

@@ -19,13 +19,13 @@ import java.util.Queue;
 public class EncryptorThread extends Thread {
     private Queue<Uri> toEncrypt;
     private List<EncryptedFile> result;
-    private String passcode;
+    private String password;
 
     public EncryptorThread(Queue<Uri> files, String passcode) {
         super();
         this.toEncrypt = files;
         result = new ArrayList<EncryptedFile>();
-        this.passcode = passcode;
+        this.password = passcode;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class EncryptorThread extends Thread {
         while (!toEncrypt.isEmpty()) {
             file = toEncrypt.poll();
 
-            encrypted = encryptUri(file, passcode);
+            encrypted = encryptUri(file);
 
             result.add(encrypted);
         }
@@ -51,10 +51,10 @@ public class EncryptorThread extends Thread {
     public void clear() {
         toEncrypt.clear();
         result.clear();
-        passcode = null;
+        password = null;
     }
 
-    private EncryptedFile encryptUri(Uri uri, String password) {
+    private EncryptedFile encryptUri(Uri uri) {
         EncryptedFile res = null;
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
@@ -66,6 +66,7 @@ public class EncryptorThread extends Thread {
             if (type.startsWith("video")) {
 
                 data = getVideoData(uri);
+
                 res = new EncryptedVideo();
                 res.encrypt(data, password);
 
@@ -82,7 +83,7 @@ public class EncryptorThread extends Thread {
         return res;
     }
 
-    private String getVideoData(Uri uri) {
+    private static synchronized String getVideoData(Uri uri) {
         String res = null;
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
@@ -90,10 +91,10 @@ public class EncryptorThread extends Thread {
             InputStream fis = activity.getContentResolver().openInputStream(uri);
 
             if (fis != null) {
-
                 ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
 
                 byte[] bytes = new byte[4096];
+
                 int read = fis.read(bytes);
 
                 while (read != -1) {
@@ -101,10 +102,9 @@ public class EncryptorThread extends Thread {
                     read = fis.read(bytes);
                 }
 
-
                 byte[] data = byteOutputStream.toByteArray();
 
-                res = java.util.Base64.getEncoder().encodeToString(data);
+                res = Base64.encodeToString(data, Base64.DEFAULT);
 
                 fis.close();
                 byteOutputStream.close();
