@@ -1,6 +1,8 @@
 package com.example.cripto_photoaffix.Activities.GalleryActivities;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
@@ -21,6 +23,8 @@ import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaOpenerVisitor;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.widget.Toolbar;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.DisplayMetrics;
 import android.view.View;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -233,16 +237,30 @@ public class GalleryActivity extends MyActivity {
 
         @Override
         public void onClick(View v) {
-            if (button.isSelected())
+            if (button.isSelected()) {
                 button.setSelected(false);
-            else
+                button.setAlpha(1f);
+            }
+            else {
                 button.setSelected(true);
+                button.setAlpha(0.5f);
+            }
         }
     }
 
     private class LongClickListener implements View.OnLongClickListener {
         public boolean onLongClick(View view) {
             view.setSelected(true);
+            view.setAlpha(0.5f);
+
+            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                vibrator.vibrate(VibrationEffect.createOneShot(25, VibrationEffect.DEFAULT_AMPLITUDE));
+            else {
+                VibrationEffect effect = VibrationEffect.createOneShot(25, 1);
+                vibrator.vibrate(effect);
+            }
 
             if (!actionButtons.get(0).isShown()) {
                 List<Media> galleryMedia = gallery.getMedia();
@@ -274,6 +292,7 @@ public class GalleryActivity extends MyActivity {
 
                     if (butt != null) {
                         butt.setSelected(false);
+                        butt.setAlpha(1f);
                         butt.setOnClickListener(new ButtonOpenerListener(butt));
                     }
                 }
