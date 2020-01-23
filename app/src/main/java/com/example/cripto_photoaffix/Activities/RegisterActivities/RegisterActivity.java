@@ -18,7 +18,7 @@ import com.example.cripto_photoaffix.Gallery.Gallery;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Security.BCrypt;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
-import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
+import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
 import java.security.SecureRandom;
 
 public class RegisterActivity extends MyActivity {
@@ -45,6 +45,8 @@ public class RegisterActivity extends MyActivity {
     }
 
     public void accept(ActivityVisitor activityVisitor) {}
+
+    public void refresh() {}
 
     private void createUserData() {
         EditText field = findViewById(R.id.passcode);

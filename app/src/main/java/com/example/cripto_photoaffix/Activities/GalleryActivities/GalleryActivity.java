@@ -4,23 +4,21 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivityStates.OpenerState;
+import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivityStates.SelectorState;
+import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivityStates.State;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Commands.Command;
 import com.example.cripto_photoaffix.Commands.DeleteCommand;
-import com.example.cripto_photoaffix.Commands.RemoveDecryptedMediaCommand;
 import com.example.cripto_photoaffix.Commands.ShareMultipleCommand;
 import com.example.cripto_photoaffix.Commands.StoreCommand;
 import com.example.cripto_photoaffix.DataTransferer;
-import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
-import com.example.cripto_photoaffix.Factories.IntentsFactory.LoginIntentFactory;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Gallery.Gallery;
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.MyImageButton;
-import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
-import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaOpenerVisitor;
-import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
+import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.widget.Toolbar;
 import android.os.VibrationEffect;
@@ -41,10 +39,10 @@ import java.util.concurrent.LinkedTransferQueue;
 public class GalleryActivity extends MyActivity {
 
     private Gallery gallery;
-    private boolean openedImage;
     private GridLayout gridLayout;
     private Map<Media, MyImageButton> buttons;
     private List<FloatingActionButton> actionButtons;
+    private State state;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,21 +59,19 @@ public class GalleryActivity extends MyActivity {
         initializeFloatingButtons();
     }
 
-    public void accept(ActivityVisitor activityVisitor) {}
-
-    private void initialize() {
-        DataTransferer transferer = DataTransferer.getInstance();
-        gallery = (Gallery)transferer.getData();
-
-        gridLayout = findViewById(R.id.grid_layout);
-        gridLayout.setColumnCount(3);
-
-        gridLayout.setRowCount(gallery.getMedia().size()/3 + 1);
-
-        updateButtons();
+    public void changeState(State state) {
+        this.state = state;
     }
 
-    private void updateButtons() {
+    public void unselectAllButtons() {
+        for (MyImageButton button: buttons.values()) {
+            button.setSelected(false);
+            button.setAlpha(1f);
+        }
+    }
+
+    @Override
+    public void refresh() {
         List<Media> galleryMedia = gallery.getMedia();
         MyImageButton button;
         FilesManager manager = FilesManager.getInstance();
@@ -97,7 +93,7 @@ public class GalleryActivity extends MyActivity {
 
                     gridLayout.addView(button, getScreenWidth() / 3, getScreenHeigth() / 6);
 
-                    button.setOnClickListener(new ButtonOpenerListener(button));
+                    button.setOnClickListener(new ButtonListener(button));
                     button.setOnLongClickListener(longClickListener);
 
                     buttons.put(media, button);
@@ -117,6 +113,73 @@ public class GalleryActivity extends MyActivity {
 
         while (!toRemove.isEmpty())
             gallery.remove(toRemove.poll());
+    }
+
+    public void hideActionButtons() {
+        CoordinatorLayout.LayoutParams params;
+        int size = actionButtons.size();
+        FloatingActionButton b;
+
+
+        for (int i = 0; i < size; i++) {
+            b = actionButtons.get(i);
+
+            params = (CoordinatorLayout.LayoutParams) b.getLayoutParams();
+            params.setAnchorId(View.NO_ID);
+            b.setLayoutParams(params);
+            b.hide();
+        }
+    }
+
+    public void showActionButtons() {
+        CoordinatorLayout.LayoutParams params;
+        int size = actionButtons.size();
+        FloatingActionButton b;
+
+        for (int i = 0; i < size; i++) {
+            b = actionButtons.get(i);
+
+            params = (CoordinatorLayout.LayoutParams) b.getLayoutParams();
+            params.setBehavior(new FloatingActionButton.Behavior());
+            params.setAnchorId(R.id.app_bar);
+            b.setLayoutParams(params);
+            b.show();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        state.onPause();
+    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+
+        ActivityTransferer activityTransferer = ActivityTransferer.getInstance();
+        activityTransferer.setActivity(this);
+
+        state.onRestart();
+    }
+
+    public void accept(ActivityVisitor activityVisitor) {
+        activityVisitor.visit(this);
+    }
+
+    private void initialize() {
+        DataTransferer transferer = DataTransferer.getInstance();
+        gallery = (Gallery)transferer.getData();
+
+        gridLayout = findViewById(R.id.grid_layout);
+        gridLayout.setColumnCount(3);
+
+        gridLayout.setRowCount(gallery.getMedia().size()/3 + 1);
+
+        refresh();
+
+        state = new OpenerState();
     }
 
     private void initializeFloatingButtons() {
@@ -152,99 +215,16 @@ public class GalleryActivity extends MyActivity {
         return displayMetrics.heightPixels;
     }
 
-    private void hideActionButtons() {
-        CoordinatorLayout.LayoutParams params;
-        int size = actionButtons.size();
-        FloatingActionButton b;
-
-
-        for (int i = 0; i < size; i++) {
-            b = actionButtons.get(i);
-
-            params = (CoordinatorLayout.LayoutParams) b.getLayoutParams();
-            params.setAnchorId(View.NO_ID);
-            b.setLayoutParams(params);
-            b.hide();
-        }
-    }
-
-    private void showActionButtons() {
-        CoordinatorLayout.LayoutParams params;
-        int size = actionButtons.size();
-        FloatingActionButton b;
-
-        for (int i = 0; i < size; i++) {
-            b = actionButtons.get(i);
-
-            params = (CoordinatorLayout.LayoutParams) b.getLayoutParams();
-            params.setBehavior(new FloatingActionButton.Behavior());
-            params.setAnchorId(R.id.app_bar);
-            b.setLayoutParams(params);
-            b.show();
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        if (!openedImage) {
-            Command removeDecryptedVideos = new RemoveDecryptedMediaCommand();
-            removeDecryptedVideos.execute();
-        }
-    }
-
-    @Override
-    public void onRestart() {
-        super.onRestart();
-
-        ActivityTransferer activityTransferer = ActivityTransferer.getInstance();
-        activityTransferer.setActivity(this);
-
-        if (!openedImage) {
-            IntentFactory factory = new LoginIntentFactory();
-            startActivity(factory.create());
-            finish();
-        }
-        else {
-            updateButtons();
-            openedImage = false;
-        }
-    }
-
-    private class ButtonOpenerListener implements View.OnClickListener {
+    private class ButtonListener implements View.OnClickListener {
         private MyImageButton button;
 
-        public ButtonOpenerListener(MyImageButton button) {
+        public ButtonListener(MyImageButton button) {
             this.button = button;
         }
 
         @Override
         public void onClick(View v) {
-            MediaVisitor visitor = new MediaOpenerVisitor();
-            Media buttonMedia = button.getMedia();
-            buttonMedia.accept(visitor);
-            openedImage = true;
-        }
-    }
-
-    private class ButtonSelectorListener implements View.OnClickListener {
-        private MyImageButton button;
-
-        public ButtonSelectorListener(MyImageButton button) {
-            this.button = button;
-        }
-
-        @Override
-        public void onClick(View v) {
-            if (button.isSelected()) {
-                button.setSelected(false);
-                button.setAlpha(1f);
-            }
-            else {
-                button.setSelected(true);
-                button.setAlpha(0.5f);
-            }
+            state.touch(button);
         }
     }
 
@@ -263,42 +243,12 @@ public class GalleryActivity extends MyActivity {
             }
 
             if (!actionButtons.get(0).isShown()) {
-                List<Media> galleryMedia = gallery.getMedia();
-                MyImageButton butt;
-                int size = galleryMedia.size();
-                Media media;
-
-                for (int i = 0; i < size; i++) {
-                    media = galleryMedia.get(i);
-
-                    butt = buttons.get(media);
-
-                    if (butt != null)
-                        butt.setOnClickListener(new ButtonSelectorListener(butt));
-                }
-
+                state = new SelectorState(state);
                 showActionButtons();
             }
-            else {
-                List<Media> galleryMedia = gallery.getMedia();
-                MyImageButton butt;
-                int size = galleryMedia.size();
-                Media media;
+            else
+                state.back();
 
-                for (int i = 0; i < size; i++) {
-                    media = galleryMedia.get(i);
-
-                    butt = buttons.get(media);
-
-                    if (butt != null) {
-                        butt.setSelected(false);
-                        butt.setAlpha(1f);
-                        butt.setOnClickListener(new ButtonOpenerListener(butt));
-                    }
-                }
-
-                hideActionButtons();
-            }
             return true;
         }
     }
@@ -315,19 +265,26 @@ public class GalleryActivity extends MyActivity {
             List<Media> galleryMedia = gallery.getMedia();
             int size = galleryMedia.size();
             Media media;
+            MyImageButton button;
 
             for (int i = 0; i < size; i++) {
                 media = galleryMedia.get(i);
+                button = buttons.get(media);
 
-                if (buttons.get(media).isSelected())
+                if (button.isSelected())
                     task.addMedia(media);
+
+                button.setSelected(false);
+                button.setAlpha(1f);
             }
 
             task.execute();
 
-            updateButtons();
+            refresh();
 
             hideActionButtons();
+
+            state = new OpenerState();
         }
     }
 }

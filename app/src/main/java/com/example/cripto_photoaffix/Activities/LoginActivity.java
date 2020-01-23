@@ -22,7 +22,7 @@ import com.example.cripto_photoaffix.Factories.IntentsFactory.RegisterIntentFact
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Threads.GalleryInitializerThread;
-import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
+import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -77,6 +77,9 @@ public class LoginActivity extends MyActivity {
     public void accept(ActivityVisitor activityVisitor) {
         activityVisitor.visit(this);
     }
+
+    @Override
+    public void refresh() {}
 
     private void checkForIncomingIntents() {
         Intent intent = getIntent();

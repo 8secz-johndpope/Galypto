@@ -1,7 +1,9 @@
-package com.example.cripto_photoaffix.Visitors.AuthenticationVisitors;
+package com.example.cripto_photoaffix.Visitors.ActivityVisitors.AuthenticatorVisitors;
 
+import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivity;
 import com.example.cripto_photoaffix.Activities.LoginActivity;
 import com.example.cripto_photoaffix.Authenticators.Authenticator;
+import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
 
 public class FingerprintSuccessfulAuthenticationActivityVisitor implements ActivityVisitor {
     private Authenticator authenticator;
@@ -14,4 +16,7 @@ public class FingerprintSuccessfulAuthenticationActivityVisitor implements Activ
     public void visit(LoginActivity activity) {
         activity.loginSuccessful(authenticator.getFinalPassword());
     }
+
+    @Override
+    public void visit(GalleryActivity activity) {}
 }

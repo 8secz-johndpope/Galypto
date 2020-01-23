@@ -3,7 +3,7 @@ package com.example.cripto_photoaffix.Activities;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
-import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
+import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
 
 public abstract class MyActivity extends AppCompatActivity {
 
@@ -16,4 +16,6 @@ public abstract class MyActivity extends AppCompatActivity {
     }
 
     public abstract void accept(ActivityVisitor activityVisitor);
+
+    public abstract void refresh();
 }

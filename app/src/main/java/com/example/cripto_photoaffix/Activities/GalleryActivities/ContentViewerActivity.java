@@ -15,7 +15,7 @@ import com.example.cripto_photoaffix.Factories.ButtonFactories.ShareButtonFactor
 import com.example.cripto_photoaffix.Factories.ButtonFactories.StoreButtonFactory;
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.R;
-import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
+import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
 
 public abstract class ContentViewerActivity extends MyActivity {
     protected Media media;
@@ -148,6 +148,9 @@ public abstract class ContentViewerActivity extends MyActivity {
     }
 
     public void accept(ActivityVisitor visitor) {}
+
+    @Override
+    public void refresh() {}
 
     protected void initializeButtons() {
         LinearLayout layout = findViewById(R.id.fullscreen_content_controls);

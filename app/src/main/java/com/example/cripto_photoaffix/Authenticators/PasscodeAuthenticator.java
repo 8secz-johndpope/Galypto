@@ -8,9 +8,9 @@ import com.example.cripto_photoaffix.Security.BCrypt;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedPassword;
 import com.example.cripto_photoaffix.Security.MyEncryptor;
-import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.PasscodeSuccessfulAuthenticationActivityVisitor;
-import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.PasscodeUnsuccessfulAuthenticationActivityVisitor;
-import com.example.cripto_photoaffix.Visitors.AuthenticationVisitors.ActivityVisitor;
+import com.example.cripto_photoaffix.Visitors.ActivityVisitors.AuthenticatorVisitors.PasscodeSuccessfulAuthenticationActivityVisitor;
+import com.example.cripto_photoaffix.Visitors.ActivityVisitors.AuthenticatorVisitors.PasscodeUnsuccessfulAuthenticationActivityVisitor;
+import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
 
 public class PasscodeAuthenticator implements Authenticator {
     protected EditText field;
