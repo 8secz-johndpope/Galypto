@@ -10,6 +10,7 @@ import android.os.Vibrator;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.example.cripto_photoaffix.Authenticators.Authenticator;
@@ -37,6 +38,7 @@ public class LoginActivity extends MyActivity {
         setContentView(R.layout.activity_login);
 
         findViewById(R.id.progressBar).setVisibility(View.GONE);
+        findViewById(R.id.view).setVisibility(View.GONE);
 
         toEncrypt = new ArrayList<Uri>();
         field = findViewById(R.id.loginPasscode);
@@ -49,12 +51,19 @@ public class LoginActivity extends MyActivity {
 
     public void loginSuccessful(String password) {
         findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+        findViewById(R.id.view).setVisibility(View.VISIBLE);
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(field.getApplicationWindowToken(), 0);
+
+        field.setEnabled(false);
 
         GalleryInitializerThread galleryInitializer = new GalleryInitializerThread(toEncrypt, password);
         galleryInitializer.start();
     }
 
     public void loginUnsuccessful() {
+        field.selectAll();
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
