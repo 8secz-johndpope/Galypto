@@ -11,10 +11,10 @@ import com.example.cripto_photoaffix.MyImageButton;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaOpenerVisitor;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 
-public class OpenerState implements State {
+public class Opener implements State {
     private boolean openedImage;
 
-    public OpenerState() {
+    public Opener() {
         openedImage = false;
     }
 

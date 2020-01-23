@@ -4,8 +4,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivityStates.OpenerState;
-import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivityStates.SelectorState;
+import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivityStates.Opener;
+import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivityStates.Selector;
 import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivityStates.State;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
@@ -179,7 +179,7 @@ public class GalleryActivity extends MyActivity {
 
         refresh();
 
-        state = new OpenerState();
+        state = new Opener();
     }
 
     private void initializeFloatingButtons() {
@@ -243,7 +243,7 @@ public class GalleryActivity extends MyActivity {
             }
 
             if (!actionButtons.get(0).isShown()) {
-                state = new SelectorState(state);
+                state = new Selector(state);
                 showActionButtons();
             }
             else
@@ -284,7 +284,7 @@ public class GalleryActivity extends MyActivity {
 
             hideActionButtons();
 
-            state = new OpenerState();
+            state = new Opener();
         }
     }
 }

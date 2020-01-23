@@ -10,11 +10,11 @@ import com.example.cripto_photoaffix.MyImageButton;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.SelectorBackVisitor;
 
-public class SelectorState implements State {
+public class Selector implements State {
     private int cantSelected;
     private State previousState;
 
-    public SelectorState(State previousState) {
+    public Selector(State previousState) {
         cantSelected = 1;
 
         this.previousState = previousState;
