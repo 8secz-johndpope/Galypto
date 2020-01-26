@@ -23,6 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.widget.Toolbar;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.ArrayMap;
 import android.util.DisplayMetrics;
 import android.view.View;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -30,7 +31,6 @@ import androidx.gridlayout.widget.GridLayout;
 import android.widget.ImageView;
 import com.example.cripto_photoaffix.R;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -52,7 +52,7 @@ public class GalleryActivity extends MyActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        buttons = new HashMap<Media, MyImageButton>();
+        buttons = new ArrayMap<Media, MyImageButton>();
 
         initialize();
 
