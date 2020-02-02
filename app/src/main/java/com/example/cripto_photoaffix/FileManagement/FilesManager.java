@@ -186,6 +186,30 @@ public class FilesManager {
         return res;
     }
 
+    public List<String> getShared() {
+        String[] media;
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
+
+        File folder = new File(activity.getCacheDir().getPath());
+
+        media = folder.list();
+
+        List<String> res = new ArrayList<String>();
+
+        if (media != null) {
+            String s;
+            int size = media.length;
+
+            for (int i = 0; i < size; i++) {
+                s = media[i];
+
+                res.add(activity.getFilesDir() + "/pictures/" + s);
+            }
+        }
+
+        return res;
+    }
+
     public void removeEverything() {
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
         File folder = new File(activity.getFilesDir() + "/pictures");

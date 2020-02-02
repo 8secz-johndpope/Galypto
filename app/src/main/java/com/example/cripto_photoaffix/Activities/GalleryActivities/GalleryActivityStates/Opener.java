@@ -4,6 +4,7 @@ import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Commands.Command;
 import com.example.cripto_photoaffix.Commands.RemoveDecryptedMediaCommand;
+import com.example.cripto_photoaffix.Commands.RemoveSharedCommand;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.LoginIntentFactory;
 import com.example.cripto_photoaffix.Gallery.Media;
@@ -35,8 +36,11 @@ public class Opener implements State {
     @Override
     public void onPause() {
         if (!openedImage) {
-            Command removeDecryptedVideos = new RemoveDecryptedMediaCommand();
-            removeDecryptedVideos.execute();
+            Command command = new RemoveDecryptedMediaCommand();
+            command.execute();
+
+            command = new RemoveSharedCommand();
+            command.execute();
         }
     }
 
