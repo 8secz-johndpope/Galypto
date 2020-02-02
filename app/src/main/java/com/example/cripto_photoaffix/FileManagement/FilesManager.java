@@ -76,8 +76,8 @@ public class FilesManager {
         return res.toString();
     }
 
-    public boolean exists(String name) {
-        File f = new File(name);
+    public boolean exists(String path) {
+        File f = new File(path);
 
         return f.exists();
     }
@@ -86,8 +86,8 @@ public class FilesManager {
         SecureRandom random = new SecureRandom();
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
-        if (!exists(activity.getFilesDir() + "/pictures"))
-            createFolder("pictures");
+        if (!exists(activity.getFilesDir() + "/media"))
+            createFolder("media");
 
         EncryptedFile file;
         int size = files.size();
@@ -98,13 +98,13 @@ public class FilesManager {
             System.out.println("Storing: " + file.getPath() + "/" + file.getFileName());
             String name = random.nextInt() + "";
 
-            while (exists(activity.getFilesDir() + "/pictures/" + name))
+            while (exists(activity.getFilesDir() + "/media/" + name))
                 name = random.nextInt() + "";
 
             file.setFileName(name);
-            file.setPath(activity.getFilesDir() + "/pictures");
+            file.setPath(activity.getFilesDir() + "/media");
 
-            storeObject(file, activity.getFilesDir() + "/pictures" ,file.getFileName());
+            storeObject(file, activity.getFilesDir() + "/media" ,file.getFileName());
         }
     }
 
@@ -162,10 +162,10 @@ public class FilesManager {
         String[] media;
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
-        File folder = new File(activity.getFilesDir() + "/pictures");
+        File folder = new File(activity.getFilesDir() + "/media");
 
         if (!folder.exists())
-            createFolder("pictures");
+            createFolder("media");
 
 
         media = folder.list();
@@ -179,7 +179,7 @@ public class FilesManager {
             for (int i = 0; i < size; i++) {
                 s = media[i];
 
-                res.add(activity.getFilesDir() + "/pictures/" + s);
+                res.add(activity.getFilesDir() + "/media/" + s);
             }
         }
 
@@ -203,7 +203,7 @@ public class FilesManager {
             for (int i = 0; i < size; i++) {
                 s = media[i];
 
-                res.add(activity.getFilesDir() + "/pictures/" + s);
+                res.add(activity.getFilesDir() + "/media/" + s);
             }
         }
 
@@ -212,7 +212,7 @@ public class FilesManager {
 
     public void removeEverything() {
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
-        File folder = new File(activity.getFilesDir() + "/pictures");
+        File folder = new File(activity.getFilesDir() + "/media");
 
         if (folder.exists()) {
             deleteFiles(folder.listFiles());

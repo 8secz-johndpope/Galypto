@@ -57,14 +57,7 @@ public class Picture extends Media {
     public File store(String path) {
         File myDir = new File(path);
 
-        String fname = "Image-" + "storing";
-        File file = new File(myDir, fname + ".jpg");
-
-        int i = 0;
-        while (file.exists()) {
-            file = new File(myDir, fname + i + ".jpg");
-            i++;
-        }
+        File file = new File(myDir, filename + ".jpg");
 
         FilesManager.copy(getFullPath(), file.getPath());
 
