@@ -47,6 +47,11 @@ public class Selector implements State {
     }
 
     @Override
+    public void onLongPress() {
+        back();
+    }
+
+    @Override
     public void onPause() {
         Command command = new RemoveDecryptedMediaCommand();
         command.execute();

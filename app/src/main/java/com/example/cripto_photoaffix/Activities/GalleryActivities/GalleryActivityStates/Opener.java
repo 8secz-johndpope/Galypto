@@ -9,6 +9,8 @@ import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.LoginIntentFactory;
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.MyImageButton;
+import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
+import com.example.cripto_photoaffix.Visitors.ActivityVisitors.OpenerLongPressVisitor;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaOpenerVisitor;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 
@@ -31,6 +33,13 @@ public class Opener implements State {
     public void back() {
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
         activity.onBackPressed();
+    }
+
+    @Override
+    public void onLongPress() {
+        ActivityVisitor visitor = new OpenerLongPressVisitor(this);
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
+        activity.accept(visitor);
     }
 
     @Override

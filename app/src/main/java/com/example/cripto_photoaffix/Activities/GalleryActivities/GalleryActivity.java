@@ -242,12 +242,7 @@ public class GalleryActivity extends MyActivity {
                 vibrator.vibrate(effect);
             }
 
-            if (!actionButtons.get(0).isShown()) {
-                state = new Selector(state);
-                showActionButtons();
-            }
-            else
-                state.back();
+            state.onLongPress();
 
             return true;
         }
