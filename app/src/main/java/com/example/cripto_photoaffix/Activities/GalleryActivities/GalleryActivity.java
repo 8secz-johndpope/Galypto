@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivityStates.Opener;
-import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivityStates.Selector;
 import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivityStates.State;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
