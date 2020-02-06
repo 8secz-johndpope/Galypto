@@ -3,7 +3,7 @@ package com.example.cripto_photoaffix.Threads;
 import android.net.Uri;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
-import com.example.cripto_photoaffix.DataTransferer;
+import com.example.cripto_photoaffix.GalleryTransferer;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.GalleryIntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
 import com.example.cripto_photoaffix.Gallery.Gallery;
@@ -28,8 +28,8 @@ public class GalleryInitializerThread extends Thread {
         else
             gallery = new Gallery(password, toEncrypt);
 
-        DataTransferer transferer = DataTransferer.getInstance();
-        transferer.setData(gallery);
+        GalleryTransferer transferer = GalleryTransferer.getInstance();
+        transferer.setGallery(gallery);
 
         IntentFactory factory = new GalleryIntentFactory();
         currentActivity.startActivity(factory.create());

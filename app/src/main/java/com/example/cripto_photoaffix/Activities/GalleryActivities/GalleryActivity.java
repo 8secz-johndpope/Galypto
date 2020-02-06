@@ -12,7 +12,7 @@ import com.example.cripto_photoaffix.Commands.Command;
 import com.example.cripto_photoaffix.Commands.DeleteCommand;
 import com.example.cripto_photoaffix.Commands.ShareMultipleCommand;
 import com.example.cripto_photoaffix.Commands.StoreCommand;
-import com.example.cripto_photoaffix.DataTransferer;
+import com.example.cripto_photoaffix.GalleryTransferer;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Gallery.Gallery;
 import com.example.cripto_photoaffix.Gallery.Media;
@@ -168,8 +168,8 @@ public class GalleryActivity extends MyActivity {
     }
 
     private void initialize() {
-        DataTransferer transferer = DataTransferer.getInstance();
-        gallery = (Gallery)transferer.getData();
+        GalleryTransferer transferer = GalleryTransferer.getInstance();
+        gallery = transferer.getGallery();
 
         gridLayout = findViewById(R.id.grid_layout);
         gridLayout.setColumnCount(3);

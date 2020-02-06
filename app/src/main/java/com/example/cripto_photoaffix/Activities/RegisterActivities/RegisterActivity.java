@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.Authenticators.Authenticator;
 import com.example.cripto_photoaffix.Authenticators.PasscodeAuthenticator;
-import com.example.cripto_photoaffix.DataTransferer;
+import com.example.cripto_photoaffix.GalleryTransferer;
 import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.AuthenticatorFactory;
 import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.FingerprintAuthenticatorFactory;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
@@ -63,8 +63,8 @@ public class RegisterActivity extends MyActivity {
         if (fingerprint.canBeUsed())
             encryptAndStoreForFingerprint(fingerprint, finalPassword);
 
-        DataTransferer transferer = DataTransferer.getInstance();
-        transferer.setData(new Gallery());
+        GalleryTransferer transferer = GalleryTransferer.getInstance();
+        transferer.setGallery(new Gallery());
 
         IntentFactory factory = new GalleryIntentFactory();
         startActivity(factory.create());

@@ -8,12 +8,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import com.example.cripto_photoaffix.Activities.MyActivity;
-import com.example.cripto_photoaffix.DataTransferer;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.ButtonFactory;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.DeleteButtonFactory;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.ShareButtonFactory;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.StoreButtonFactory;
 import com.example.cripto_photoaffix.Gallery.Media;
+import com.example.cripto_photoaffix.MediaTransferer;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
 
@@ -94,9 +94,10 @@ public abstract class ContentViewerActivity extends MyActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        DataTransferer transferer = DataTransferer.getInstance();
+        MediaTransferer transferer = MediaTransferer.getInstance();
 
-        media = (Media) transferer.getData();
+    //    media = (Media) transferer.getData();
+        media = transferer.getMedia();
     }
 
     @Override
@@ -163,6 +164,7 @@ public abstract class ContentViewerActivity extends MyActivity {
         factory = new StoreButtonFactory(layout, R.id.save_button);
         factory.create();
 
-        DataTransferer.getInstance().setData(media);
+        //GalleryTransferer.getInstance().setData(media);
+        MediaTransferer.getInstance().setMedia(media);
     }
 }

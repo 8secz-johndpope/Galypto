@@ -10,8 +10,8 @@ import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Commands.Command;
 import com.example.cripto_photoaffix.Commands.DeleteCommand;
-import com.example.cripto_photoaffix.DataTransferer;
 import com.example.cripto_photoaffix.Gallery.Media;
+import com.example.cripto_photoaffix.MediaTransferer;
 
 public class DeleteButtonFactory extends LayoutButtonFactory {
 
@@ -21,7 +21,7 @@ public class DeleteButtonFactory extends LayoutButtonFactory {
 
     public ImageButton create() {
         final MyActivity activity = ActivityTransferer.getInstance().getActivity();
-        final Media media = (Media)DataTransferer.getInstance().getData();
+        final Media media = MediaTransferer.getInstance().getMedia();
 
         ImageButton button = layout.findViewById(layoutID);
         Drawable icon = ContextCompat.getDrawable(activity, android.R.drawable.ic_menu_delete);

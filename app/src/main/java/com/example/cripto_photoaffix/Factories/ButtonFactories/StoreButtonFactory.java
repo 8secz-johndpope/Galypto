@@ -10,8 +10,7 @@ import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Commands.Command;
 import com.example.cripto_photoaffix.Commands.StoreCommand;
-import com.example.cripto_photoaffix.DataTransferer;
-import com.example.cripto_photoaffix.Gallery.Media;
+import com.example.cripto_photoaffix.MediaTransferer;
 
 public class StoreButtonFactory extends LayoutButtonFactory {
     public StoreButtonFactory(LinearLayout layout, int layoutID) {
@@ -35,9 +34,9 @@ public class StoreButtonFactory extends LayoutButtonFactory {
     private class Listener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            DataTransferer transferer = DataTransferer.getInstance();
+            MediaTransferer transferer = MediaTransferer.getInstance();
             Command command = new StoreCommand();
-            command.addMedia((Media)transferer.getData());
+            command.addMedia(transferer.getMedia());
             command.execute();
         }
     }

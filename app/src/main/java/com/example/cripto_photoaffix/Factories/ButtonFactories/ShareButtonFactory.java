@@ -8,8 +8,8 @@ import android.widget.LinearLayout;
 import androidx.core.content.ContextCompat;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
-import com.example.cripto_photoaffix.DataTransferer;
 import com.example.cripto_photoaffix.Gallery.Media;
+import com.example.cripto_photoaffix.MediaTransferer;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.ShareVisitor;
 
@@ -38,7 +38,7 @@ public class ShareButtonFactory extends LayoutButtonFactory {
         public void onClick(View v) {
             //Preguntar si esto esta bien. No me gusta para nada castear. Podria crear
             //para cada tipo de datos un transferer.
-            Media media = (Media) DataTransferer.getInstance().getData();
+            Media media = MediaTransferer.getInstance().getMedia();
 
             MediaVisitor visitor = new ShareVisitor();
 
