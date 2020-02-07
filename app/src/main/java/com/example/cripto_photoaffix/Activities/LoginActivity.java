@@ -146,4 +146,11 @@ public class LoginActivity extends MyActivity {
         authenticators = null;
         field = null;
     }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+
+        checkForIncomingIntents();
+    }
 }
