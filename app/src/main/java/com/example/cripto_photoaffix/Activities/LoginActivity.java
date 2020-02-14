@@ -52,6 +52,11 @@ public class LoginActivity extends MyActivity {
         checkForIncomingIntents();
     }
 
+    /**
+     * Un visitor llama a este metodo si ingreso correctamente la contraseña o si las biometricas
+     * aceptaron al usuario.
+     * @param password Contraseña ingresada por el usuario/biometricas.
+     */
     public void loginSuccessful(String password) {
         findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
         findViewById(R.id.view).setVisibility(View.VISIBLE);
@@ -65,6 +70,10 @@ public class LoginActivity extends MyActivity {
         galleryInitializer.start();
     }
 
+    /**
+     * Si el usuario ingresa una contraseña incorrecta o las biometricas no lo aceptan, el visitor
+     * llama a este metodo.
+     */
     public void loginUnsuccessful() {
         field.selectAll();
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -77,6 +86,10 @@ public class LoginActivity extends MyActivity {
         }
     }
 
+    /**
+     * Accept del visitor.
+     * @param activityVisitor Visitor que quiere visitar.
+     */
     public void accept(ActivityVisitor activityVisitor) {
         activityVisitor.visit(this);
     }
@@ -84,6 +97,15 @@ public class LoginActivity extends MyActivity {
     @Override
     public void refresh() {}
 
+    /**
+     * Se fija si se esta tratando de compartir alguna imagen o video con la aplicacion, si es el
+     * caso, añade lo que se esta tratando de compartir a una cola. En caso de que uno o mas
+     * archivos superen los 60 Mb esos no van a ser agregados a la cola y se va a mostrar un mensaje
+     * indicando que no se pueden añadir. Esto es porque el proceso de encriptado consume mucha
+     * memoria y requiere mucho poder de procesado, aproximadamente 60Mb es lo que puede aguantar
+     * un Galaxy S9 (Mi celular) se deberia encontrar alguna forma mejor para determinar el limite
+     * dependiendo de la cantidad del dispositivo en uso.
+     */
     private void checkForIncomingIntents() {
         Intent intent = getIntent();
         String action = intent.getAction();
@@ -124,6 +146,11 @@ public class LoginActivity extends MyActivity {
         }
     }
 
+    /**
+     * Retorna el tamaño de un archivo en un URI.
+     * @param uri URI a obtener el tamaño.
+     * @return Tamaño en Mb del archivo que "apunta" el URI.
+     */
     private double getFileSize(Uri uri) {
         Cursor cursor = getContentResolver().query(uri, null, null, null, null);
         cursor.moveToFirst();
@@ -133,6 +160,9 @@ public class LoginActivity extends MyActivity {
         return (double)filesize/(1024*1024);
     }
 
+    /**
+     * Si el usuario no esta registrado, se inicia la actividad para registrarlo.
+     */
     private void choseActivity() {
         if (authenticators.isEmpty()) {
             FilesManager manager = FilesManager.getInstance();
@@ -146,6 +176,10 @@ public class LoginActivity extends MyActivity {
         }
     }
 
+    /**
+     * Inicializa los autenticadores que el dispositivo tenga habilitados (no todos, solamente los
+     * disponibles por la aplicacion) y el usuario se haya registrado.
+     */
     private void initializeAuthenticators() {
         AuthenticatorFactory factory = new PasscodeAuthenticatorFactory(field);
         Authenticator created = factory.create();
@@ -171,6 +205,10 @@ public class LoginActivity extends MyActivity {
             authenticators.add(created);
     }
 
+    /**
+     * Si la aplicacion se cierra, se limpian los autenticadores y campos para que las contraseñas,
+     * si estan guardadas, sean liberadas de memoria.
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -180,6 +218,9 @@ public class LoginActivity extends MyActivity {
         field = null;
     }
 
+    /**
+     * Al reiniciar la actividad, se fija si se estan compartiendo elementos.
+     */
     @Override
     public void onRestart() {
         super.onRestart();

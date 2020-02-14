@@ -9,6 +9,13 @@ import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
 import com.example.cripto_photoaffix.Gallery.Gallery;
 import java.util.List;
 
+/**
+ * Este hilo abre la galeria. Es usado para poder poner la pantalla de carga en la pantalla
+ * principal, debido a que este proceso es pesado, si no se usase este hilo la pantalla de carga
+ * cargaria solamente una vez que se termina de desencriptar toda la galeria, dando una mala
+ * experiencia ya que la aplicacion pareceria estar congelada y no se veria la carga porque se
+ * abriria inmediatamente la galeria.
+ */
 public class GalleryInitializerThread extends Thread {
     private List<Uri> toEncrypt;
     private String password;

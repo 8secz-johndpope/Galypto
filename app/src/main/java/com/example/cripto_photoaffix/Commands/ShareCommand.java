@@ -10,6 +10,11 @@ import com.example.cripto_photoaffix.Factories.IntentsFactory.ShareIntentFactory
 import java.io.File;
 
 public abstract class ShareCommand extends Command {
+    /**
+     * Crea el "Intent" para que la aplicacion que recibe los archivos pueda tener acceso.
+     * @param file Archivo a compartir.
+     * @return Intent para la aplicacion que recibe los archivos.
+     */
     protected Intent createIntent(File file) {
         IntentFactory factory = new ShareIntentFactory();
         Intent intent = factory.create();

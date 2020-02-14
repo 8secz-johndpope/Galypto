@@ -58,10 +58,17 @@ public class GalleryActivity extends MyActivity {
         initializeFloatingButtons();
     }
 
+    /**
+     * Cambia el estado que se esta utilizando.
+     * @param state Nuevo estado.
+     */
     public void changeState(State state) {
         this.state = state;
     }
 
+    /**
+     * Deselecciona todos los botones previamente seleccionados.
+     */
     public void unselectAllButtons() {
         for (MyImageButton button: buttons.values()) {
             button.setSelected(false);
@@ -114,6 +121,9 @@ public class GalleryActivity extends MyActivity {
             gallery.remove(toRemove.poll());
     }
 
+    /**
+     * Oculta los botones flotantes (compartir, eliminar y guardar).
+     */
     public void hideActionButtons() {
         CoordinatorLayout.LayoutParams params;
         int size = actionButtons.size();
@@ -130,6 +140,9 @@ public class GalleryActivity extends MyActivity {
         }
     }
 
+    /**
+     * Muestra todos los botones.
+     */
     public void showActionButtons() {
         CoordinatorLayout.LayoutParams params;
         int size = actionButtons.size();
@@ -146,6 +159,9 @@ public class GalleryActivity extends MyActivity {
         }
     }
 
+    /**
+     * Si se frena la actividad actual se avisa al estado y se determina la accion a realizar.
+     */
     @Override
     public void onPause() {
         super.onPause();
@@ -153,6 +169,10 @@ public class GalleryActivity extends MyActivity {
         state.onPause();
     }
 
+    /**
+     * Si se reinicia la actividad actual, se avisa al estado actual y se determina la activiad a
+     * realizar, tambien se añade a esta actividad como la actual.
+     */
     @Override
     public void onRestart() {
         super.onRestart();
@@ -167,6 +187,9 @@ public class GalleryActivity extends MyActivity {
         activityVisitor.visit(this);
     }
 
+    /**
+     * Inicializa la grilla de imagenes y el estado.
+     */
     private void initialize() {
         GalleryTransferer transferer = GalleryTransferer.getInstance();
         gallery = transferer.getGallery();
@@ -181,6 +204,9 @@ public class GalleryActivity extends MyActivity {
         state = new Opener();
     }
 
+    /**
+     * Inicializa los botones flotantes (compartir, eliminar y borrar).
+     */
     private void initializeFloatingButtons() {
         actionButtons = new ArrayList<FloatingActionButton>();
 
@@ -200,6 +226,10 @@ public class GalleryActivity extends MyActivity {
         actionButtons.add(button);
     }
 
+    /**
+     * Retorna el ancho de la pantalla.
+     * @return Retorna el ancho de la pantalla.
+     */
     private int getScreenWidth() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -207,6 +237,10 @@ public class GalleryActivity extends MyActivity {
         return displayMetrics.widthPixels;
     }
 
+    /**
+     * Retorna el largo de la pantalla.
+     * @return Retorna el largo de la pantalla.
+     */
     private int getScreenHeigth() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -214,6 +248,9 @@ public class GalleryActivity extends MyActivity {
         return displayMetrics.heightPixels;
     }
 
+    /**
+     * Listener de tocado en las imagenes.
+     */
     private class ButtonListener implements View.OnClickListener {
         private MyImageButton button;
 
@@ -227,6 +264,9 @@ public class GalleryActivity extends MyActivity {
         }
     }
 
+    /**
+     * Listener de tocado largo en las imagenes.
+     */
     private class LongClickListener implements View.OnLongClickListener {
         public boolean onLongClick(View view) {
             view.setSelected(true);
@@ -247,6 +287,9 @@ public class GalleryActivity extends MyActivity {
         }
     }
 
+    /**
+     * Listener de los botones flotantes, cada uno tiene su propio comando.
+     */
     private class FloatingButtonListener implements View.OnClickListener {
         private Command task;
 

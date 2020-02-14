@@ -13,10 +13,18 @@ public class MyImageButton extends AppCompatImageButton {
         setImageBitmap(media.getPreview());
     }
 
+    /**
+     * Guarda la media del boton.
+     * @param media Media que el boton representa
+     */
     public void setMedia(Media media) {
         this.media = media;
     }
 
+    /**
+     * Retorna la media que el boton representa.
+     * @return Media que el boton representa.
+     */
     public Media getMedia() {
         return media;
     }

@@ -13,6 +13,9 @@ public class Video extends Media {
         findPreview();
     }
 
+    /**
+     * Encuentra una vista previa para el video.
+     */
     private void findPreview() {
         preview = ThumbnailUtils.createVideoThumbnail(path + ".mp4", MediaStore.Video.Thumbnails.MICRO_KIND);
     }

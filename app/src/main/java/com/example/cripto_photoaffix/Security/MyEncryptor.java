@@ -17,10 +17,20 @@ public class MyEncryptor {
 
     private MyEncryptor() {}
 
+    /**
+     * Retorna una instancia del Singleton. Es un singleton para evitar "Memory Churn".
+     * @return Instancia del singleton.
+     */
     public static MyEncryptor getInstance() {
         return instance;
     }
 
+    /**
+     * Retorna informacion desencriptada, dada una contraseña y un archivo a desencriptar.
+     * @param file Archivo a desencriptar.
+     * @param password Contraseña con la cual desencriptar.
+     * @return String con la informacion desencriptada.
+     */
     public String decrypt(EncryptedFile file, String password) {
         String decrypted = null;
 
@@ -39,13 +49,13 @@ public class MyEncryptor {
     }
 
     /**
-     * Returns a vector whose indexes contain:
-     *                                  0: Data encrypted.
-     *                                  1: Initialization Vector.
-     *                                  2: Salt.
-     * @param data: Data to encrypt.
-     * @param password: Password to encrypt the data.
-     * @return Vector with the parameters needed to decrypt.
+     * Retorna un vector que contiene en cada uno de sus componentes:
+     *                                  0: Informacion encryptada.
+     *                                  1: Vector de inicializacion.
+     *                                  2: "Salt".
+     * @param data: Informacion a encriptar.
+     * @param password: Contraseña con la cual encriptar la informacion.
+     * @return Vector con los parametros necesarios para desencriptar.
      */
     public Vector<byte[]> encrypt(String data, String password) {
         Vector<byte[]> res = new Vector<byte[]>(3);
@@ -74,6 +84,12 @@ public class MyEncryptor {
         return res;
     }
 
+    /**
+     * Genera una contraseña secreta a partir de una contraseña como array de char y una "salt".
+     * @param password Contraseña.
+     * @param salt "Salt".
+     * @return Contraseña secreta.
+     */
     private SecretKey generateSecretKey(char[] password, byte[] salt) {
         SecretKey secretKey = null;
 

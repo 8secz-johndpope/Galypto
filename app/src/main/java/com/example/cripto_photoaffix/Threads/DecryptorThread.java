@@ -40,10 +40,17 @@ public class DecryptorThread extends Thread {
         }
     }
 
+    /**
+     * Retorna toda la "media" desencriptada.
+     * @return
+     */
     public List<Media> getMedia() {
         return result;
     }
 
+    /**
+     * Limpia la informacion de memoria.
+     */
     public void clear() {
         encryptedFiles.clear();
         result.clear();

@@ -10,15 +10,27 @@ public class GalleryTransferer {
         gallery = null;
     }
 
+    /**
+     * Retorna instancia de la clase ya que es un Singleton.
+     * @return Instancia de la clase.
+     */
     public static GalleryTransferer getInstance() {
         return instance;
     }
 
+    /**
+     * Retorna la galeria siendo utilizada.
+     * @return Galeria siendo utilizada.
+     */
     public Gallery getGallery() {
         return gallery;
     }
 
-    public void setGallery(Gallery d) {
-        gallery = d;
+    /**
+     * Guarda la galeria a utilizar.
+     * @param gallery Galeria a guardar y utilizar.
+     */
+    public void setGallery(Gallery gallery) {
+        this.gallery = gallery;
     }
 }

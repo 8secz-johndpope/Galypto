@@ -96,7 +96,6 @@ public abstract class ContentViewerActivity extends MyActivity {
 
         MediaTransferer transferer = MediaTransferer.getInstance();
 
-    //    media = (Media) transferer.getData();
         media = transferer.getMedia();
     }
 
@@ -153,6 +152,9 @@ public abstract class ContentViewerActivity extends MyActivity {
     @Override
     public void refresh() {}
 
+    /**
+     * Inicializa los botones de eliminar, compartir y guardar.
+     */
     protected void initializeButtons() {
         LinearLayout layout = findViewById(R.id.fullscreen_content_controls);
         ButtonFactory factory = new DeleteButtonFactory(layout, R.id.delete_button);
@@ -164,7 +166,6 @@ public abstract class ContentViewerActivity extends MyActivity {
         factory = new StoreButtonFactory(layout, R.id.save_button);
         factory.create();
 
-        //GalleryTransferer.getInstance().setData(media);
         MediaTransferer.getInstance().setMedia(media);
     }
 }

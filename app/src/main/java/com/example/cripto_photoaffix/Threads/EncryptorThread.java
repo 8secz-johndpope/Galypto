@@ -44,16 +44,28 @@ public class EncryptorThread extends Thread {
         }
     }
 
+    /**
+     * Retorna una lista con los archivos encriptados.
+     * @return Lista con los archivos encriptados.
+     */
     public List<EncryptedFile> getEncrypted() {
         return result;
     }
 
+    /**
+     * Limpia los elementos del hilo de memoria.
+     */
     public void clear() {
         toEncrypt.clear();
         result.clear();
         password = null;
     }
 
+    /**
+     * Encripta un URI.
+     * @param uri URI a encriptar.
+     * @return Archivo encriptado.
+     */
     private EncryptedFile encryptUri(Uri uri) {
         EncryptedFile res = null;
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
@@ -83,6 +95,13 @@ public class EncryptorThread extends Thread {
         return res;
     }
 
+    /**
+     * Retorna la informacion de un video en un URI. El metodo es estatico y sincronizado ya que
+     * el metodo de "Base64" "encodeToString" es estatico, y al ser utilizado por varios hilos ese
+     * metodo provoca errores retornando posiblemente el mismo video para dos videos diferentes.
+     * @param uri URI a obtener informacion.
+     * @return Informacion del video.
+     */
     private static synchronized String getVideoData(Uri uri) {
         String res = null;
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
@@ -116,12 +135,22 @@ public class EncryptorThread extends Thread {
         return res;
     }
 
+    /**
+     * Retorna la informacion de la imagen contenida en el URI.
+     * @param uri URI a obtener la informacion de la imagen.
+     * @return String con la informacion de la image.
+     */
     private String getImageData(Uri uri) {
         Bitmap bitmap = getThumbnail(uri);
 
         return bitmapToString(bitmap);
     }
 
+    /**
+     * Retonra una vista miniatura del URI.
+     * @param uri URI a obtener miniatura.
+     * @return Miniatura en forma de Bitmap.
+     */
     private Bitmap getThumbnail(Uri uri) {
         Bitmap bitmap;
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
@@ -139,6 +168,11 @@ public class EncryptorThread extends Thread {
         return bitmap;
     }
 
+    /**
+     * Transforma un Bitmap en String.
+     * @param bitmap Bitmap a transformar en String.
+     * @return String del Bitmap.
+     */
     private String bitmapToString(Bitmap bitmap) {
         byte [] bytes = null;
 

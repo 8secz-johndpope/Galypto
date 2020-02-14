@@ -8,33 +8,71 @@ public abstract class Media {
     protected Bitmap preview;
     protected String path, filename;
 
+    /**
+     * Vista previa de la "Media".
+     * @return Bitmap con la vista previa.
+     */
     public Bitmap getPreview() {
         return preview;
     }
 
+    /**
+     * Accept del visitor.
+     * @param visitor Visitor que desea visitar.
+     */
     public abstract void accept(MediaVisitor visitor);
 
+    /**
+     * Retorna el camino donde esta guardada la media.
+     * @return Camino donde esta guardada.
+     */
     public String getPath() {
         return path;
     }
 
+    /**
+     * Retorna el nombre del archivo.
+     * @return Nombre del archivo.
+     */
     public String getFilename() {
         return filename;
     }
 
+    /**
+     * Retorna el camino completo del archivo.
+     * @return Camino completo del archivo.
+     */
     public String getFullPath() {
         return path + filename;
     }
 
+    /**
+     * Cambia el camino del archivo.
+     * @param path Camino nuevo del archivo.
+     */
     public void setPath(String path) {
         this.path = path;
     }
 
+    /**
+     * Cambia el nombre del archivo.
+     * @param name
+     */
     public void setFilename(String name) {
         filename = name;
     }
 
+    /**
+     * Comparte el archivo.
+     * @param sharingPath Camino a donde compartir.
+     * @return Archivo donde fue compartido.
+     */
     public abstract File share(String sharingPath);
 
+    /**
+     * Guarda el archivo en cierta locacion.
+     * @param path Camino a guardar el archivo.
+     * @return Archivo donde fue guardado.
+     */
     public abstract File store(String path);
 }

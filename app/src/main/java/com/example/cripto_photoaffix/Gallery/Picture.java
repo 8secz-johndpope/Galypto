@@ -64,6 +64,11 @@ public class Picture extends Media {
         return file;
     }
 
+    /**
+     * Retorna el porcentaje por el cual se debe reducir la calidad de la imagen para la vista
+     * previa. Esto es para ahorrar espacio en memoria.
+     * @return Porcentaje de reduccion de calidad.
+     */
     private double getDiscount() {
         double discount = 0.5;
 
@@ -81,7 +86,7 @@ public class Picture extends Media {
 
         return discount;
     }
-
+    
     public String getFullPath() {
         return super.getFullPath() + ".jpg";
     }

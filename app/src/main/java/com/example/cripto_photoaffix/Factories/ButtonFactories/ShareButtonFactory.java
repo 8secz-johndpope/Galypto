@@ -36,8 +36,6 @@ public class ShareButtonFactory extends LayoutButtonFactory {
 
         @Override
         public void onClick(View v) {
-            //Preguntar si esto esta bien. No me gusta para nada castear. Podria crear
-            //para cada tipo de datos un transferer.
             Media media = MediaTransferer.getInstance().getMedia();
 
             MediaVisitor visitor = new ShareVisitor();

@@ -11,8 +11,15 @@ public abstract class Command {
         toExecuteOn = new LinkedTransferQueue<>();
     }
 
+    /**
+     * Ejecuta la tarea.
+     */
     public abstract void execute();
 
+    /**
+     * Añade elementos en los cuales ejecutar la tarea.
+     * @param media Media en la cual ejecutar la tarea.
+     */
     public void addMedia(Media media){
         toExecuteOn.add(media);
     }

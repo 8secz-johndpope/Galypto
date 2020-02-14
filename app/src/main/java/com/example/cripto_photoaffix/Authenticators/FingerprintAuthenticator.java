@@ -113,6 +113,9 @@ public class FingerprintAuthenticator implements Authenticator {
         return decrypt(finalPassword);
     }
 
+    /**
+     * Inicializa el texto de la caja de informacion.
+     */
     protected void initializePromptInfo() {
         promptInfo = new BiometricPrompt.PromptInfo.Builder().setTitle("Touch the fingerprint sensor")
                 .setSubtitle("Log in using your fingerprint.").setNegativeButtonText("Use passcode")
@@ -145,6 +148,10 @@ public class FingerprintAuthenticator implements Authenticator {
         }
     }
 
+    /**
+     * Retorna el "Crypto Cipher".
+     * @return "Crypto Cipher"
+     */
     protected Cipher getCryptoCipher() {
         Cipher cipher = null;
 
@@ -157,6 +164,10 @@ public class FingerprintAuthenticator implements Authenticator {
         return cipher;
     }
 
+    /**
+     * Retorna la contraseña secreta.
+     * @return Contraseña secreta.
+     */
     protected SecretKey getSecretKey() {
         SecretKey secretKey = null;
 

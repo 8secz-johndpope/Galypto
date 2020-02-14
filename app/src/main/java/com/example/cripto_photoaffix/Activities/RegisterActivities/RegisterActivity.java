@@ -44,10 +44,18 @@ public class RegisterActivity extends MyActivity {
         factory.create();
     }
 
+    /**
+     * Accept del visitor. No hace nada ya que por el momento no se requiere que se visite esta
+     * actividad.
+     * @param activityVisitor Visitor visitando.
+     */
     public void accept(ActivityVisitor activityVisitor) {}
 
     public void refresh() {}
 
+    /**
+     * Se crea la informacion brindada por el usuario. Para despues poder ser usada por el login.
+     */
     private void createUserData() {
         EditText field = findViewById(R.id.passcode);
 
@@ -71,6 +79,12 @@ public class RegisterActivity extends MyActivity {
         finish();
     }
 
+    /**
+     * Genera una contraseña "universal", que va a ser la cual encripta las fotos y videos, ya que
+     * la contraseña numerica creada por el usuario obviamente difiere de la biometrica (si es que
+     * se usa) y esto nos permite no tener que duplicar los archivos.
+     * @return Contraseña "universal".
+     */
     private String generatePassword() {
         StringBuilder res = new StringBuilder();
         SecureRandom random = new SecureRandom();
@@ -89,6 +103,10 @@ public class RegisterActivity extends MyActivity {
         return res.toString();
     }
 
+    /**
+     * Hashea la contraseña y crea el archivo correspondiente.
+     * @param password Contraseña a hashear.
+     */
     private void hashPassword(String password) {
         String salt = BCrypt.gensalt(12);
         String hashed = BCrypt.hashpw(password, salt);
@@ -98,6 +116,11 @@ public class RegisterActivity extends MyActivity {
         manager.writeToFile("passcodePassword", hashed);
     }
 
+    /**
+     * Encripta la contraseña "universal" usando la contraseña del usuario.
+     * @param field Campo que contiene la contraseña del usuario.
+     * @param passwordToEncrypt Contraseña "universal" a encriptar.
+     */
     private void encryptAndStoreForPassocde(EditText field, String passwordToEncrypt) {
         Authenticator authenticator = new PasscodeAuthenticator(field);
 
@@ -108,6 +131,11 @@ public class RegisterActivity extends MyActivity {
         manager.storePassword(finalPass);
     }
 
+    /**
+     * Encripta la contraseña "universal" usando la huella digital.
+     * @param fingerprint Authenticador que contiene la contraseña del usuario.
+     * @param password Contraseña "universal" a encriptar.
+     */
     private void encryptAndStoreForFingerprint(Authenticator fingerprint, String password) {
         EncryptedFile file = fingerprint.encrypt(password);
         file.setFileName("fingerprintFinalPassword");

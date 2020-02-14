@@ -23,5 +23,10 @@ public class RemoveDecryptedMediaCommand extends Command {
         }
     }
 
+    /**
+     * No añade la "media" para ahorrar espacio (muy poco) ya que no es necesario porque se va a
+     * ejecutar sobre todos los archivos y no media.
+     * @param media Media en la cual ejecutar la tarea.
+     */
     public void addMedia(Media media) {}
 }

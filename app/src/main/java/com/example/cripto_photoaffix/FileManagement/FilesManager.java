@@ -25,6 +25,11 @@ public class FilesManager {
 
     protected FilesManager() {}
 
+    /**
+     * Retorna la instancia del manejador. Es un Singleton para evitar crear instancias no
+     * necesarias.
+     * @return Instancia del manejador.
+     */
     public static FilesManager getInstance() {
         if (instance == null)
             instance = new FilesManager();
@@ -32,6 +37,11 @@ public class FilesManager {
         return instance;
     }
 
+    /**
+     * Escribe en un archivo la informacion especificada.
+     * @param path Camino al archivo al cual escribir.
+     * @param data Informacion a escribir.
+     */
     public void writeToFile(String path, String data) {
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
@@ -46,6 +56,11 @@ public class FilesManager {
         }
     }
 
+    /**
+     * Retorna el contenido de un archivo especificado.
+     * @param path Camino al archivo para obtener la informacion.
+     * @return Informacion en forma de String.
+     */
     public String getFileContent(String path) {
         StringBuilder res = new StringBuilder();
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
@@ -76,12 +91,21 @@ public class FilesManager {
         return res.toString();
     }
 
+    /**
+     * Determina si un archiv existe o no.
+     * @param path Camino del archivo a determinar su existencia.
+     * @return True si el archivo existe, False en caso contrario.
+     */
     public boolean exists(String path) {
         File f = new File(path);
 
         return f.exists();
     }
 
+    /**
+     * Serializa una lista de archivos encriptados.
+     * @param files Archivos encriptados a serializar.
+     */
     public void store(List<EncryptedFile> files) {
         SecureRandom random = new SecureRandom();
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
@@ -108,6 +132,10 @@ public class FilesManager {
         }
     }
 
+    /**
+     * Deserializa los archivos (Media) encriptados.
+     * @return Media encriptada.
+     */
     public List<EncryptedFile> restoreMedia() {
         List<EncryptedFile> files = new ArrayList<EncryptedFile>();
         List<String> names = getMedia();
@@ -158,6 +186,10 @@ public class FilesManager {
         return files;
     }
 
+    /**
+     * Retorna una lista con los caminos a los archivos encriptados.
+     * @return Lista con caminos a todos los archivos encriptados.
+     */
     public List<String> getMedia() {
         String[] media;
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
@@ -186,6 +218,10 @@ public class FilesManager {
         return res;
     }
 
+    /**
+     * Retorna una lista con todos los elementos compartidos.
+     * @return Lista con camino a todos los elementos compartidos.
+     */
     public List<String> getShared() {
         String[] media;
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
@@ -210,6 +246,9 @@ public class FilesManager {
         return res;
     }
 
+    /**
+     * Elimina todos los datos de la aplicacion.
+     */
     public void removeEverything() {
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
         File folder = new File(activity.getFilesDir() + "/media");
@@ -244,6 +283,10 @@ public class FilesManager {
             password.delete();
     }
 
+    /**
+     * Elimina todos los archivos en un arreglo de archivos.
+     * @param files Archivos a eliminar.
+     */
     private void deleteFiles(File [] files) {
         int size = 0;
 
@@ -258,6 +301,10 @@ public class FilesManager {
         }
     }
 
+    /**
+     * Elimina un archivo en un camino determinado.
+     * @param path Camino del archivo a eliminar.
+     */
     public void removeFile(String path) {
         File file = new File(path);
 
@@ -265,6 +312,10 @@ public class FilesManager {
             file.delete();
     }
 
+    /**
+     * Guarda una contraseña (archivo encriptado).
+     * @param password Contraseña a guardar.
+     */
     public void storePassword(EncryptedFile password) {
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
@@ -272,6 +323,12 @@ public class FilesManager {
         storeObject(password, activity.getFilesDir().toString(), password.getFileName());
     }
 
+    /**
+     * Copia un archivo a otro destino.
+     * @param origin Camino al archivo cual copiar.
+     * @param destination Destino donde pegar el archivo.
+     * @return Archivo destino.
+     */
     public static File copy(String origin, String destination) {
         File res = null;
 
@@ -301,6 +358,11 @@ public class FilesManager {
         return res;
     }
 
+    /**
+     * Restaura la contraseña con camino en name.
+     * @param name Nombre de la contraseña.
+     * @return Archivo encriptado con la contraseña.
+     */
     public EncryptedFile restorePassword(String name) {
         EncryptedFile file = null;
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
@@ -325,6 +387,12 @@ public class FilesManager {
         return file;
     }
 
+    /**
+     * Serializa un archivo encriptado en un camino especificado y con un nombre especificado.
+     * @param file Archivo a serializar.
+     * @param path Camino en donde guardar.
+     * @param name Nombre del archivo a ser guardado.
+     */
     private void storeObject(EncryptedFile file, String path, String name) {
         FlatBufferBuilder builder = file.serialize();
 
@@ -344,6 +412,10 @@ public class FilesManager {
         }
     }
 
+    /**
+     * Crea una carpeta con un determinado nombre.
+     * @param name Nombre de la carpeta a crear.
+     */
     private void createFolder(String name) {
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
         File path = new File(activity.getFilesDir(), name);
