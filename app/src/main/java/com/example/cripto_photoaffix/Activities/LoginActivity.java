@@ -94,7 +94,6 @@ public class LoginActivity extends MyActivity {
         if (Intent.ACTION_SEND.equals(action) && type != null) {
             Uri uri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
 
-            System.out.println("File size: " + getFileSize(uri));
             if (getFileSize(uri) < 60)
                 toEncrypt.add(uri);
             else
