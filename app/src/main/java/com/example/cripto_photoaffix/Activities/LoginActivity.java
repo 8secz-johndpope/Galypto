@@ -2,11 +2,13 @@ package com.example.cripto_photoaffix.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.provider.OpenableColumns;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -23,6 +25,7 @@ import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Threads.GalleryInitializerThread;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -86,18 +89,49 @@ public class LoginActivity extends MyActivity {
         String action = intent.getAction();
         String type = intent.getType();
 
+        int cannotAdd = 0;
+
         if (Intent.ACTION_SEND.equals(action) && type != null) {
             Uri uri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
 
-            toEncrypt.add(uri);
+            System.out.println("File size: " + getFileSize(uri));
+            if (getFileSize(uri) < 60)
+                toEncrypt.add(uri);
+            else
+                cannotAdd++;
         }
         else if (Intent.ACTION_SEND_MULTIPLE.equals(action)) {
 
             ArrayList<Uri> list = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
 
-            if (list != null)
-                toEncrypt.addAll(list);
+            if (list != null) {
+                Uri uri;
+                int size = list.size();
+
+                for (int i = 0; i < size; i++) {
+                    uri = list.get(i);
+
+                    if (getFileSize(uri) < 60)
+                        toEncrypt.add(uri);
+                    else
+                        cannotAdd++;
+                }
+            }
         }
+
+        if (cannotAdd != 0) {
+            CannotAddDialog dialog = new CannotAddDialog(cannotAdd);
+            dialog.show(getSupportFragmentManager(), "File size dialog.");
+        }
+    }
+
+    private double getFileSize(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        long filesize = cursor.getLong(cursor.getColumnIndex(OpenableColumns.SIZE));
+        cursor.close();
+
+        return (double)filesize/(1024*1024);
     }
 
     private void choseActivity() {
