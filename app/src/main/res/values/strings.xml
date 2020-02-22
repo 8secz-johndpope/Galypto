@@ -121,4 +121,6 @@
     <string name="imageView">TODO</string>
     <string name="select">Select</string>
     <string name="insert_password">Insert password</string>
+    <string name="entrar">Entrar</string>
+    <string name="inserte_contrase_a">Inserte contraseña</string>
 </resources>

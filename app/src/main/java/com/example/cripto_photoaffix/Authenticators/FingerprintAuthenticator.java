@@ -117,8 +117,8 @@ public class FingerprintAuthenticator implements Authenticator {
      * Inicializa el texto de la caja de informacion.
      */
     protected void initializePromptInfo() {
-        promptInfo = new BiometricPrompt.PromptInfo.Builder().setTitle("Touch the fingerprint sensor")
-                .setSubtitle("Log in using your fingerprint.").setNegativeButtonText("Use passcode")
+        promptInfo = new BiometricPrompt.PromptInfo.Builder().setTitle("Log in por biometricas")
+                .setSubtitle("Entre usando biometricas.").setNegativeButtonText("Usar contraseña")
                 .build();
     }
 
