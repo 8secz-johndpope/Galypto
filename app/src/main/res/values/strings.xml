@@ -123,4 +123,6 @@
     <string name="insert_password">Insert password</string>
     <string name="entrar">Entrar</string>
     <string name="inserte_contrase_a">Inserte contraseña</string>
+    <string name="registro">Registro</string>
+    <string name="inserte_contrase_a_numerica">Inserte contraseña numerica</string>
 </resources>
