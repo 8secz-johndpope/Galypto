@@ -321,7 +321,7 @@ public class GalleryActivity extends MyActivity {
 
             hideActionButtons();
 
-            state = new Opener();
+            state = state.getNextState();
         }
     }
 }

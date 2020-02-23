@@ -16,13 +16,16 @@ import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 
 public class Opener implements State {
     private boolean openedImage;
+    private boolean justOpened;
 
     public Opener() {
         openedImage = false;
+        justOpened = true;
     }
 
     @Override
     public void touch(MyImageButton button) {
+        justOpened = false;
         MediaVisitor visitor = new MediaOpenerVisitor();
         Media buttonMedia = button.getMedia();
         buttonMedia.accept(visitor);
@@ -31,6 +34,7 @@ public class Opener implements State {
 
     @Override
     public void back() {
+        justOpened = false;
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
         activity.onBackPressed();
     }
@@ -40,11 +44,12 @@ public class Opener implements State {
         ActivityVisitor visitor = new OpenerLongPressVisitor(this);
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
         activity.accept(visitor);
+        justOpened = true;
     }
 
     @Override
     public void onPause() {
-        if (!openedImage) {
+        if (!openedImage && !justOpened) {
             Command command = new RemoveDecryptedMediaCommand();
             command.execute();
 
@@ -57,7 +62,7 @@ public class Opener implements State {
     public void onRestart() {
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
-        if (!openedImage) {
+        if (!openedImage && !justOpened) {
             IntentFactory factory = new LoginIntentFactory();
             activity.startActivity(factory.create());
             activity.finish();
