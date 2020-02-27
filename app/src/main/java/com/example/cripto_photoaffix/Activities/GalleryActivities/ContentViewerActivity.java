@@ -175,7 +175,7 @@ public abstract class ContentViewerActivity extends MyActivity {
     @Override
     public void onResume() {
         super.onResume();
-        System.out.println("Resuming content view, wentBack: " + wentBack);
+
         if (!wentBack) {
             IntentFactory factory = new LoginIntentFactory();
             startActivity(factory.create());
