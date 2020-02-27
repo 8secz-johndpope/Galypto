@@ -23,7 +23,7 @@ import java.util.List;
 public class FilesManager {
     private static FilesManager instance;
 
-    protected FilesManager() {}
+    private FilesManager() {}
 
     /**
      * Retorna la instancia del manejador. Es un Singleton para evitar crear instancias no
