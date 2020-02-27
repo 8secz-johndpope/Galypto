@@ -21,6 +21,10 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 
+/**
+ * Quiza esta clase se deberia llamar BiometricAuthenticator, ya que en Android 10 en adelante
+ * permite utilizar diferentes formas de biometricas en caso de estar disponibles.
+ */
 public class FingerprintAuthenticator implements Authenticator {
     protected BiometricPrompt.PromptInfo promptInfo;
 
