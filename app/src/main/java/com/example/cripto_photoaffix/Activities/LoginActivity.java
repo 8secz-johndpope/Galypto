@@ -61,6 +61,7 @@ public class LoginActivity extends MyActivity {
         findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
         findViewById(R.id.view).setVisibility(View.VISIBLE);
 
+        //Oculta el teclado.
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(field.getApplicationWindowToken(), 0);
 
