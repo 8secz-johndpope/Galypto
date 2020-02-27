@@ -14,8 +14,6 @@ public class MediaOpenerVisitor implements MediaVisitor {
     public void visit(Picture picture) {
         IntentFactory factory = new ImageViewerIntentFactory();
 
-      //  GalleryTransferer transferer = GalleryTransferer.getInstance();
-       // transferer.setData(picture);
         MediaTransferer transferer = MediaTransferer.getInstance();
         transferer.setMedia(picture);
 
@@ -27,8 +25,6 @@ public class MediaOpenerVisitor implements MediaVisitor {
     public void visit(Video video) {
         IntentFactory factory = new VideoViewerIntentFactory();
 
-        //  GalleryTransferer transferer = GalleryTransferer.getInstance();
-        // transferer.setData(video);
         MediaTransferer transferer = MediaTransferer.getInstance();
         transferer.setMedia(video);
 
