@@ -29,7 +29,8 @@ public class ShareMultipleCommand extends Command {
             File file = media.share(activity.getCacheDir().getPath() + "/share/");
 
             Uri uri = FileProvider.getUriForFile(activity,
-                    "com.example.cripto_photoaffix.fileprovider", file);
+                    "com.example.cripto_photoaffix.fileprovider", file);       //Esta string "authority" debe estar "hardcodeada"
+                                                                                        //Ya que es única para cada App, es como una ID.
             list.add(uri);
         }
 

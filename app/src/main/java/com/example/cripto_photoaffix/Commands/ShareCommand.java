@@ -23,7 +23,8 @@ public abstract class ShareCommand extends Command {
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
         Uri path = FileProvider.getUriForFile(activity,
-                "com.example.cripto_photoaffix.fileprovider", file);
+                "com.example.cripto_photoaffix.fileprovider", file);    //Esta string "authority" debe estar "hardcodeada"
+                                                                                 //Ya que es única para cada App, es como una ID.
 
         intent.putExtra(Intent.EXTRA_STREAM, path);
 
