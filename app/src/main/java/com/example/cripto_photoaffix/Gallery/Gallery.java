@@ -21,7 +21,7 @@ public class Gallery {
         media = new ArrayList<Media>();
 
         List<Queue<EncryptedFile>> queues = divideDecryption();
-        List<Media> allMedia = startThreading(queues, password);
+        List<Media> allMedia = startDecryption(queues, password);
 
         media.addAll(allMedia);
         allMedia.clear();
@@ -36,7 +36,7 @@ public class Gallery {
         store(toEncrypt, password);
 
         List<Queue<EncryptedFile>> queues = divideDecryption();
-        List<Media> allMedia = startThreading(queues, password);
+        List<Media> allMedia = startDecryption(queues, password);
 
         media.addAll(allMedia);
         allMedia.clear();
@@ -53,6 +53,10 @@ public class Gallery {
         return media;
     }
 
+    /**
+     * Divide el proceso de desencriptado en a lo sumo 5 colas.
+     * @return Lista de colas con los archivos a desencriptar.
+     */
     private List<Queue<EncryptedFile>> divideDecryption() {
         FilesManager manager = FilesManager.getInstance();
         List<EncryptedFile> encryptedFiles = manager.restoreMedia();
@@ -93,7 +97,13 @@ public class Gallery {
         return res;
     }
 
-    private List<Media> startThreading(List<Queue<EncryptedFile>> queues, String passcode) {
+    /**
+     * Inicia el proceso de desencriptado en a lo sumo 5 hilos.
+     * @param queues Lista de colas de elementos a desencriptar.
+     * @param passcode Contraseña con la cual desencriptar los elementos.
+     * @return Lista de Media, es decir los archivos desencriptados.
+     */
+    private List<Media> startDecryption(List<Queue<EncryptedFile>> queues, String passcode) {
         List<DecryptorThread> threads = new ArrayList<DecryptorThread>();
         ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
 
@@ -133,6 +143,11 @@ public class Gallery {
         return media;
     }
 
+    /**
+     * Guarda y encripta los archivos de los URIs indicados.
+     * @param toEncrypt Lista de archivos a encriptar.
+     * @param password Contraseña con la cual encriptar los archivos.
+     */
     private void store(List<Uri> toEncrypt, String password) {
         List<Queue<Uri>> queues = divideEncryption(toEncrypt);
         List<EncryptorThread> threads = new ArrayList<EncryptorThread>();
@@ -177,6 +192,11 @@ public class Gallery {
         manager.store(encryptedFiles);
     }
 
+    /**
+     * Divide la tarea de encriptar en a lo sumo 5 colas.
+     * @param uris Lista de URIs a encriptar.
+     * @return Lista de cola de URIs ya dividida.
+     */
     private List<Queue<Uri>> divideEncryption(List<Uri> uris) {
 
         List<Queue<Uri>> res = new ArrayList<Queue<Uri>>();
