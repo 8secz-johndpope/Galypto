@@ -62,7 +62,7 @@ public class Opener implements State {
     public void onRestart() {
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
-        if (!openedImage && !justOpened) {
+        if (!openedImage) {
             IntentFactory factory = new LoginIntentFactory();
             activity.startActivity(factory.create());
             activity.finish();

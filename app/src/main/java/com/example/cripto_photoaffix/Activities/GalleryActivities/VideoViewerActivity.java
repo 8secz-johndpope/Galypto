@@ -33,6 +33,13 @@ public class VideoViewerActivity extends ContentViewerActivity {
         // while interacting with the UI.
         findViewById(R.id.delete_button).setOnTouchListener(mDelayHideTouchListener);
 
+        loadMedia();
+
+        initializeButtons();
+    }
+
+    @Override
+    public void loadMedia() {
         videoView = (VideoView) mContentView;
         String videoPath = media.getFullPath();
 
@@ -47,7 +54,5 @@ public class VideoViewerActivity extends ContentViewerActivity {
                 }
             });
         }
-
-        initializeButtons();
     }
 }

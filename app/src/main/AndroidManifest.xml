@@ -23,6 +23,7 @@
             android:name=".Activities.GalleryActivities.ContentViewerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_image_viewer"
+            android:launchMode="singleInstance"
             android:theme="@style/FullscreenTheme"></activity>
         <activity
             android:name=".Activities.GalleryActivities.GalleryActivity"

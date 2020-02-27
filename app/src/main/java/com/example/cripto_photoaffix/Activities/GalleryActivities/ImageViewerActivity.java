@@ -31,8 +31,7 @@ public class ImageViewerActivity extends ContentViewerActivity {
         // while interacting with the UI.
         findViewById(R.id.delete_button).setOnTouchListener(mDelayHideTouchListener);
 
-        imageView = (ImageView) mContentView;
-        imageView.setImageBitmap(BitmapFactory.decodeFile(media.getFullPath()));
+        loadMedia();
 
         initializeButtons();
     }
@@ -42,5 +41,11 @@ public class ImageViewerActivity extends ContentViewerActivity {
         super.onBackPressed();
 
         imageView.setImageBitmap(null);
+    }
+
+    @Override
+    public void loadMedia() {
+        imageView = (ImageView) mContentView;
+        imageView.setImageBitmap(BitmapFactory.decodeFile(media.getFullPath()));
     }
 }

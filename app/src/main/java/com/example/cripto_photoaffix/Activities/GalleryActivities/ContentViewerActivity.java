@@ -12,6 +12,8 @@ import com.example.cripto_photoaffix.Factories.ButtonFactories.ButtonFactory;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.DeleteButtonFactory;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.ShareButtonFactory;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.StoreButtonFactory;
+import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
+import com.example.cripto_photoaffix.Factories.IntentsFactory.LoginIntentFactory;
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.MediaTransferer;
 import com.example.cripto_photoaffix.R;
@@ -19,6 +21,7 @@ import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
 
 public abstract class ContentViewerActivity extends MyActivity {
     protected Media media;
+    private boolean wentBack;
 
     /**
      * Whether or not the system UI should be auto-hidden after
@@ -94,9 +97,9 @@ public abstract class ContentViewerActivity extends MyActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        MediaTransferer transferer = MediaTransferer.getInstance();
+        media = getMedia();
 
-        media = transferer.getMedia();
+        wentBack = true;
     }
 
     @Override
@@ -167,5 +170,45 @@ public abstract class ContentViewerActivity extends MyActivity {
         factory.create();
 
         MediaTransferer.getInstance().setMedia(media);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        System.out.println("Resuming content view, wentBack: " + wentBack);
+        if (!wentBack) {
+            IntentFactory factory = new LoginIntentFactory();
+            startActivity(factory.create());
+            wentBack = true;
+        }
+        else {
+            wentBack = false;
+
+            media = getMedia();
+
+            loadMedia();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        wentBack = true;
+    }
+
+    /**
+     * Carga la "media" en la vista donde deberia ser cargada.
+     */
+    public abstract void loadMedia();
+
+    /**
+     * Actualiza la "media" que se va a mostrar.
+     * @return Media a mostrar.
+     */
+    private Media getMedia() {
+        MediaTransferer transferer = MediaTransferer.getInstance();
+
+        return transferer.getMedia();
     }
 }
