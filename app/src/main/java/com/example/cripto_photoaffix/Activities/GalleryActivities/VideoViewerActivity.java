@@ -32,10 +32,6 @@ public class VideoViewerActivity extends ContentViewerActivity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         findViewById(R.id.delete_button).setOnTouchListener(mDelayHideTouchListener);
-
-        loadMedia();
-
-        initializeButtons();
     }
 
     @Override

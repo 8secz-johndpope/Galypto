@@ -187,6 +187,8 @@ public abstract class ContentViewerActivity extends MyActivity {
             media = getMedia();
 
             loadMedia();
+
+            initializeButtons();
         }
     }
 
