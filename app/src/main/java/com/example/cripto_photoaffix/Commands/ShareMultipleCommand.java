@@ -36,6 +36,6 @@ public class ShareMultipleCommand extends Command {
 
         intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, list);
 
-        activity.startActivity(Intent.createChooser(intent, "Compartir via:"));
+        activity.startActivity(Intent.createChooser(intent, "Compartir mediante:"));
     }
 }

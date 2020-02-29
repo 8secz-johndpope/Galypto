@@ -21,7 +21,7 @@ public class VideoShareCommand extends ShareCommand {
             Intent intent = createIntent(file);
             intent.setType("video/mp4");
 
-            activity.startActivity(Intent.createChooser(intent, "Share via:"));
+            activity.startActivity(Intent.createChooser(intent, "Compartir mediante:"));
         }
     }
 }

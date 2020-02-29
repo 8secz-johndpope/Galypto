@@ -21,7 +21,7 @@ public class ImageShareCommand extends ShareCommand {
             Intent intent = createIntent(file);
             intent.setType("image/jpg");
 
-            activity.startActivity(Intent.createChooser(intent, "Share via:"));
+            activity.startActivity(Intent.createChooser(intent, "Compartir mediante:"));
         }
     }
 }
