@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
-
 import com.example.cripto_photoaffix.Activities.Dialogs.CouldNotDecryptDialog;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
@@ -120,7 +119,7 @@ public class FingerprintAuthenticator implements Authenticator {
     public String getFinalPassword() {
         FilesManager manager = FilesManager.getInstance();
 
-        EncryptedFile finalPassword = manager.restorePassword("fingerprintFinalPassword");
+        EncryptedFile finalPassword = manager.restoreFile("fingerprintFinalPassword");
 
         return decrypt(finalPassword);
     }

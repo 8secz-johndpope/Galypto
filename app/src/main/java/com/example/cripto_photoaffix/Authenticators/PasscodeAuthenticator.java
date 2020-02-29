@@ -69,7 +69,7 @@ public class PasscodeAuthenticator implements Authenticator {
     public String getFinalPassword() {
         FilesManager manager = FilesManager.getInstance();
 
-        EncryptedFile finalPassword = manager.restorePassword("passcodeFinalPassword");
+        EncryptedFile finalPassword = manager.restoreFile("passcodeFinalPassword");
 
         return decrypt(finalPassword);
     }

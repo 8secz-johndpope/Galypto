@@ -360,15 +360,15 @@ public class FilesManager {
 
     /**
      * Restaura la contraseña con camino en name.
-     * @param name Nombre de la contraseña.
+     * @param path Nombre de la contraseña.
      * @return Archivo encriptado con la contraseña.
      */
-    public EncryptedFile restorePassword(String name) {
+    public EncryptedFile restoreFile(String path) {
         EncryptedFile file = null;
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
         try {
-            File f = new File(activity.getFilesDir() + "/" + name);
+            File f = new File(activity.getFilesDir() + "/" + path);
             FileInputStream fis = new FileInputStream(f);
 
             byte[] data = new byte[(int) f.length()];
