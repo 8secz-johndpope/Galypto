@@ -63,13 +63,13 @@ public class RegisterActivity extends MyActivity {
 
         String finalPassword = generatePassword();
 
-        encryptAndStoreForPassocde(field, finalPassword);
+        setupPasscode(field, finalPassword);
 
         AuthenticatorFactory fingerprintAuthenticatorFactory = new FingerprintAuthenticatorFactory();
         Authenticator fingerprint = fingerprintAuthenticatorFactory.create();
 
         if (fingerprint.canBeUsed())
-            encryptAndStoreForFingerprint(fingerprint, finalPassword);
+            setupFingerprint(fingerprint, finalPassword);
 
         GalleryTransferer transferer = GalleryTransferer.getInstance();
         transferer.setGallery(new Gallery());
@@ -121,7 +121,7 @@ public class RegisterActivity extends MyActivity {
      * @param field Campo que contiene la contraseña del usuario.
      * @param passwordToEncrypt Contraseña "universal" a encriptar.
      */
-    private void encryptAndStoreForPassocde(EditText field, String passwordToEncrypt) {
+    private void setupPasscode(EditText field, String passwordToEncrypt) {
         Authenticator authenticator = new PasscodeAuthenticator(field);
 
         EncryptedFile finalPass = authenticator.encrypt(passwordToEncrypt);
@@ -136,7 +136,7 @@ public class RegisterActivity extends MyActivity {
      * @param fingerprint Authenticador que contiene la contraseña del usuario.
      * @param password Contraseña "universal" a encriptar.
      */
-    private void encryptAndStoreForFingerprint(Authenticator fingerprint, String password) {
+    private void setupFingerprint(Authenticator fingerprint, String password) {
         EncryptedFile file = fingerprint.encrypt(password);
         file.setFileName("fingerprintFinalPassword");
 
