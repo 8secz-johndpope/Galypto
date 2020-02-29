@@ -1,4 +1,4 @@
-package com.example.cripto_photoaffix.Activities;
+package com.example.cripto_photoaffix.Activities.Dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

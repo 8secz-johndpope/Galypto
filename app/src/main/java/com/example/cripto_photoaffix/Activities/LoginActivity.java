@@ -15,6 +15,8 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import androidx.appcompat.app.AppCompatDialogFragment;
+import com.example.cripto_photoaffix.Activities.Dialogs.CannotAddDialog;
 import com.example.cripto_photoaffix.Authenticators.Authenticator;
 import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.AuthenticatorFactory;
 import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.FingerprintAuthenticatorFactory;
@@ -25,7 +27,6 @@ import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Threads.GalleryInitializerThread;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -103,7 +104,7 @@ public class LoginActivity extends MyActivity {
      * caso, añade lo que se esta tratando de compartir a una cola. En caso de que uno o mas
      * archivos superen los 60 Mb esos no van a ser agregados a la cola y se va a mostrar un mensaje
      * indicando que no se pueden añadir. Esto es porque el proceso de encriptado consume mucha
-     * memoria y requiere mucho poder de procesado, aproximadamente 60Mb es lo que puede aguantar
+     * memoria y requiere poder de procesado, aproximadamente 60Mb es lo que puede aguantar
      * un Galaxy S9 (Mi celular) se deberia encontrar alguna forma mejor para determinar el limite
      * dependiendo de la cantidad del dispositivo en uso.
      */
@@ -142,8 +143,8 @@ public class LoginActivity extends MyActivity {
         }
 
         if (cannotAdd != 0) {
-            CannotAddDialog dialog = new CannotAddDialog(cannotAdd);
-            dialog.show(getSupportFragmentManager(), "File size dialog.");
+            AppCompatDialogFragment dialog = new CannotAddDialog(cannotAdd);
+            dialog.show(getSupportFragmentManager(), "Cannot add dialog.");
         }
     }
 

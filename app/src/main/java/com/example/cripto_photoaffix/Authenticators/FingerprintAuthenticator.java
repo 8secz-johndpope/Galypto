@@ -3,9 +3,12 @@ package com.example.cripto_photoaffix.Authenticators;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
+
+import com.example.cripto_photoaffix.Activities.Dialogs.CouldNotDecryptDialog;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
@@ -106,6 +109,10 @@ public class FingerprintAuthenticator implements Authenticator {
 
         } catch (Exception e) {
             e.printStackTrace();
+            MyActivity activity = ActivityTransferer.getInstance().getActivity();
+
+            AppCompatDialogFragment decryptionErrorDialog = new CouldNotDecryptDialog();
+            decryptionErrorDialog.show(activity.getSupportFragmentManager(), "Decryption error");
         }
         return res;
     }

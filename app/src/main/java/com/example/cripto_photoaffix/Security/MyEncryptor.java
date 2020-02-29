@@ -1,5 +1,9 @@
 package com.example.cripto_photoaffix.Security;
 
+import androidx.appcompat.app.AppCompatDialogFragment;
+import com.example.cripto_photoaffix.Activities.Dialogs.CouldNotDecryptDialog;
+import com.example.cripto_photoaffix.Activities.MyActivity;
+import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
 import java.security.AlgorithmParameters;
 import java.security.SecureRandom;
@@ -43,6 +47,11 @@ public class MyEncryptor {
             decrypted = new String(cipher.doFinal(file.getData()), "UTF-8");
         } catch (Exception e) {
             e.printStackTrace();
+
+            MyActivity activity = ActivityTransferer.getInstance().getActivity();
+
+            AppCompatDialogFragment decryptionErrorDialog = new CouldNotDecryptDialog();
+            decryptionErrorDialog.show(activity.getSupportFragmentManager(), "Decryption error");
         }
 
         return decrypted;
