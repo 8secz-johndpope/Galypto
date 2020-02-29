@@ -259,14 +259,6 @@ public class FilesManager {
             folder.delete();
         }
 
-        folder = new File(activity.getFilesDir() + "/passwords");
-
-        if (folder.exists()) {
-            deleteFiles(folder.listFiles());
-
-            folder.delete();
-        }
-
         File password = new File(activity.getFilesDir() + "/passcodePassword");
 
         if (password.exists())
