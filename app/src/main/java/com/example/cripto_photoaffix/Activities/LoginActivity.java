@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import com.example.cripto_photoaffix.Activities.Dialogs.CannotAddDialog;
+import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Authenticators.Authenticator;
 import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.AuthenticatorFactory;
 import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.FingerprintAuthenticatorFactory;

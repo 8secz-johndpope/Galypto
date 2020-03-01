@@ -18,4 +18,18 @@ public abstract class MyActivity extends AppCompatActivity {
     public abstract void accept(ActivityVisitor activityVisitor);
 
     public abstract void refresh();
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+
+        ActivityTransferer.getInstance().setActivity(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        ActivityTransferer.getInstance().setActivity(this);
+    }
 }

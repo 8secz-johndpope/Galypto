@@ -177,9 +177,6 @@ public class GalleryActivity extends MyActivity {
     public void onRestart() {
         super.onRestart();
 
-        ActivityTransferer activityTransferer = ActivityTransferer.getInstance();
-        activityTransferer.setActivity(this);
-
         state.onRestart();
     }
 
