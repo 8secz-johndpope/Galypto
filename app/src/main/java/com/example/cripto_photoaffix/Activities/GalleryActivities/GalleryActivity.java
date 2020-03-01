@@ -180,10 +180,10 @@ public class GalleryActivity extends MyActivity {
         state.onRestart();
     }
 
-    public void onStop() {
-        super.onStop();
+    public void onResume() {
+        super.onResume();
 
-        state.onStop();
+        state.onResume();
     }
 
     public void accept(ActivityVisitor activityVisitor) {

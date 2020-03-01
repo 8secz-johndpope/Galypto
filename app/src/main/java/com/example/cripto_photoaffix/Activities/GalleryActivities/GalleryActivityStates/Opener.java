@@ -16,16 +16,15 @@ import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 
 public class Opener implements State {
     private boolean openedImage;
-    private boolean justOpened;
+    private boolean goToLogin;
 
     public Opener() {
         openedImage = false;
-        justOpened = true;
+        goToLogin = false;
     }
 
     @Override
     public void touch(MyImageButton button) {
-        justOpened = false;
         MediaVisitor visitor = new MediaOpenerVisitor();
         Media buttonMedia = button.getMedia();
         buttonMedia.accept(visitor);
@@ -34,14 +33,12 @@ public class Opener implements State {
 
     @Override
     public void back() {
-        justOpened = false;
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
         activity.onBackPressed();
     }
 
     @Override
     public void onLongPress() {
-        justOpened = false;
         ActivityVisitor visitor = new OpenerLongPressVisitor();
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
         activity.accept(visitor);
@@ -49,25 +46,20 @@ public class Opener implements State {
 
     @Override
     public void onPause() {
-        if (!openedImage && !justOpened)
-            exit();
-    }
+        if (!openedImage) {
+            Command command = new RemoveDecryptedMediaCommand();
+            command.execute();
 
-    @Override
-    public void onStop() {
-        if (!openedImage)
-            exit();
+            goToLogin = true;
+        }
     }
 
     @Override
     public void onRestart() {
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
-        if (!openedImage) {
-            IntentFactory factory = new LoginIntentFactory();
-            activity.startActivity(factory.create());
-            activity.finish();
-        }
+        if (!openedImage || goToLogin)
+            goToLogin();
         else {
             activity.refresh();
             openedImage = false;
@@ -75,15 +67,28 @@ public class Opener implements State {
     }
 
     @Override
+    public void onResume() {
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
+
+        if (goToLogin)
+            goToLogin();
+        else
+            activity.refresh();
+    }
+
+    @Override
     public State getNextState() {
         return this;
     }
 
-    private void exit() {
-        Command command = new RemoveDecryptedMediaCommand();
+    private void goToLogin() {
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
+
+        Command command = new RemoveSharedCommand();
         command.execute();
 
-        command = new RemoveSharedCommand();
-        command.execute();
+        IntentFactory factory = new LoginIntentFactory();
+        activity.startActivity(factory.create());
+        activity.finish();
     }
 }

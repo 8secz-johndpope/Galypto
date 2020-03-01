@@ -25,12 +25,12 @@ public interface State {
     public void onPause();
 
     /**
-     * Si se frena la actividad actual, se realiza esta tarea.
+     * Si se reanuda, se realiza esta tarea.
      */
-    public void onStop();
+    public void onResume();
 
     /**
-     * Si se sale de la actividad actual, se realiza esta tarea.
+     * Si se reanuda, se realiza esta tarea.
      */
     public void onRestart();
 

@@ -58,7 +58,7 @@ public class Selector implements State {
     }
 
     @Override
-    public void onStop() {}
+    public void onResume() {}
 
     @Override
     public void onRestart() {

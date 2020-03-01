@@ -176,8 +176,8 @@ public abstract class ContentViewerActivity extends MyActivity {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onStop() {
+        super.onStop();
 
         if (!wentBack) {
             Command command = new RemoveDecryptedMediaCommand();
