@@ -8,6 +8,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import com.example.cripto_photoaffix.Activities.MyActivity;
+import com.example.cripto_photoaffix.Commands.Command;
+import com.example.cripto_photoaffix.Commands.RemoveDecryptedMediaCommand;
+import com.example.cripto_photoaffix.Commands.RemoveSharedCommand;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.ButtonFactory;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.DeleteButtonFactory;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.ShareButtonFactory;
@@ -173,10 +176,29 @@ public abstract class ContentViewerActivity extends MyActivity {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (!wentBack) {
+            Command command = new RemoveDecryptedMediaCommand();
+            command.execute();
+
+            command = new RemoveSharedCommand();
+            command.execute();
+        }
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
         if (!wentBack) {
+            Command command = new RemoveDecryptedMediaCommand();
+            command.execute();
+
+            command = new RemoveSharedCommand();
+            command.execute();
+
             IntentFactory factory = new LoginIntentFactory();
             startActivity(factory.create());
             wentBack = true;

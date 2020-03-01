@@ -13,12 +13,9 @@ import com.example.cripto_photoaffix.Visitors.ActivityVisitors.SelectorBackVisit
 
 public class Selector implements State {
     private int cantSelected;
-    private State previousState;
 
-    public Selector(State previousState) {
+    public Selector() {
         cantSelected = 1;
-
-        this.previousState = previousState;
     }
 
     @Override
@@ -71,6 +68,6 @@ public class Selector implements State {
 
     @Override
     public State getNextState() {
-        return previousState;
+        return new Opener();
     }
 }

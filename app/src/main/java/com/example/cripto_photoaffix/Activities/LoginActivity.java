@@ -166,6 +166,7 @@ public class LoginActivity extends MyActivity {
      * Si el usuario no esta registrado, se inicia la actividad para registrarlo.
      */
     private void choseActivity() {
+        System.out.println("Path: " + getFilesDir());
         if (authenticators.isEmpty()) {
             FilesManager manager = FilesManager.getInstance();
             manager.removeEverything();

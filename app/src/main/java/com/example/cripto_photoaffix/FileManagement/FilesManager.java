@@ -239,7 +239,7 @@ public class FilesManager {
             for (int i = 0; i < size; i++) {
                 s = media[i];
 
-                res.add(activity.getFilesDir() + "/media/" + s);
+                res.add(activity.getCacheDir().getPath() + "/" + s);
             }
         }
 
@@ -251,28 +251,26 @@ public class FilesManager {
      */
     public void removeEverything() {
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
-        File folder = new File(activity.getFilesDir() + "/media");
+        File [] files = activity.getFilesDir().listFiles();
 
-        if (folder.exists()) {
-            deleteFiles(folder.listFiles());
-
-            folder.delete();
+        for (int i = 0; i < files.length; i++) {
+            if (files[i].isFile())
+                files[i].delete();
+            else {
+                deleteFiles(files[i].listFiles());
+                files[i].delete();
+            }
         }
 
-        File password = new File(activity.getFilesDir() + "/passcodePassword");
-
-        if (password.exists())
-            password.delete();
-
-        password = new File(activity.getFilesDir() + "/passcodeFinalPassword");
-
-        if (password.exists())
-            password.delete();
-
-        password = new File(activity.getFilesDir() + "/fingerprintFinalPassword");
-
-        if (password.exists())
-            password.delete();
+        files = activity.getCacheDir().listFiles();
+        for (int i = 0; i < files.length; i++) {
+            if (files[i].isFile())
+                files[i].delete();
+            else {
+                deleteFiles(files[i].listFiles());
+                files[i].delete();
+            }
+        }
     }
 
     /**
@@ -289,6 +287,10 @@ public class FilesManager {
 
         for (int i = 0; i < size; i++) {
             file = files[i];
+
+            if (!file.isFile())
+                deleteFiles(file.listFiles());
+
             file.delete();
         }
     }
@@ -300,8 +302,12 @@ public class FilesManager {
     public void removeFile(String path) {
         File file = new File(path);
 
-        if (file.exists())
+        if (file.exists()) {
+            if (!file.isFile())
+                deleteFiles(file.listFiles());
+
             file.delete();
+        }
     }
 
     /**

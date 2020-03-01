@@ -41,10 +41,10 @@ public class Opener implements State {
 
     @Override
     public void onLongPress() {
-        ActivityVisitor visitor = new OpenerLongPressVisitor(this);
+        justOpened = false;
+        ActivityVisitor visitor = new OpenerLongPressVisitor();
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
         activity.accept(visitor);
-        justOpened = true;
     }
 
     @Override
