@@ -49,13 +49,14 @@ public class Opener implements State {
 
     @Override
     public void onPause() {
-        if (!openedImage && !justOpened) {
-            Command command = new RemoveDecryptedMediaCommand();
-            command.execute();
+        if (!openedImage && !justOpened)
+            exit();
+    }
 
-            command = new RemoveSharedCommand();
-            command.execute();
-        }
+    @Override
+    public void onStop() {
+        if (!openedImage)
+            exit();
     }
 
     @Override
@@ -76,5 +77,13 @@ public class Opener implements State {
     @Override
     public State getNextState() {
         return this;
+    }
+
+    private void exit() {
+        Command command = new RemoveDecryptedMediaCommand();
+        command.execute();
+
+        command = new RemoveSharedCommand();
+        command.execute();
     }
 }

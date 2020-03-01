@@ -58,6 +58,9 @@ public class Selector implements State {
     }
 
     @Override
+    public void onStop() {}
+
+    @Override
     public void onRestart() {
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
 

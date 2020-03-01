@@ -7,12 +7,15 @@ import java.util.List;
 public class RemoveSharedCommand extends Command {
     @Override
     public void execute() {
+        System.out.println("Executing shared removal.");
         FilesManager manager = FilesManager.getInstance();
         List<String> media = manager.getShared();
         int size = media.size();
 
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < size; i++) {
+            System.out.println("Removing: " + media.get(i));
             manager.removeFile(media.get(i));
+        }
     }
 
     /**
