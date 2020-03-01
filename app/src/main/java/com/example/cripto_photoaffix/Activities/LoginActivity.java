@@ -47,11 +47,6 @@ public class LoginActivity extends MyActivity {
 
         toEncrypt = new ArrayList<Uri>();
         field = findViewById(R.id.loginPasscode);
-        authenticators = new Vector<Authenticator>();
-
-        initializeAuthenticators();
-        choseActivity();
-        checkForIncomingIntents();
     }
 
     /**
@@ -229,6 +224,24 @@ public class LoginActivity extends MyActivity {
     public void onRestart() {
         super.onRestart();
 
+        checkForIncomingIntents();
+
+        for (Authenticator auth: authenticators)
+            auth.initialize();
+    }
+
+    /**
+     * Inicia los autenticadores si es posible o inicia la activiad de registro
+     * finalmente, busca imagenes o videos que se esten compartiendo. Esto se realiza cada
+     * vez que se vuelve a la actividad o se inicia.
+     */
+    public void onResume() {
+        super.onResume();
+
+        authenticators = new Vector<Authenticator>();
+
+        initializeAuthenticators();
+        choseActivity();
         checkForIncomingIntents();
     }
 }

@@ -32,7 +32,7 @@ public class FingerprintAuthenticator implements Authenticator {
     protected BiometricPrompt.PromptInfo promptInfo;
 
     public FingerprintAuthenticator() {
-        if (canBeUsed())
+        if (canBeUsed() && filesReady())
             initialize();
     }
 
