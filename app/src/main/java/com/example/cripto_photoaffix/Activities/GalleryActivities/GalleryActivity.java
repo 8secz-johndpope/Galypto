@@ -7,10 +7,9 @@ import android.os.Bundle;
 import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivityStates.Opener;
 import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivityStates.State;
 import com.example.cripto_photoaffix.Activities.MyActivity;
-import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Commands.Command;
 import com.example.cripto_photoaffix.Commands.DeleteCommand;
-import com.example.cripto_photoaffix.Commands.ShareMultipleCommand;
+import com.example.cripto_photoaffix.Commands.ShareCommand;
 import com.example.cripto_photoaffix.Commands.StoreCommand;
 import com.example.cripto_photoaffix.GalleryTransferer;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
@@ -224,7 +223,7 @@ public class GalleryActivity extends MyActivity {
         actionButtons.add(button);
 
         button = findViewById(R.id.share);
-        button.setOnClickListener(new FloatingButtonListener(new ShareMultipleCommand()));
+        button.setOnClickListener(new FloatingButtonListener(new ShareCommand()));
         button.hide();
         actionButtons.add(button);
     }

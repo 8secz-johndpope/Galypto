@@ -8,10 +8,10 @@ import android.widget.LinearLayout;
 import androidx.core.content.ContextCompat;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
+import com.example.cripto_photoaffix.Commands.Command;
+import com.example.cripto_photoaffix.Commands.ShareCommand;
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.MediaTransferer;
-import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
-import com.example.cripto_photoaffix.Visitors.MediaVisitors.ShareVisitor;
 
 public class ShareButtonFactory extends LayoutButtonFactory {
     public ShareButtonFactory(LinearLayout layout, int layoutID) {
@@ -38,9 +38,9 @@ public class ShareButtonFactory extends LayoutButtonFactory {
         public void onClick(View v) {
             Media media = MediaTransferer.getInstance().getMedia();
 
-            MediaVisitor visitor = new ShareVisitor();
-
-            media.accept(visitor);
+            Command share = new ShareCommand();
+            share.addMedia(media);
+            share.execute();
         }
     }
 }

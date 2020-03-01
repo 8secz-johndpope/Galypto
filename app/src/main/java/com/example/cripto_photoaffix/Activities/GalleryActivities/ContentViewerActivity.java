@@ -182,9 +182,6 @@ public abstract class ContentViewerActivity extends MyActivity {
         if (!wentBack) {
             Command command = new RemoveDecryptedMediaCommand();
             command.execute();
-
-            command = new RemoveSharedCommand();
-            command.execute();
         }
     }
 
