@@ -26,6 +26,11 @@ public class Video extends Media {
 
     @Override
     public File share(String sharingPath) {
+        File path = new File(sharingPath);
+
+        if (!path.exists())
+            path.mkdir();
+
         File toShare = new File(sharingPath, filename + ".mp4");
 
         for (int i = 0; toShare.exists(); i++)
