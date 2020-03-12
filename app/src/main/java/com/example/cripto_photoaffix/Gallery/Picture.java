@@ -30,27 +30,12 @@ public class Picture extends Media {
         if (!path.exists())
             path.mkdir();
 
-        File file = new File(sharingPath, filename + ".jpg");
+        File toShare = new File(sharingPath, filename + ".jpg");
 
-        int i = 0;
+        for (int i = 0; toShare.exists(); i++)
+            toShare = new File(sharingPath, filename + i + ".jpg");
 
-        while (file.exists()) {
-            file = new File(sharingPath, filename + i + ".jpg");
-            i++;
-        }
-
-        try {
-
-            FileOutputStream out = new FileOutputStream(file);
-            preview.compress(Bitmap.CompressFormat.PNG, 100, out);
-
-            out.flush();
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return file;
+        return FilesManager.copy(getFullPath(), toShare.getPath());
     }
 
     @Override
