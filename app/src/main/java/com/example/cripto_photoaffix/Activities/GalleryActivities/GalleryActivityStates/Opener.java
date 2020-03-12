@@ -84,9 +84,6 @@ public class Opener implements State {
     private void goToLogin() {
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
-        Command command = new RemoveSharedCommand();
-        command.execute();
-
         IntentFactory factory = new LoginIntentFactory();
         activity.startActivity(factory.create());
         activity.finish();
