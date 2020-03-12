@@ -4,7 +4,6 @@ import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Commands.Command;
 import com.example.cripto_photoaffix.Commands.RemoveDecryptedMediaCommand;
-import com.example.cripto_photoaffix.Commands.RemoveSharedCommand;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.LoginIntentFactory;
 import com.example.cripto_photoaffix.Gallery.Media;

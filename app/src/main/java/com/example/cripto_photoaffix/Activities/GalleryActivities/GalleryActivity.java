@@ -179,6 +179,7 @@ public class GalleryActivity extends MyActivity {
         state.onRestart();
     }
 
+    @Override
     public void onResume() {
         super.onResume();
 
