@@ -15,7 +15,7 @@ public class EncryptedPassword extends EncryptedFile {
     }
 
     public Media accept(EncryptedFileVisitor visitor) {
-        return visitor.visit(this);
+        return null;
     }
 
     public EncryptedFile clone() {
