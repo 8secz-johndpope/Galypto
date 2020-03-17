@@ -161,7 +161,7 @@ public class LoginActivity extends MyActivity {
     /**
      * Si el usuario no esta registrado, se inicia la actividad para registrarlo.
      */
-    private void choseActivity() {
+    private void chooseActivity() {
         System.out.println("Path: " + getFilesDir());
         if (authenticators.isEmpty()) {
             FilesManager manager = FilesManager.getInstance();
@@ -241,7 +241,7 @@ public class LoginActivity extends MyActivity {
         authenticators = new Vector<Authenticator>();
 
         initializeAuthenticators();
-        choseActivity();
+        chooseActivity();
         checkForIncomingIntents();
     }
 }
