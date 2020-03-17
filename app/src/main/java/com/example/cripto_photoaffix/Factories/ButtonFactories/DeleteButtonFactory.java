@@ -21,7 +21,6 @@ public class DeleteButtonFactory extends LayoutButtonFactory {
 
     public ImageButton create() {
         final MyActivity activity = ActivityTransferer.getInstance().getActivity();
-        final Media media = MediaTransferer.getInstance().getMedia();
 
         ImageButton button = layout.findViewById(layoutID);
         Drawable icon = ContextCompat.getDrawable(activity, android.R.drawable.ic_menu_delete);
@@ -29,6 +28,8 @@ public class DeleteButtonFactory extends LayoutButtonFactory {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Media media = MediaTransferer.getInstance().getMedia();
+
                 Command delete = new DeleteCommand();
                 delete.addMedia(media);
                 delete.execute();

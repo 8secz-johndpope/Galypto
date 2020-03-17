@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import com.example.cripto_photoaffix.Activities.Dialogs.CannotAddDialog;
-import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Authenticators.Authenticator;
 import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.AuthenticatorFactory;
 import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.FingerprintAuthenticatorFactory;
@@ -50,7 +49,7 @@ public class LoginActivity extends MyActivity {
     }
 
     /**
-     * Un visitor llama a este metodo si ingreso correctamente la contraseña o si las biometricas
+     * Este metodo es llamado si el usuario ingreso correctamente la contraseña o si las biometricas
      * aceptaron al usuario.
      * @param password Contraseña ingresada por el usuario/biometricas.
      */
@@ -218,7 +217,8 @@ public class LoginActivity extends MyActivity {
     }
 
     /**
-     * Al reiniciar la actividad, se fija si se estan compartiendo elementos.
+     * Al reiniciar la actividad, se fija si se estan compartiendo elementos y reinicia los
+     * autenticadores.
      */
     @Override
     public void onRestart() {

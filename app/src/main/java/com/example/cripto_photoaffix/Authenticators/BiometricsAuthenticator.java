@@ -23,15 +23,10 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 
-/**
- * Quiza esta clase se deberia llamar BiometricAuthenticator, ya que en Android 10 en adelante
- * permite utilizar diferentes formas de biometricas en caso de estar disponibles, pero inicialmente
- * la app fue diseñada para Android 9.
- */
-public class FingerprintAuthenticator implements Authenticator {
+public class BiometricsAuthenticator implements Authenticator {
     protected BiometricPrompt.PromptInfo promptInfo;
 
-    public FingerprintAuthenticator() {
+    public BiometricsAuthenticator() {
         if (canBeUsed() && filesReady())
             initialize();
     }
@@ -154,7 +149,7 @@ public class FingerprintAuthenticator implements Authenticator {
             super.onAuthenticationSucceeded(result);
 
             MyActivity activity = ActivityTransferer.getInstance().getActivity();
-            ActivityVisitor activityVisitor = new FingerprintSuccessfulAuthenticationActivityVisitor(FingerprintAuthenticator.this);
+            ActivityVisitor activityVisitor = new FingerprintSuccessfulAuthenticationActivityVisitor(BiometricsAuthenticator.this);
             activity.accept(activityVisitor);
         }
     }

@@ -78,11 +78,11 @@ public class GalleryActivity extends MyActivity {
     @Override
     public void refresh() {
         List<Media> galleryMedia = gallery.getMedia();
-        MyImageButton button;
         FilesManager manager = FilesManager.getInstance();
         Queue<Media> toRemove = new LinkedTransferQueue<Media>();
         View.OnLongClickListener longClickListener = new LongClickListener();
 
+        MyImageButton button;
         Media media;
         int size = galleryMedia.size();
 

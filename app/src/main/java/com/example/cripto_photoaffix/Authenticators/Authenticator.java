@@ -5,7 +5,7 @@ import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
 public interface Authenticator {
 
     /**
-     * Al finalizar la autenticacion se llama a este metodo.
+     * Al identificarse se llama a este metodo.
      */
     public void authenticate();
 

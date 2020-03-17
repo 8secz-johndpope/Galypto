@@ -5,8 +5,6 @@ import android.graphics.BitmapFactory;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 public class Picture extends Media {
     public Picture(String path) {
@@ -59,7 +57,7 @@ public class Picture extends Media {
 
         int value = preview.getHeight() > preview.getWidth()? preview.getWidth(): preview.getHeight();
 
-        if (discount*value > 440) {
+        if (discount * value > 440) {
             while (discount * value > 440)
                 discount = discount * 0.5;
         }
