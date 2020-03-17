@@ -2,7 +2,6 @@ package com.example.cripto_photoaffix.Visitors.EncryptedFilesVisitors;
 
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.Gallery.Picture;
-import com.example.cripto_photoaffix.Gallery.Text;
 import com.example.cripto_photoaffix.Gallery.Video;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedPassword;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedPicture;
@@ -45,6 +44,6 @@ public class MediaSelectorVisitor implements EncryptedFileVisitor {
     }
 
     public Media visit(EncryptedPassword password) {
-        return new Text();
+        return null;
     }
 }
