@@ -8,5 +8,4 @@ import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedVideo;
 public interface EncryptedFileVisitor {
     public Media visit(EncryptedPicture encryptedPicture);
     public Media visit(EncryptedVideo encryptedVideo);
-    public Media visit(EncryptedPassword encryptedPassword);
 }
