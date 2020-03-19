@@ -35,6 +35,7 @@ public class LoginActivity extends MyActivity {
     private EditText field;
     private Vector<Authenticator> authenticators;
     private List<Uri> toEncrypt;
+    private boolean openingGallery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,8 @@ public class LoginActivity extends MyActivity {
 
         toEncrypt = new ArrayList<Uri>();
         field = findViewById(R.id.loginPasscode);
+
+        openingGallery = false;
     }
 
     /**
@@ -63,6 +66,8 @@ public class LoginActivity extends MyActivity {
 
         field.setEnabled(false);
 
+        openingGallery = true;
+        System.out.println("Opening Gallery!!!!!!!!!!!!!!!!!!!");
         GalleryInitializerThread galleryInitializer = new GalleryInitializerThread(toEncrypt, password);
         galleryInitializer.start();
     }
@@ -224,10 +229,13 @@ public class LoginActivity extends MyActivity {
     public void onRestart() {
         super.onRestart();
 
-        checkForIncomingIntents();
+        if (!openingGallery) {
+            System.out.println("On restart");
+            checkForIncomingIntents();
 
-        for (Authenticator auth: authenticators)
-            auth.initialize();
+            for (Authenticator auth : authenticators)
+                auth.initialize();
+        }
     }
 
     /**
@@ -238,10 +246,13 @@ public class LoginActivity extends MyActivity {
     public void onResume() {
         super.onResume();
 
-        authenticators = new Vector<Authenticator>();
+        if (!openingGallery) {
+            System.out.println("On resume");
+            authenticators = new Vector<Authenticator>();
 
-        initializeAuthenticators();
-        chooseActivity();
-        checkForIncomingIntents();
+            initializeAuthenticators();
+            chooseActivity();
+            checkForIncomingIntents();
+        }
     }
 }
