@@ -12,7 +12,6 @@ import com.example.cripto_photoaffix.Commands.DeleteCommand;
 import com.example.cripto_photoaffix.Commands.ShareCommand;
 import com.example.cripto_photoaffix.Commands.StoreCommand;
 import com.example.cripto_photoaffix.GalleryTransferer;
-import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Gallery.Gallery;
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.MyImageButton;
@@ -31,8 +30,6 @@ import com.example.cripto_photoaffix.R;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
-import java.util.concurrent.LinkedTransferQueue;
 
 public class GalleryActivity extends MyActivity {
 
