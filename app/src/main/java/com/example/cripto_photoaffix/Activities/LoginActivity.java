@@ -67,7 +67,7 @@ public class LoginActivity extends MyActivity {
         field.setEnabled(false);
 
         openingGallery = true;
-        System.out.println("Opening Gallery!!!!!!!!!!!!!!!!!!!");
+
         GalleryInitializerThread galleryInitializer = new GalleryInitializerThread(toEncrypt, password);
         galleryInitializer.start();
     }
@@ -230,7 +230,6 @@ public class LoginActivity extends MyActivity {
         super.onRestart();
 
         if (!openingGallery) {
-            System.out.println("On restart");
             checkForIncomingIntents();
 
             for (Authenticator auth : authenticators)
@@ -247,7 +246,6 @@ public class LoginActivity extends MyActivity {
         super.onResume();
 
         if (!openingGallery) {
-            System.out.println("On resume");
             authenticators = new Vector<Authenticator>();
 
             initializeAuthenticators();
