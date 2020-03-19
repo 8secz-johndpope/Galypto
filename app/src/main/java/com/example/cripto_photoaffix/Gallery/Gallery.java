@@ -258,6 +258,10 @@ public class Gallery {
         return res;
     }
 
+    /**
+     * Elimina la "media" dada de la galeria.
+     * @param media Media a eliminar.
+     */
     public void remove(Media media) {
         Command command = new DeleteCommand();
         command.addMedia(media);
