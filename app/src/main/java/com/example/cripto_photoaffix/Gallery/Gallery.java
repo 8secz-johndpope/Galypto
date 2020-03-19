@@ -1,11 +1,16 @@
 package com.example.cripto_photoaffix.Gallery;
 
 import android.net.Uri;
+
+import com.example.cripto_photoaffix.Commands.Command;
+import com.example.cripto_photoaffix.Commands.DeleteCommand;
 import com.example.cripto_photoaffix.FileManagement.Deserialazator;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
 import com.example.cripto_photoaffix.Threads.DecryptorThread;
 import com.example.cripto_photoaffix.Threads.EncryptorThread;
+
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
@@ -50,7 +55,25 @@ public class Gallery {
     }
 
     public List<Media> getMedia() {
-        return media;
+        List<Media> list = new ArrayList<Media>();
+        Queue<Media> toRemove = new ArrayDeque<Media>();
+
+        int size = media.size();
+        Media actual;
+
+        for (int i = 0; i < size; i++) {
+            actual = media.get(i);
+
+            if (FilesManager.getInstance().exists(actual.getFullPath()))
+                list.add(actual);
+            else
+                toRemove.add(actual);
+        }
+
+        while (!toRemove.isEmpty())
+            media.remove(toRemove.poll());
+
+        return list;
     }
 
     /**
@@ -236,6 +259,10 @@ public class Gallery {
     }
 
     public void remove(Media media) {
+        Command command = new DeleteCommand();
+        command.addMedia(media);
+        command.execute();
+
         this.media.remove(media);
     }
 }

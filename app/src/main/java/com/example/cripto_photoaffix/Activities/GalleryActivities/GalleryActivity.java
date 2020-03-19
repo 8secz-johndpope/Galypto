@@ -78,46 +78,43 @@ public class GalleryActivity extends MyActivity {
     @Override
     public void refresh() {
         List<Media> galleryMedia = gallery.getMedia();
-        FilesManager manager = FilesManager.getInstance();
-        Queue<Media> toRemove = new LinkedTransferQueue<Media>();
         View.OnLongClickListener longClickListener = new LongClickListener();
 
         MyImageButton button;
         Media media;
         int size = galleryMedia.size();
+        List<Media> toRemove = new ArrayList<Media>(buttons.keySet());
 
         for (int i = 0; i < size; i++) {
             media = galleryMedia.get(i);
 
-            if (manager.exists(media.getFullPath())) {
+            if (buttons.get(media) == null) {
+                button = new MyImageButton(media);
 
-                if (buttons.get(media) == null) {
-                    button = new MyImageButton(media);
+                button.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-                    button.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                gridLayout.addView(button, getScreenWidth() / 3, getScreenHeigth() / 6);
 
-                    gridLayout.addView(button, getScreenWidth() / 3, getScreenHeigth() / 6);
+                button.setOnClickListener(new ButtonListener(button));
+                button.setOnLongClickListener(longClickListener);
 
-                    button.setOnClickListener(new ButtonListener(button));
-                    button.setOnLongClickListener(longClickListener);
+                buttons.put(media, button);
 
-                    buttons.put(media, button);
-
-                    button.setBackgroundColor(Color.BLACK);
-                }
-
+                button.setBackgroundColor(Color.BLACK);
             }
-            else {
-                toRemove.add(media);
-
-                gridLayout.removeView(buttons.get(media));
-
-                buttons.remove(media);
-            }
+            else
+                toRemove.remove(media);
         }
 
-        while (!toRemove.isEmpty())
-            gallery.remove(toRemove.poll());
+        size = toRemove.size();
+
+        for (int i = 0; i < size; i++) {
+            media = toRemove.get(i);
+
+            gridLayout.removeView(buttons.get(media));
+
+            buttons.remove(media);
+        }
     }
 
     /**
