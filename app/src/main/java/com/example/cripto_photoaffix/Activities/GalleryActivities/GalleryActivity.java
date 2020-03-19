@@ -85,7 +85,7 @@ public class GalleryActivity extends MyActivity {
         for (int i = 0; i < size; i++) {
             media = galleryMedia.get(i);
 
-            if (buttons.get(media) == null) {
+            if (buttons.get(media) == null) {          //Si no hay un boton en la pantalla, lo añado
                 button = new MyImageButton(media);
 
                 button.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -99,13 +99,13 @@ public class GalleryActivity extends MyActivity {
 
                 button.setBackgroundColor(Color.BLACK);
             }
-            else
-                toRemove.remove(media);
+            else                                      //Si hay un boton en la pantalla, lo saco de
+                toRemove.remove(media);               //la lista a eliminar botones.
         }
 
         size = toRemove.size();
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {              //Elimino todos los botones que hay que eliminar.
             media = toRemove.get(i);
 
             gridLayout.removeView(buttons.get(media));
