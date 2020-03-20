@@ -63,6 +63,6 @@
         android:clickable="true"
         app:layout_anchor="@+id/app_bar"
         app:layout_anchorGravity="bottom|center"
-        app:srcCompat="@android:drawable/stat_sys_download_done" />
+        app:srcCompat="@android:drawable/ic_menu_save" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

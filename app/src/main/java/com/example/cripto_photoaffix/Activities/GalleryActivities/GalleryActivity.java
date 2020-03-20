@@ -246,7 +246,7 @@ public class GalleryActivity extends MyActivity {
     }
 
     /**
-     * Listener de tocado en las imagenes.
+     * ButtonListener de tocado en las imagenes.
      */
     private class ButtonListener implements View.OnClickListener {
         private MyImageButton button;
@@ -262,7 +262,7 @@ public class GalleryActivity extends MyActivity {
     }
 
     /**
-     * Listener de tocado largo en las imagenes.
+     * ButtonListener de tocado largo en las imagenes.
      */
     private class LongClickListener implements View.OnLongClickListener {
         public boolean onLongClick(View view) {
@@ -285,7 +285,7 @@ public class GalleryActivity extends MyActivity {
     }
 
     /**
-     * Listener de los botones flotantes, cada uno tiene su propio comando.
+     * ButtonListener de los botones flotantes, cada uno tiene su propio comando.
      */
     private class FloatingButtonListener implements View.OnClickListener {
         private Command task;
