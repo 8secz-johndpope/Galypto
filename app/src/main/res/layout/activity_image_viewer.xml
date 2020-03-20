@@ -39,13 +39,14 @@
             tools:ignore="UselessParent">
 
             <ImageButton
-                style="?metaButtonBarButtonStyle"
                 android:id="@+id/share_button"
+                style="?metaButtonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/ShareButton"
-                android:contentDescription="@string/share_button" />
+                android:contentDescription="@string/share_button"
+                android:src="@android:drawable/ic_menu_share"
+                android:text="@string/ShareButton" />
 
             <ImageButton
                 android:id="@+id/save_button"
@@ -53,8 +54,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/save_to_device"
-                android:contentDescription="@string/save_button" />
+                android:contentDescription="@string/save_button"
+                android:src="@android:drawable/ic_menu_save"
+                android:text="@string/save_to_device" />
 
             <ImageButton
                 android:id="@+id/delete_button"
@@ -62,8 +64,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/Delete"
-                android:contentDescription="@string/delete_button" />
+                android:contentDescription="@string/delete_button"
+                android:src="@android:drawable/ic_menu_delete"
+                android:text="@string/Delete" />
 
             <ImageButton
                 android:id="@+id/rotate_left_button"

@@ -19,14 +19,10 @@ public class ShareButtonFactory extends LayoutButtonFactory {
     }
 
     public ImageButton create() {
-        MyActivity activity = ActivityTransferer.getInstance().getActivity();
-
         ImageButton button = layout.findViewById(layoutID);
-        Drawable icon = ContextCompat.getDrawable(activity, android.R.drawable.ic_menu_share);
 
         button.setOnClickListener(new Listener());
 
-        button.setImageDrawable(icon);
         button.setBackgroundColor(Color.TRANSPARENT);
 
         return button;

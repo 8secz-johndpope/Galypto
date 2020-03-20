@@ -18,14 +18,10 @@ public class StoreButtonFactory extends LayoutButtonFactory {
     }
 
     public ImageButton create() {
-        MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
         ImageButton button = layout.findViewById(layoutID);
-        Drawable icon = ContextCompat.getDrawable(activity, android.R.drawable.stat_sys_download_done);
 
         button.setOnClickListener(new Listener());
-
-        button.setImageDrawable(icon);
         button.setBackgroundColor(Color.TRANSPARENT);
 
         return button;

@@ -34,25 +34,31 @@
             tools:ignore="UselessParent">
 
             <ImageButton
-                style="?metaButtonBarButtonStyle"
                 android:id="@+id/share_button"
+                style="?metaButtonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:src="@android:drawable/ic_menu_share"
+                android:contentDescription="@string/share_button" />
 
             <ImageButton
                 android:id="@+id/save_button"
                 style="?metaButtonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:src="@android:drawable/ic_menu_save"
+                android:contentDescription="@string/save_button" />
 
             <ImageButton
                 android:id="@+id/delete_button"
                 style="?metaButtonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:src="@android:drawable/ic_menu_delete"
+                android:contentDescription="@string/delete_button" />
 
         </LinearLayout>
 

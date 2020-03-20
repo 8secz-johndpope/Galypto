@@ -23,7 +23,6 @@ public class DeleteButtonFactory extends LayoutButtonFactory {
         final MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
         ImageButton button = layout.findViewById(layoutID);
-        Drawable icon = ContextCompat.getDrawable(activity, android.R.drawable.ic_menu_delete);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,7 +35,6 @@ public class DeleteButtonFactory extends LayoutButtonFactory {
                 activity.onBackPressed();
             }
         });
-        button.setImageDrawable(icon);
         button.setBackgroundColor(Color.TRANSPARENT);
 
         return button;
