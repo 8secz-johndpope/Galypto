@@ -1,13 +1,16 @@
 package com.example.cripto_photoaffix.Activities.GalleryActivities;
 
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import com.example.cripto_photoaffix.R;
 
 public class ImageViewerActivity extends ContentViewerActivity {
     protected ImageView imageView;
+    private int rotated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,8 @@ public class ImageViewerActivity extends ContentViewerActivity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         findViewById(R.id.delete_button).setOnTouchListener(mDelayHideTouchListener);
+
+        rotated = 0;
     }
 
     @Override
@@ -43,5 +48,38 @@ public class ImageViewerActivity extends ContentViewerActivity {
     public void loadMedia() {
         imageView = (ImageView) mContentView;
         imageView.setImageBitmap(BitmapFactory.decodeFile(media.getFullPath()));
+    }
+
+    @Override
+    protected void initializeButtons() {
+        super.initializeButtons();
+
+        ImageButton button = findViewById(R.id.rotate_right_button);
+        button.setBackgroundColor(Color.TRANSPARENT);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rotated += 1;
+
+                rotate();
+            }
+        });
+
+        button = findViewById(R.id.rotate_left_button);
+        button.setBackgroundColor(Color.TRANSPARENT);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rotated -= 1;
+
+                rotate();
+            }
+        });
+    }
+
+    private void rotate() {
+        imageView.setRotation(90f*rotated);
     }
 }

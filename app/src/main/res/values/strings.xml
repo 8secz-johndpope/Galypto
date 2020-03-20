@@ -125,4 +125,8 @@
     <string name="inserte_contrase_a">Inserte contraseña</string>
     <string name="registro">Registro</string>
     <string name="inserte_contrase_a_numerica">Inserte contraseña numerica</string>
+    <string name="rotate">rotate</string>
+    <string name="delete_button">delete_button</string>
+    <string name="save_button">save_button</string>
+    <string name="share_button">share_button</string>
 </resources>
