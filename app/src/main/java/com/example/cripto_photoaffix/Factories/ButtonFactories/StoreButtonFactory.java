@@ -1,9 +1,7 @@
 package com.example.cripto_photoaffix.Factories.ButtonFactories;
 
-import android.graphics.Color;
-import android.widget.ImageButton;
+import android.view.View;
 import android.widget.LinearLayout;
-
 import com.example.cripto_photoaffix.Commands.StoreCommand;
 
 public class StoreButtonFactory extends LayoutButtonFactory {
@@ -11,13 +9,8 @@ public class StoreButtonFactory extends LayoutButtonFactory {
         super(layout, layoutID);
     }
 
-    public ImageButton create() {
-
-        ImageButton button = layout.findViewById(layoutID);
-
-        button.setOnClickListener(new ButtonListener(new StoreCommand()));
-        button.setBackgroundColor(Color.TRANSPARENT);
-
-        return button;
+    @Override
+    public View.OnClickListener listener() {
+        return new ButtonListener(new StoreCommand());
     }
 }

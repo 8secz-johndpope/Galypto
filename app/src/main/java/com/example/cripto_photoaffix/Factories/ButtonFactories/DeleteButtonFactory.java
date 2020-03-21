@@ -1,8 +1,6 @@
 package com.example.cripto_photoaffix.Factories.ButtonFactories;
 
-import android.graphics.Color;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
@@ -14,13 +12,9 @@ public class DeleteButtonFactory extends LayoutButtonFactory {
         super(layout, layoutID);
     }
 
-    public ImageButton create() {
-        ImageButton button = layout.findViewById(layoutID);
-
-        button.setOnClickListener(new DeleteListener());
-        button.setBackgroundColor(Color.TRANSPARENT);
-
-        return button;
+    @Override
+    protected View.OnClickListener listener() {
+        return new DeleteListener();
     }
 
     private class DeleteListener extends ButtonListener {
