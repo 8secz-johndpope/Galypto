@@ -7,10 +7,10 @@ import android.os.Bundle;
 import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivityStates.Opener;
 import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivityStates.State;
 import com.example.cripto_photoaffix.Activities.MyActivity;
-import com.example.cripto_photoaffix.Commands.Command;
-import com.example.cripto_photoaffix.Commands.DeleteCommand;
-import com.example.cripto_photoaffix.Commands.ShareCommand;
-import com.example.cripto_photoaffix.Commands.StoreCommand;
+import com.example.cripto_photoaffix.Factories.ButtonFactories.ButtonFactory;
+import com.example.cripto_photoaffix.Factories.ButtonFactories.GalleryButtons.GalleryDeleteButtonFactory;
+import com.example.cripto_photoaffix.Factories.ButtonFactories.GalleryButtons.GalleryShareButtonFactory;
+import com.example.cripto_photoaffix.Factories.ButtonFactories.GalleryButtons.GalleryStoreButtonFactory;
 import com.example.cripto_photoaffix.GalleryTransferer;
 import com.example.cripto_photoaffix.Gallery.Gallery;
 import com.example.cripto_photoaffix.Gallery.Media;
@@ -25,7 +25,11 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.gridlayout.widget.GridLayout;
+
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+
 import com.example.cripto_photoaffix.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +40,7 @@ public class GalleryActivity extends MyActivity {
     private Gallery gallery;
     private GridLayout gridLayout;
     private Map<Media, MyImageButton> buttons;
-    private List<FloatingActionButton> actionButtons;
+    private List<ImageButton> actionButtons;
     private State state;
 
     @Override
@@ -70,6 +74,14 @@ public class GalleryActivity extends MyActivity {
             button.setSelected(false);
             button.setAlpha(1f);
         }
+    }
+
+    /**
+     * Retorna el estado actual.
+     * @return Estado actual.
+     */
+    public State getState() {
+        return state;
     }
 
     @Override
@@ -120,16 +132,14 @@ public class GalleryActivity extends MyActivity {
     public void hideActionButtons() {
         CoordinatorLayout.LayoutParams params;
         int size = actionButtons.size();
-        FloatingActionButton b;
+        ImageButton b;
 
 
         for (int i = 0; i < size; i++) {
             b = actionButtons.get(i);
 
-            params = (CoordinatorLayout.LayoutParams) b.getLayoutParams();
-            params.setAnchorId(View.NO_ID);
-            b.setLayoutParams(params);
-            b.hide();
+            b.setVisibility(View.INVISIBLE);
+            b.setClickable(false);
         }
     }
 
@@ -139,16 +149,13 @@ public class GalleryActivity extends MyActivity {
     public void showActionButtons() {
         CoordinatorLayout.LayoutParams params;
         int size = actionButtons.size();
-        FloatingActionButton b;
+        ImageButton b;
 
         for (int i = 0; i < size; i++) {
             b = actionButtons.get(i);
 
-            params = (CoordinatorLayout.LayoutParams) b.getLayoutParams();
-            params.setBehavior(new FloatingActionButton.Behavior());
-            params.setAnchorId(R.id.app_bar);
-            b.setLayoutParams(params);
-            b.show();
+            b.setVisibility(View.VISIBLE);
+            b.setClickable(true);
         }
     }
 
@@ -205,21 +212,23 @@ public class GalleryActivity extends MyActivity {
      * Inicializa los botones flotantes (compartir, eliminar y borrar).
      */
     private void initializeFloatingButtons() {
-        actionButtons = new ArrayList<FloatingActionButton>();
+        actionButtons = new ArrayList<ImageButton>();
 
-        FloatingActionButton button = findViewById(R.id.remove);
-        button.setOnClickListener(new FloatingButtonListener(new DeleteCommand()));
-        button.hide();
+        View layout = findViewById(R.id.constraintLay);
+
+        ButtonFactory factory = new GalleryDeleteButtonFactory(layout, R.id.delete, buttons);
+        ImageButton button = factory.create();
+        button.setVisibility(View.INVISIBLE);
         actionButtons.add(button);
 
-        button = findViewById(R.id.store);
-        button.setOnClickListener(new FloatingButtonListener(new StoreCommand()));
-        button.hide();
+        factory = new GalleryStoreButtonFactory(layout, R.id.store, buttons);
+        button = factory.create();
+        button.setVisibility(View.INVISIBLE);
         actionButtons.add(button);
 
-        button = findViewById(R.id.share);
-        button.setOnClickListener(new FloatingButtonListener(new ShareCommand()));
-        button.hide();
+        factory = new GalleryShareButtonFactory(layout, R.id.share, buttons);
+        button = factory.create();
+        button.setVisibility(View.INVISIBLE);
         actionButtons.add(button);
     }
 
@@ -283,10 +292,8 @@ public class GalleryActivity extends MyActivity {
             return true;
         }
     }
+    /*
 
-    /**
-     * ButtonListener de los botones flotantes, cada uno tiene su propio comando.
-     */
     private class FloatingButtonListener implements View.OnClickListener {
         private Command task;
 
@@ -321,4 +328,5 @@ public class GalleryActivity extends MyActivity {
             state = state.getNextState();
         }
     }
+    */
 }

@@ -119,4 +119,7 @@
     <string name="delete_button">delete_button</string>
     <string name="save_button">save_button</string>
     <string name="share_button">share_button</string>
+    <string name="delete">Delete</string>
+    <string name="store">Store</string>
+    <string name="share">Share</string>
 </resources>

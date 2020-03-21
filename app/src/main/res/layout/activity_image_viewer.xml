@@ -40,7 +40,6 @@
 
             <ImageButton
                 android:id="@+id/share_button"
-                style="?metaButtonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -50,7 +49,6 @@
 
             <ImageButton
                 android:id="@+id/save_button"
-                style="?metaButtonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -60,7 +58,6 @@
 
             <ImageButton
                 android:id="@+id/delete_button"
-                style="?metaButtonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -70,7 +67,6 @@
 
             <ImageButton
                 android:id="@+id/rotate_left_button"
-                style="?metaButtonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
