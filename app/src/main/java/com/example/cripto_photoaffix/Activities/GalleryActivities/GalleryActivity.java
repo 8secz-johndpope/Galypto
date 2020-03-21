@@ -290,7 +290,7 @@ public class GalleryActivity extends MyActivity {
     private class FloatingButtonListener implements View.OnClickListener {
         private Command task;
 
-        public FloatingButtonListener(Command task) {
+        private FloatingButtonListener(Command task) {
             this.task = task;
         }
 
