@@ -1,10 +1,11 @@
-package com.example.cripto_photoaffix.Factories.ButtonFactories;
+package com.example.cripto_photoaffix.Factories.ButtonFactories.ViewerButtons;
 
 import android.view.View;
 import android.widget.LinearLayout;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Commands.DeleteCommand;
+import com.example.cripto_photoaffix.Factories.ButtonFactories.LayoutButtonFactory;
 
 public class DeleteButtonFactory extends LayoutButtonFactory {
 

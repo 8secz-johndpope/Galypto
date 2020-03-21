@@ -1,4 +1,4 @@
-package com.example.cripto_photoaffix.Factories.ButtonFactories;
+package com.example.cripto_photoaffix.Factories.ButtonFactories.ViewerButtons;
 
 import android.view.View;
 import com.example.cripto_photoaffix.Commands.Command;

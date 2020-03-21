@@ -8,7 +8,7 @@ public class GalleryButtonsVisitor implements ActivityVisitor {
     public void visit(GalleryActivity activity) {
         activity.refresh();
 
-        activity.hideActionButtons();
+        activity.hideButtons();
 
         activity.changeState(activity.getState().getNextState());
     }

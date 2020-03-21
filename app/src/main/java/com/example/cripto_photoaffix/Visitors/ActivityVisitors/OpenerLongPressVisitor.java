@@ -8,7 +8,7 @@ public class OpenerLongPressVisitor implements ActivityVisitor {
     @Override
     public void visit(GalleryActivity activity) {
         activity.changeState(new Selector());
-        activity.showActionButtons();
+        activity.showButtons();
     }
 
     @Override

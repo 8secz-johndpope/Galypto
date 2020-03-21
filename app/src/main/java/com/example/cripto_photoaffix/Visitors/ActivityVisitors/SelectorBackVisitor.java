@@ -18,6 +18,6 @@ public class SelectorBackVisitor implements ActivityVisitor {
     public void visit(GalleryActivity activity) {
         activity.changeState(state.getNextState());
         activity.unselectAllButtons();
-        activity.hideActionButtons();
+        activity.hideButtons();
     }
 }

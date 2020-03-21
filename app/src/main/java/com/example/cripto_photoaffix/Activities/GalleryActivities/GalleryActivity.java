@@ -129,11 +129,9 @@ public class GalleryActivity extends MyActivity {
     /**
      * Oculta los botones flotantes (compartir, eliminar y guardar).
      */
-    public void hideActionButtons() {
-        CoordinatorLayout.LayoutParams params;
+    public void hideButtons() {
         int size = actionButtons.size();
         ImageButton b;
-
 
         for (int i = 0; i < size; i++) {
             b = actionButtons.get(i);
@@ -146,8 +144,7 @@ public class GalleryActivity extends MyActivity {
     /**
      * Muestra todos los botones.
      */
-    public void showActionButtons() {
-        CoordinatorLayout.LayoutParams params;
+    public void showButtons() {
         int size = actionButtons.size();
         ImageButton b;
 
@@ -218,18 +215,17 @@ public class GalleryActivity extends MyActivity {
 
         ButtonFactory factory = new GalleryDeleteButtonFactory(layout, R.id.delete, buttons);
         ImageButton button = factory.create();
-        button.setVisibility(View.INVISIBLE);
         actionButtons.add(button);
 
         factory = new GalleryStoreButtonFactory(layout, R.id.store, buttons);
         button = factory.create();
-        button.setVisibility(View.INVISIBLE);
         actionButtons.add(button);
 
         factory = new GalleryShareButtonFactory(layout, R.id.share, buttons);
         button = factory.create();
-        button.setVisibility(View.INVISIBLE);
         actionButtons.add(button);
+
+        hideButtons();
     }
 
     /**
