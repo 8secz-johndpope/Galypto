@@ -1,16 +1,16 @@
 package com.example.cripto_photoaffix.Activities.GalleryActivities;
 
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
+import com.example.cripto_photoaffix.Factories.ButtonFactories.ButtonFactory;
+import com.example.cripto_photoaffix.Factories.ButtonFactories.ViewerButtons.RotateLeftButtonFactory;
+import com.example.cripto_photoaffix.Factories.ButtonFactories.ViewerButtons.RotateRightButtonFactory;
 import com.example.cripto_photoaffix.R;
 
 public class ImageViewerActivity extends ContentViewerActivity {
     protected ImageView imageView;
-    private int rotated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +33,6 @@ public class ImageViewerActivity extends ContentViewerActivity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         findViewById(R.id.delete_button).setOnTouchListener(mDelayHideTouchListener);
-
-        rotated = 0;
     }
 
     @Override
@@ -53,33 +51,12 @@ public class ImageViewerActivity extends ContentViewerActivity {
     @Override
     protected void initializeButtons() {
         super.initializeButtons();
+        View view = findViewById(R.id.fullscreen_content_controls);
 
-        ImageButton button = findViewById(R.id.rotate_right_button);
-        button.setBackgroundColor(Color.TRANSPARENT);
+        ButtonFactory factory = new RotateLeftButtonFactory(view, R.id.rotate_left_button, imageView);
+        factory.create();
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rotated += 1;
-
-                rotate();
-            }
-        });
-
-        button = findViewById(R.id.rotate_left_button);
-        button.setBackgroundColor(Color.TRANSPARENT);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rotated -= 1;
-
-                rotate();
-            }
-        });
-    }
-
-    private void rotate() {
-        imageView.setRotation(90f*rotated);
+        factory = new RotateRightButtonFactory(view, R.id.rotate_right_button, imageView);
+        factory.create();
     }
 }

@@ -32,6 +32,10 @@ public abstract class GalleryButtonFactory extends LayoutButtonFactory {
         return new MultipleActionButtonListener(command());
     }
 
+    /**
+     * Invierte el mapeo de media->boton a boton->media.
+     * @return Nuevo mapeo.
+     */
     private Map<MyImageButton, Media> invertMap() {
         Map<MyImageButton, Media> res = new ArrayMap<MyImageButton, Media>();
 
