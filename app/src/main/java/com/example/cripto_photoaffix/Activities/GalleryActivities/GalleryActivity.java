@@ -16,20 +16,15 @@ import com.example.cripto_photoaffix.Gallery.Gallery;
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.MyImageButton;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.widget.Toolbar;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.ArrayMap;
 import android.util.DisplayMetrics;
 import android.view.View;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.gridlayout.widget.GridLayout;
-
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-
 import com.example.cripto_photoaffix.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -288,41 +283,4 @@ public class GalleryActivity extends MyActivity {
             return true;
         }
     }
-    /*
-
-    private class FloatingButtonListener implements View.OnClickListener {
-        private Command task;
-
-        private FloatingButtonListener(Command task) {
-            this.task = task;
-        }
-
-        @Override
-        public void onClick(View v) {
-            List<Media> galleryMedia = gallery.getMedia();
-            int size = galleryMedia.size();
-            Media media;
-            MyImageButton button;
-
-            for (int i = 0; i < size; i++) {
-                media = galleryMedia.get(i);
-                button = buttons.get(media);
-
-                if (button.isSelected())
-                    task.addMedia(media);
-
-                button.setSelected(false);
-                button.setAlpha(1f);
-            }
-
-            task.execute();
-
-            refresh();
-
-            hideActionButtons();
-
-            state = state.getNextState();
-        }
-    }
-    */
 }

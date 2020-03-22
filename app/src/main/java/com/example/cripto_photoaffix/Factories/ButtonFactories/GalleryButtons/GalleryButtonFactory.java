@@ -22,6 +22,10 @@ public abstract class GalleryButtonFactory extends LayoutButtonFactory {
         this.mediaButtons = mediaButtons;
     }
 
+    /**
+     * Retorna el comando necesario para ejecutar una vez que se toca al boton.
+     * @return Comando a ejecutar.
+     */
     protected abstract Command command();
 
     protected View.OnClickListener listener() {

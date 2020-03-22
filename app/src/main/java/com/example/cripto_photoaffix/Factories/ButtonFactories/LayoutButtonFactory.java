@@ -23,5 +23,9 @@ public abstract class LayoutButtonFactory extends ButtonFactory {
         return button;
     }
 
+    /**
+     * Retorna el "listener" para el boton.
+     * @return Listener para el boton.
+     */
     protected abstract View.OnClickListener listener();
 }
