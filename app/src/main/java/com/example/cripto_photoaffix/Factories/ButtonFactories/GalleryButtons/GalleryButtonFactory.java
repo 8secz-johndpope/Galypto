@@ -25,7 +25,6 @@ public abstract class GalleryButtonFactory extends LayoutButtonFactory {
     protected abstract Command command();
 
     protected View.OnClickListener listener() {
-        System.out.println("Returning listener...");
         return new MultipleActionButtonListener(command());
     }
 
@@ -46,7 +45,6 @@ public abstract class GalleryButtonFactory extends LayoutButtonFactory {
         private ActivityVisitor visitor;
 
         private MultipleActionButtonListener(Command task) {
-            System.out.println("Created " + this + " with command " + task);
             this.task = task;
 
             visitor = new GalleryButtonsVisitor();
@@ -54,7 +52,6 @@ public abstract class GalleryButtonFactory extends LayoutButtonFactory {
 
         @Override
         public void onClick(View v) {
-            System.out.println("Cliked like a fucker");
             Map<MyImageButton, Media> aux = invertMap();
 
             List<MyImageButton> galleryMedia = new ArrayList<MyImageButton>(aux.keySet());
