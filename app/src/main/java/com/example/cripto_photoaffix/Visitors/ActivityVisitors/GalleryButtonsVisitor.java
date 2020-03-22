@@ -1,6 +1,7 @@
 package com.example.cripto_photoaffix.Visitors.ActivityVisitors;
 
 import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivity;
+import com.example.cripto_photoaffix.Activities.GalleryActivities.ImageViewerActivity;
 import com.example.cripto_photoaffix.Activities.LoginActivity;
 
 public class GalleryButtonsVisitor implements ActivityVisitor {
@@ -15,4 +16,7 @@ public class GalleryButtonsVisitor implements ActivityVisitor {
 
     @Override
     public void visit(LoginActivity activity) {}
+
+    @Override
+    public void visit(ImageViewerActivity activity) {}
 }

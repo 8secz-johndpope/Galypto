@@ -1,30 +1,26 @@
 package com.example.cripto_photoaffix.Factories.ButtonFactories.ViewerButtons;
 
 import android.view.View;
-import android.widget.ImageView;
+import com.example.cripto_photoaffix.Activities.MyActivity;
+import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.LayoutButtonFactory;
+import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
 
 public abstract class RotateImageButtonFactory extends LayoutButtonFactory {
-    protected ImageView view;
+    protected ActivityVisitor visitor;
 
-    public RotateImageButtonFactory(View layout, int layoutID, ImageView view) {
+    public RotateImageButtonFactory(View layout, int layoutID) {
         super(layout, layoutID);
-
-        this.view = view;
     }
 
     /**
      * Rota la imagen en la vista "view".
      */
     protected void rotate() {
-        view.setRotation(degrees());
-    }
+        MyActivity activity = ActivityTransferer.getInstance().getActivity();
 
-    /**
-     * Retorna los grados a rotar la vista.
-     * @return Grados a rotar.
-     */
-    protected abstract float degrees();
+        activity.accept(visitor);
+    }
 
     protected View.OnClickListener listener() {
         return new RotatorListener();

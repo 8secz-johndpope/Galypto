@@ -153,7 +153,7 @@ public abstract class ContentViewerActivity extends MyActivity {
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
-    public void accept(ActivityVisitor visitor) {}
+    public abstract void accept(ActivityVisitor visitor);
 
     @Override
     public void refresh() {}

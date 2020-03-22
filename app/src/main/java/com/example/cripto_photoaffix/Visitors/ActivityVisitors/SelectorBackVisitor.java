@@ -2,6 +2,7 @@ package com.example.cripto_photoaffix.Visitors.ActivityVisitors;
 
 import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivity;
 import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivityStates.State;
+import com.example.cripto_photoaffix.Activities.GalleryActivities.ImageViewerActivity;
 import com.example.cripto_photoaffix.Activities.LoginActivity;
 
 public class SelectorBackVisitor implements ActivityVisitor {
@@ -20,4 +21,7 @@ public class SelectorBackVisitor implements ActivityVisitor {
         activity.unselectAllButtons();
         activity.hideButtons();
     }
+
+    @Override
+    public void visit(ImageViewerActivity activity) {}
 }

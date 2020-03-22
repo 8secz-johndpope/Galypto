@@ -1,17 +1,12 @@
 package com.example.cripto_photoaffix.Factories.ButtonFactories.ViewerButtons;
 
 import android.view.View;
-import android.widget.ImageView;
+import com.example.cripto_photoaffix.Visitors.ActivityVisitors.RotatorVisitor;
 
 public class RotateRightButtonFactory extends RotateImageButtonFactory {
-    public RotateRightButtonFactory(View layout, int layoutID, ImageView view) {
-        super(layout, layoutID, view);
-    }
+    public RotateRightButtonFactory(View layout, int layoutID) {
+        super(layout, layoutID);
 
-    @Override
-    protected float degrees() {
-        float rotation = view.getRotation();
-
-        return rotation + 90;
+        visitor = new RotatorVisitor(90);
     }
 }

@@ -8,6 +8,7 @@ import com.example.cripto_photoaffix.Factories.ButtonFactories.ButtonFactory;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.ViewerButtons.RotateLeftButtonFactory;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.ViewerButtons.RotateRightButtonFactory;
 import com.example.cripto_photoaffix.R;
+import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
 
 public class ImageViewerActivity extends ContentViewerActivity {
     protected ImageView imageView;
@@ -53,10 +54,19 @@ public class ImageViewerActivity extends ContentViewerActivity {
         super.initializeButtons();
         View view = findViewById(R.id.fullscreen_content_controls);
 
-        ButtonFactory factory = new RotateLeftButtonFactory(view, R.id.rotate_left_button, imageView);
+        ButtonFactory factory = new RotateLeftButtonFactory(view, R.id.rotate_left_button);
         factory.create();
 
-        factory = new RotateRightButtonFactory(view, R.id.rotate_right_button, imageView);
+        factory = new RotateRightButtonFactory(view, R.id.rotate_right_button);
         factory.create();
+    }
+
+    public void rotateImage(float degrees) {
+        imageView.setRotation(imageView.getRotation() + degrees);
+    }
+
+    @Override
+    public void accept(ActivityVisitor visitor) {
+        visitor.visit(this);
     }
 }

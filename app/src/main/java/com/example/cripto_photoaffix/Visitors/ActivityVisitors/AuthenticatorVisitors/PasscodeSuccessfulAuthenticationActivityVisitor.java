@@ -1,6 +1,7 @@
 package com.example.cripto_photoaffix.Visitors.ActivityVisitors.AuthenticatorVisitors;
 
 import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivity;
+import com.example.cripto_photoaffix.Activities.GalleryActivities.ImageViewerActivity;
 import com.example.cripto_photoaffix.Activities.LoginActivity;
 import com.example.cripto_photoaffix.Authenticators.Authenticator;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
@@ -19,4 +20,7 @@ public class PasscodeSuccessfulAuthenticationActivityVisitor implements Activity
 
     @Override
     public void visit(GalleryActivity activity) {}
+
+    @Override
+    public void visit(ImageViewerActivity activity) {}
 }

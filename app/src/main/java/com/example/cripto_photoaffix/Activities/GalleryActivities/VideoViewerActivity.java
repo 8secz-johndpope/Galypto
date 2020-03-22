@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.MediaController;
 import android.widget.VideoView;
 import com.example.cripto_photoaffix.R;
+import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
 
 public class VideoViewerActivity extends ContentViewerActivity {
     protected VideoView videoView;
@@ -51,4 +52,7 @@ public class VideoViewerActivity extends ContentViewerActivity {
             });
         }
     }
+
+    @Override
+    public void accept(ActivityVisitor visitor) {}
 }
