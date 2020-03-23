@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivityStates.Opener;
 import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivityStates.State;
 import com.example.cripto_photoaffix.Activities.MyActivity;
+import com.example.cripto_photoaffix.Commands.Command;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.ButtonFactory;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.GalleryButtons.GalleryDeleteButtonFactory;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.GalleryButtons.GalleryShareButtonFactory;
@@ -152,6 +153,38 @@ public class GalleryActivity extends MyActivity {
     }
 
     /**
+     * -Preguntar- Ejecuta en los botones seleccionados una tarea.
+     * @param task Tarea a ejecutar.
+     */
+    public void executeOnSelected(Command task) {
+        List<Media> galleryMedia = gallery.getMedia();
+
+        int size = galleryMedia.size();
+
+        Media media;
+        MyImageButton button;
+
+        for (int i = 0; i < size; i++) {
+            media = galleryMedia.get(i);
+            button = buttons.get(media);
+
+            if (button.isSelected())
+                task.addMedia(media);
+
+            button.setSelected(false);
+            button.setAlpha(1f);
+        }
+
+        task.execute();
+
+        refresh();
+
+        hideButtons();
+
+        changeState(state.getNextState());
+    }
+
+    /**
      * Si se frena la actividad actual se avisa al estado y se determina la accion a realizar.
      */
     @Override
@@ -208,15 +241,15 @@ public class GalleryActivity extends MyActivity {
 
         View layout = findViewById(R.id.constraintLay);
 
-        ButtonFactory factory = new GalleryDeleteButtonFactory(layout, R.id.delete, buttons);
+        ButtonFactory factory = new GalleryDeleteButtonFactory(layout, R.id.delete);//, buttons);
         ImageButton button = factory.create();
         actionButtons.add(button);
 
-        factory = new GalleryStoreButtonFactory(layout, R.id.store, buttons);
+        factory = new GalleryStoreButtonFactory(layout, R.id.store);//, buttons);
         button = factory.create();
         actionButtons.add(button);
 
-        factory = new GalleryShareButtonFactory(layout, R.id.share, buttons);
+        factory = new GalleryShareButtonFactory(layout, R.id.share);//, buttons);
         button = factory.create();
         actionButtons.add(button);
 
