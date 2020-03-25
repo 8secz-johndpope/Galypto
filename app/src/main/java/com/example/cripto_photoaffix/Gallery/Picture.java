@@ -22,7 +22,7 @@ public class Picture extends Media {
     }
 
     @Override
-    public File share(String sharingPath) {
+    public File store(String sharingPath) {
         File path = new File(sharingPath);
 
         if (!path.exists())
@@ -34,17 +34,6 @@ public class Picture extends Media {
             toShare = new File(sharingPath, filename + i + ".jpg");
 
         return FilesManager.copy(getFullPath(), toShare.getPath());
-    }
-
-    @Override
-    public File store(String path) {
-        File myDir = new File(path);
-
-        File file = new File(myDir, filename + ".jpg");
-
-        FilesManager.copy(getFullPath(), file.getPath());
-
-        return file;
     }
 
     /**

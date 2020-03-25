@@ -63,13 +63,6 @@ public abstract class Media {
     }
 
     /**
-     * Comparte el archivo.
-     * @param sharingPath Camino a donde compartir.
-     * @return Archivo donde fue compartido.
-     */
-    public abstract File share(String sharingPath);
-
-    /**
      * Guarda el archivo en cierta locacion.
      * @param path Camino a guardar el archivo.
      * @return Archivo donde fue guardado.

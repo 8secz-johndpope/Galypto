@@ -27,7 +27,7 @@ public class ShareCommand extends Command {
         while (!toExecuteOn.isEmpty()) {
             media = toExecuteOn.poll();
 
-            File file = media.share(activity.getCacheDir().getPath() + "/share/");
+            File file = media.store(activity.getCacheDir().getPath() + "/share/");
 
             Uri uri = FileProvider.getUriForFile(activity,
                     "com.example.cripto_photoaffix.fileprovider", file);    //Esta string "authority" debe estar "hardcodeada"

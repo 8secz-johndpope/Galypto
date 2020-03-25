@@ -25,7 +25,7 @@ public class Video extends Media {
     }
 
     @Override
-    public File share(String sharingPath) {
+    public File store(String sharingPath) {
         File path = new File(sharingPath);
 
         if (!path.exists())
@@ -37,16 +37,6 @@ public class Video extends Media {
             toShare = new File(sharingPath, filename + i + ".mp4");
 
         return FilesManager.copy(getFullPath(), toShare.getPath());
-    }
-
-    @Override
-    public File store(String path) {
-        File toSave = new File(path, filename + ".mp4");
-
-        for (int i = 0; toSave.exists(); i++)
-            toSave = new File(path, filename + i + ".mp4");
-
-        return FilesManager.copy(getFullPath(), toSave.getPath());
     }
 
     public String getFullPath() {
