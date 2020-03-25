@@ -28,7 +28,7 @@ public abstract class GalleryButtonFactory extends LayoutButtonFactory {
     protected abstract Command command();
 
     protected View.OnClickListener listener() {
-        return new MultipleActionButtonListener(command());
+        return new GalleryButtonListener(command());
     }
 
     /*
@@ -48,11 +48,11 @@ public abstract class GalleryButtonFactory extends LayoutButtonFactory {
     /**
      * ButtonListener de los botones flotantes, cada uno tiene su propio comando.
      */
-    private class MultipleActionButtonListener implements View.OnClickListener {
+    private class GalleryButtonListener implements View.OnClickListener {
         //private Command task;
         private ActivityVisitor visitor;
 
-        private MultipleActionButtonListener(Command task) {
+        private GalleryButtonListener(Command task) {
           //  this.task = task;
 
             visitor = new GalleryButtonVisitor(task);
