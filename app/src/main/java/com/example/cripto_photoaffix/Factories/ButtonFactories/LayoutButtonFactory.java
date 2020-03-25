@@ -16,7 +16,7 @@ public abstract class LayoutButtonFactory extends ButtonFactory {
     public ImageButton create() {
         ImageButton button = layout.findViewById(layoutID);
 
-        button.setBackgroundColor(Color.TRANSPARENT);
+        button.setBackgroundColor(Color.argb(0.37f, 0f, 0f, 0f));
 
         button.setOnClickListener(listener());
 
