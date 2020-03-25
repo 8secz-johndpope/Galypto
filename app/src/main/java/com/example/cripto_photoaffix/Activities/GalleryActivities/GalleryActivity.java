@@ -84,6 +84,7 @@ public class GalleryActivity extends MyActivity {
     public void refresh() {
         List<Media> galleryMedia = gallery.getMedia();
         View.OnLongClickListener longClickListener = new LongClickListener();
+        View.OnClickListener touchListener = new ButtonListener();
 
         MyImageButton button;
         Media media;
@@ -100,7 +101,7 @@ public class GalleryActivity extends MyActivity {
 
                 gridLayout.addView(button, getScreenWidth() / 3, getScreenHeigth() / 6);
 
-                button.setOnClickListener(new ButtonListener(button));
+                button.setOnClickListener(touchListener);
                 button.setOnLongClickListener(longClickListener);
 
                 buttons.put(media, button);
@@ -282,15 +283,9 @@ public class GalleryActivity extends MyActivity {
      * ButtonListener de tocado en las imagenes.
      */
     private class ButtonListener implements View.OnClickListener {
-        private MyImageButton button;
-
-        public ButtonListener(MyImageButton button) {
-            this.button = button;
-        }
-
         @Override
-        public void onClick(View v) {
-            state.touch(button);
+        public void onClick(View view) {
+            state.touch((MyImageButton) view);
         }
     }
 
@@ -299,9 +294,6 @@ public class GalleryActivity extends MyActivity {
      */
     private class LongClickListener implements View.OnLongClickListener {
         public boolean onLongClick(View view) {
-       //     view.setSelected(true);
-       //     view.setAlpha(0.5f);
-
             Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)

@@ -8,8 +8,8 @@ import com.example.cripto_photoaffix.MyImageButton;
 import java.util.Map;
 
 public class GalleryDeleteButtonFactory extends GalleryButtonFactory {
-    public GalleryDeleteButtonFactory(View layout, int layoutID) {//, Map<Media, MyImageButton> mediaButtons) {
-        super(layout, layoutID);//, mediaButtons);
+    public GalleryDeleteButtonFactory(View layout, int layoutID) {
+        super(layout, layoutID);
     }
 
     protected Command command() {
