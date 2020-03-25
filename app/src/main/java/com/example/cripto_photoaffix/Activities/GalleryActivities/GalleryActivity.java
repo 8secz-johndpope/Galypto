@@ -154,7 +154,7 @@ public class GalleryActivity extends MyActivity {
     }
 
     /**
-     * -Preguntar- Ejecuta en los botones seleccionados una tarea.
+     * Ejecuta en los botones seleccionados una tarea.
      * @param task Tarea a ejecutar.
      */
     public void executeOnSelected(Command task) {
