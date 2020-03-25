@@ -19,7 +19,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import com.example.cripto_photoaffix.Activities.Dialogs.CannotAddDialog;
 import com.example.cripto_photoaffix.Authenticators.Authenticator;
 import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.AuthenticatorFactory;
-import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.FingerprintAuthenticatorFactory;
+import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.BiometricsAuthenticatorFactory;
 import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.PasscodeAuthenticatorFactory;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.RegisterIntentFactory;
@@ -201,7 +201,7 @@ public class LoginActivity extends MyActivity {
             });
         }
 
-        factory = new FingerprintAuthenticatorFactory();
+        factory = new BiometricsAuthenticatorFactory();
         created = factory.create();
 
         if (created.canBeUsed() && created.filesReady())

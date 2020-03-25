@@ -10,7 +10,7 @@ import com.example.cripto_photoaffix.Authenticators.Authenticator;
 import com.example.cripto_photoaffix.Authenticators.PasscodeAuthenticator;
 import com.example.cripto_photoaffix.GalleryTransferer;
 import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.AuthenticatorFactory;
-import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.FingerprintAuthenticatorFactory;
+import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.BiometricsAuthenticatorFactory;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.GalleryIntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
@@ -40,7 +40,7 @@ public class RegisterActivity extends MyActivity {
             }
         });
 
-        AuthenticatorFactory factory = new FingerprintAuthenticatorFactory();
+        AuthenticatorFactory factory = new BiometricsAuthenticatorFactory();
         factory.create();
     }
 
@@ -65,7 +65,7 @@ public class RegisterActivity extends MyActivity {
 
         setupPasscode(field, finalPassword);
 
-        AuthenticatorFactory fingerprintAuthenticatorFactory = new FingerprintAuthenticatorFactory();
+        AuthenticatorFactory fingerprintAuthenticatorFactory = new BiometricsAuthenticatorFactory();
         Authenticator fingerprint = fingerprintAuthenticatorFactory.create();
 
         if (fingerprint.canBeUsed())
