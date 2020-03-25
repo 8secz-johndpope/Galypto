@@ -15,7 +15,7 @@ public class Selector implements State {
     private int cantSelected;
 
     public Selector() {
-        cantSelected = 1;
+        cantSelected = 0;//1;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class Selector implements State {
     }
 
     @Override
-    public void onLongPress() {
+    public void onLongPress(MyImageButton button) {
         back();
     }
 

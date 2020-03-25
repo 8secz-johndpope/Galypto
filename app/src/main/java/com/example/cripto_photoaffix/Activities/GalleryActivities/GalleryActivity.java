@@ -299,8 +299,8 @@ public class GalleryActivity extends MyActivity {
      */
     private class LongClickListener implements View.OnLongClickListener {
         public boolean onLongClick(View view) {
-            view.setSelected(true);
-            view.setAlpha(0.5f);
+       //     view.setSelected(true);
+       //     view.setAlpha(0.5f);
 
             Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -311,7 +311,7 @@ public class GalleryActivity extends MyActivity {
                 vibrator.vibrate(effect);
             }
 
-            state.onLongPress();
+            state.onLongPress((MyImageButton) view);
 
             return true;
         }

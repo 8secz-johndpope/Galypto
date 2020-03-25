@@ -5,7 +5,7 @@ import com.example.cripto_photoaffix.MyImageButton;
 public interface State {
     /**
      * Cuando el usuario toca una imagen, se hace esta tarea.
-     * @param button Imagen que el usuario toco.
+     * @param button Boton de imagen o video que el usuario toco.
      */
     public void touch(MyImageButton button);
 
@@ -16,8 +16,9 @@ public interface State {
 
     /**
      * Si el usuario hace un "long press" se realiza esta tarea.
+     * @param button Boton de la imagen on video que el usuario presiono por un tiempo "largo".
      */
-    public void onLongPress();
+    public void onLongPress(MyImageButton button);
 
     /**
      * Si se frena la actividad actual, se realiza esta tarea.
