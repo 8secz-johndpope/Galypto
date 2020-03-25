@@ -15,7 +15,7 @@ public class Selector implements State {
     private int cantSelected;
 
     public Selector() {
-        cantSelected = 0;//1;
+        cantSelected = 0;
     }
 
     @Override

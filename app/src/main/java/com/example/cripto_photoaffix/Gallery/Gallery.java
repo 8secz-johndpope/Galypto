@@ -1,7 +1,6 @@
 package com.example.cripto_photoaffix.Gallery;
 
 import android.net.Uri;
-
 import com.example.cripto_photoaffix.Commands.Command;
 import com.example.cripto_photoaffix.Commands.DeleteCommand;
 import com.example.cripto_photoaffix.FileManagement.Deserialazator;
@@ -9,7 +8,6 @@ import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
 import com.example.cripto_photoaffix.Threads.DecryptorThread;
 import com.example.cripto_photoaffix.Threads.EncryptorThread;
-
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;

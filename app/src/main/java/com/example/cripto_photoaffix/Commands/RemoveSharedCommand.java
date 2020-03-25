@@ -1,7 +1,6 @@
 package com.example.cripto_photoaffix.Commands;
 
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
-import com.example.cripto_photoaffix.Gallery.Media;
 import java.util.List;
 
 public class RemoveSharedCommand extends Command {
