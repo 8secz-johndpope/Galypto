@@ -15,8 +15,11 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import com.example.cripto_photoaffix.Activities.Dialogs.CannotAddDialog;
+import com.example.cripto_photoaffix.Activities.Dialogs.TooManyFilesDialog;
 import com.example.cripto_photoaffix.Authenticators.Authenticator;
 import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.AuthenticatorFactory;
 import com.example.cripto_photoaffix.Factories.AuthenticatorsFactories.BiometricsAuthenticatorFactory;
@@ -134,7 +137,7 @@ public class LoginActivity extends MyActivity {
                 for (int i = 0; i < size; i++) {
                     uri = list.get(i);
 
-                    if (getFileSize(uri) < 60)
+                    if (getFileSize(uri) < 40)
                         toEncrypt.add(uri);
                     else
                         cannotAdd++;
@@ -142,9 +145,16 @@ public class LoginActivity extends MyActivity {
             }
         }
 
-        if (cannotAdd != 0) {
-            AppCompatDialogFragment dialog = new CannotAddDialog(cannotAdd);
-            dialog.show(getSupportFragmentManager(), "Cannot add dialog.");
+        if (toEncrypt.size() > 15) {
+            AppCompatDialogFragment dialog = new TooManyFilesDialog();
+            dialog.show(getSupportFragmentManager(), "Too many files dialog.");
+            toEncrypt.clear();
+        }
+        else {
+            if (cannotAdd != 0) {
+                AppCompatDialogFragment dialog = new CannotAddDialog(cannotAdd);
+                dialog.show(getSupportFragmentManager(), "Cannot add dialog.");
+            }
         }
     }
 
@@ -248,9 +258,9 @@ public class LoginActivity extends MyActivity {
         if (!openingGallery) {
             authenticators = new Vector<Authenticator>();
 
+            checkForIncomingIntents();
             initializeAuthenticators();
             chooseActivity();
-            checkForIncomingIntents();
         }
     }
 }
