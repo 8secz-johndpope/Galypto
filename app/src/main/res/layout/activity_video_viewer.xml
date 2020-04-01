@@ -35,7 +35,6 @@
                 android:id="@+id/play_pause"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/play"
                 android:contentDescription="@string/play_stop_button" />
         </LinearLayout>
 
