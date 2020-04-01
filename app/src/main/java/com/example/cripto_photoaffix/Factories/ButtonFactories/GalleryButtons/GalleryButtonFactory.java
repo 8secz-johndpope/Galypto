@@ -6,7 +6,7 @@ import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Commands.Command;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.LayoutButtonFactory;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
-import com.example.cripto_photoaffix.Visitors.ActivityVisitors.GalleryButtonVisitor;
+import com.example.cripto_photoaffix.Visitors.ActivityVisitors.GalleryVisitors.GalleryButtonVisitor;
 
 public abstract class GalleryButtonFactory extends LayoutButtonFactory {
     protected GalleryButtonFactory(View layout, int layoutID) {

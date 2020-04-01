@@ -1,10 +1,14 @@
 package com.example.cripto_photoaffix.Activities.GalleryActivities;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.VideoView;
+import com.example.cripto_photoaffix.Activities.GalleryActivities.ViewerStates.PlayingVideoState;
+import com.example.cripto_photoaffix.Activities.GalleryActivities.ViewerStates.State;
+import com.example.cripto_photoaffix.Factories.ButtonFactories.ButtonFactory;
+import com.example.cripto_photoaffix.Factories.ButtonFactories.ViewerButtons.VideoButtons.PlayPauseButton;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
 
@@ -13,7 +17,7 @@ import java.util.List;
 
 public class VideoViewerActivity extends ContentViewerActivity {
     protected VideoView videoView;
-    protected List<ImageButton> videoControlButtons;
+    protected State state;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,20 @@ public class VideoViewerActivity extends ContentViewerActivity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         findViewById(R.id.delete_button).setOnTouchListener(mDelayHideTouchListener);
+
+        state = new PlayingVideoState();
+    }
+
+    public void changeState(State state) {
+        this.state = state;
+    }
+
+    public void play() {
+        videoView.start();
+    }
+
+    public void pause() {
+        videoView.pause();
     }
 
     @Override
@@ -48,39 +66,23 @@ public class VideoViewerActivity extends ContentViewerActivity {
     }
 
     @Override
-    public void accept(ActivityVisitor visitor) {}
+    public void accept(ActivityVisitor visitor) {
+        visitor.visit(this);
+    }
 
     @Override
     public void initializeButtons() {
         super.initializeButtons();
 
-        videoControlButtons = new ArrayList<ImageButton>();
+        LinearLayout layout = findViewById(R.id.videoActionLayout);
+        ButtonFactory factory = new PlayPauseButton(layout, R.id.play_pause, state);
 
-        final ImageButton button = findViewById(R.id.play_pause);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (videoView.isPlaying()) {
-                    videoView.pause();
-                    button.setImageResource(R.drawable.play);
-                }
-                else {
-                    videoView.start();
-                    button.setVisibility(View.INVISIBLE);
-                    button.setImageResource(R.drawable.pause);
-                }
-            }
-        });
-
-        videoControlButtons.add(button);
+        List<ImageButton> buttons = new ArrayList<ImageButton>();
+        state.setButtons(buttons);
     }
 
     @Override
     public void touchScreen() {
-        int size = videoControlButtons.size();
-
-        for (int i = 0; i < size; i++) {
-            i++;
-        }
+        state.touchScreen();
     }
 }

@@ -9,7 +9,7 @@ import com.example.cripto_photoaffix.Factories.IntentsFactory.LoginIntentFactory
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.MyImageButton;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
-import com.example.cripto_photoaffix.Visitors.ActivityVisitors.OpenerLongPressVisitor;
+import com.example.cripto_photoaffix.Visitors.ActivityVisitors.GalleryVisitors.OpenerLongPressVisitor;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaOpenerVisitor;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 

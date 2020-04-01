@@ -2,6 +2,7 @@ package com.example.cripto_photoaffix.Visitors.ActivityVisitors.AuthenticatorVis
 
 import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivity;
 import com.example.cripto_photoaffix.Activities.GalleryActivities.ImageViewerActivity;
+import com.example.cripto_photoaffix.Activities.GalleryActivities.VideoViewerActivity;
 import com.example.cripto_photoaffix.Activities.LoginActivity;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
 
@@ -16,4 +17,7 @@ public class PasscodeUnsuccessfulAuthenticationActivityVisitor implements Activi
 
     @Override
     public void visit(ImageViewerActivity activity) {}
+
+    @Override
+    public void visit(VideoViewerActivity activity) {}
 }

@@ -9,7 +9,7 @@ import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.LoginIntentFactory;
 import com.example.cripto_photoaffix.MyImageButton;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
-import com.example.cripto_photoaffix.Visitors.ActivityVisitors.SelectorBackVisitor;
+import com.example.cripto_photoaffix.Visitors.ActivityVisitors.GalleryVisitors.SelectorBackVisitor;
 
 public class Selector implements State {
     private int cantSelected;
