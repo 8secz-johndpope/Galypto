@@ -99,7 +99,6 @@
     </style>
 
     <style name="CheckBoxStyle">
-        <item name="android:fontFamily">@font/laosangmanmn"</item>
         <item name="android:textColor">@color/black_overlay</item>
         <item name="android:buttonTint">@color/darkblue</item>
     </style>
