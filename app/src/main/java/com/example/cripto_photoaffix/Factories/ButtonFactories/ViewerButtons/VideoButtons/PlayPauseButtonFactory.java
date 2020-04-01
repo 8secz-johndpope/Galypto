@@ -1,5 +1,6 @@
 package com.example.cripto_photoaffix.Factories.ButtonFactories.ViewerButtons.VideoButtons;
 
+import android.media.Image;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -16,6 +17,13 @@ public class PlayPauseButtonFactory extends LayoutButtonFactory {
     public PlayPauseButtonFactory(LinearLayout layout, int layoutID, State state) {
         super(layout, layoutID);
         this.state = state;
+    }
+
+    @Override
+    public ImageButton create() {
+        ImageButton created = super.create();
+        created.setBackgroundResource(R.drawable.play);
+        return created;
     }
 
     @Override
