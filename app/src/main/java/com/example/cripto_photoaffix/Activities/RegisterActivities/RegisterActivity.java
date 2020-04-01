@@ -2,7 +2,9 @@ package com.example.cripto_photoaffix.Activities.RegisterActivities;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.example.cripto_photoaffix.Activities.MyActivity;
@@ -42,6 +44,14 @@ public class RegisterActivity extends MyActivity {
 
         AuthenticatorFactory factory = new BiometricsAuthenticatorFactory();
         factory.create();
+
+        Button register = findViewById(R.id.registerButton);
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createUserData();
+            }
+        });
     }
 
     /**

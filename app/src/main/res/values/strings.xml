@@ -125,4 +125,5 @@
     <string name="loginButton">Log in</string>
     <string name="showpass">Show password</string>
     <string name="play_stop_button">Play</string>
+    <string name="Register">Register</string>
 </resources>
