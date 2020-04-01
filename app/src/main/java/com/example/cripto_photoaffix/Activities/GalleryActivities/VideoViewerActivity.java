@@ -77,7 +77,7 @@ public class VideoViewerActivity extends ContentViewerActivity {
         super.toggle();
 
         int size = videoButtons.size();
-        int visibility = mVisible?View.INVISIBLE:View.VISIBLE;
+        int visibility = mVisible?View.VISIBLE:View.INVISIBLE;
 
         for (int i = 0; i < size; i++) {
             videoButtons.get(i).setVisibility(visibility);
