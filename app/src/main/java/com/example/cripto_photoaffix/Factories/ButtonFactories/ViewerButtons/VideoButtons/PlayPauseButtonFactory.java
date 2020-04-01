@@ -1,10 +1,8 @@
 package com.example.cripto_photoaffix.Factories.ButtonFactories.ViewerButtons.VideoButtons;
 
-import android.media.Image;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import com.example.cripto_photoaffix.Activities.GalleryActivities.ViewerStates.State;
 import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.LayoutButtonFactory;
 import com.example.cripto_photoaffix.R;
@@ -12,11 +10,9 @@ import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ViewerVisitors.Pa
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ViewerVisitors.PlayVisitor;
 
 public class PlayPauseButtonFactory extends LayoutButtonFactory {
-    private State state;
 
-    public PlayPauseButtonFactory(LinearLayout layout, int layoutID, State state) {
+    public PlayPauseButtonFactory(LinearLayout layout, int layoutID) {
         super(layout, layoutID);
-        this.state = state;
     }
 
     @Override
@@ -34,7 +30,7 @@ public class PlayPauseButtonFactory extends LayoutButtonFactory {
     private class Listener implements View.OnClickListener {
         private boolean playing;
 
-        public Listener() {
+        private Listener() {
             playing = false;
         }
 

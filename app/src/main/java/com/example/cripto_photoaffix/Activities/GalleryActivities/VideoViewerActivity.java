@@ -5,8 +5,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.VideoView;
-import com.example.cripto_photoaffix.Activities.GalleryActivities.ViewerStates.PausedVideoState;
-import com.example.cripto_photoaffix.Activities.GalleryActivities.ViewerStates.State;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.ButtonFactory;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.ViewerButtons.VideoButtons.PlayPauseButtonFactory;
 import com.example.cripto_photoaffix.R;
@@ -16,7 +14,7 @@ import java.util.List;
 
 public class VideoViewerActivity extends ContentViewerActivity {
     protected VideoView videoView;
-    protected State state;
+    private List<ImageButton> videoButtons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +37,6 @@ public class VideoViewerActivity extends ContentViewerActivity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         findViewById(R.id.delete_button).setOnTouchListener(mDelayHideTouchListener);
-
-        state = new PausedVideoState();
-    }
-
-    public void changeState(State state) {
-        this.state = state;
     }
 
     public void play() {
@@ -74,14 +66,21 @@ public class VideoViewerActivity extends ContentViewerActivity {
         super.initializeButtons();
 
         LinearLayout layout = findViewById(R.id.videoActionLayout);
-        ButtonFactory factory = new PlayPauseButtonFactory(layout, R.id.play_pause, state);
-        List<ImageButton> buttons = new ArrayList<ImageButton>();
-        buttons.add(factory.create());
-        state.setButtons(buttons);
+        ButtonFactory factory = new PlayPauseButtonFactory(layout, R.id.play_pause);
+        videoButtons = new ArrayList<ImageButton>();
+
+        videoButtons.add(factory.create());
     }
 
     @Override
-    public void touchScreen() {
-        state.touchScreen();
+    protected void toggle() {
+        super.toggle();
+
+        int size = videoButtons.size();
+        int visibility = mVisible?View.INVISIBLE:View.VISIBLE;
+
+        for (int i = 0; i < size; i++) {
+            videoButtons.get(i).setVisibility(visibility);
+        }
     }
 }

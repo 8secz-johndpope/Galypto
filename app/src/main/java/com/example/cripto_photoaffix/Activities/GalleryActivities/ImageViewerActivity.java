@@ -69,6 +69,4 @@ public class ImageViewerActivity extends ContentViewerActivity {
     public void accept(ActivityVisitor visitor) {
         visitor.visit(this);
     }
-
-    public void touchScreen() {}
 }
