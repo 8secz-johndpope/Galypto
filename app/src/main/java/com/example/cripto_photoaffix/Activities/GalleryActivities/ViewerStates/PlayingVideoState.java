@@ -9,12 +9,12 @@ public class PlayingVideoState extends PlayingPausedState {
 
     public PlayingVideoState() {
         nextState = new PausedVideoState(this);
-        visitor = new PauseVisitor(this);
+        visitor = new PauseVisitor();
     }
 
     public PlayingVideoState(State nextState) {
         super(nextState);
-        visitor = new PauseVisitor(this);
+        visitor = new PauseVisitor();
     }
 
     @Override
