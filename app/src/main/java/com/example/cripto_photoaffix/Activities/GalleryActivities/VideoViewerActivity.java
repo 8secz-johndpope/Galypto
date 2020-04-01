@@ -1,5 +1,6 @@
 package com.example.cripto_photoaffix.Activities.GalleryActivities;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -7,14 +8,16 @@ import android.widget.LinearLayout;
 import android.widget.VideoView;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.ButtonFactory;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.ViewerButtons.VideoButtons.PlayPauseButtonFactory;
+import com.example.cripto_photoaffix.Gallery.Video;
 import com.example.cripto_photoaffix.R;
+import com.example.cripto_photoaffix.VideoButton;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
 import java.util.ArrayList;
 import java.util.List;
 
 public class VideoViewerActivity extends ContentViewerActivity {
     protected VideoView videoView;
-    private List<ImageButton> videoButtons;
+    private List<VideoButton> videoButtons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,15 @@ public class VideoViewerActivity extends ContentViewerActivity {
     @Override
     public void loadMedia() {
         videoView = (VideoView) mContentView;
+
+        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                for (VideoButton b: videoButtons)
+                    b.finishedPlaying();
+            }
+        });
+
         String videoPath = media.getFullPath();
 
         if (videoPath != null)
@@ -67,9 +79,9 @@ public class VideoViewerActivity extends ContentViewerActivity {
 
         LinearLayout layout = findViewById(R.id.videoActionLayout);
         ButtonFactory factory = new PlayPauseButtonFactory(layout, R.id.play_pause);
-        videoButtons = new ArrayList<ImageButton>();
+        videoButtons = new ArrayList<VideoButton>();
 
-        videoButtons.add(factory.create());
+        videoButtons.add((VideoButton) factory.create());
     }
 
     @Override
