@@ -6,7 +6,6 @@ import android.widget.LinearLayout;
 import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.LayoutButtonFactory;
 import com.example.cripto_photoaffix.R;
-import com.example.cripto_photoaffix.VideoButton;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ViewerVisitors.PauseVisitor;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ViewerVisitors.PlayVisitor;
 
@@ -29,16 +28,23 @@ public class PlayPauseButtonFactory extends LayoutButtonFactory {
     }
 
     private class Listener implements View.OnClickListener {
+        private boolean playing;
+
+        private Listener() {
+            playing = false;
+        }
+
         @Override
         public void onClick(View v) {
-            VideoButton button = (VideoButton) v;
-            if (button.isPlaying()) {
+            if (playing) {
                 ActivityTransferer.getInstance().getActivity().accept(new PauseVisitor());
-                button.paused();
+                playing = false;
+                v.setBackgroundResource(R.drawable.play);
             }
             else {
                 ActivityTransferer.getInstance().getActivity().accept(new PlayVisitor());
-                button.playing();
+                playing = true;
+                v.setBackgroundResource(R.drawable.pause);
             }
         }
     }

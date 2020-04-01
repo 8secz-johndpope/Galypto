@@ -8,16 +8,13 @@ import android.widget.LinearLayout;
 import android.widget.VideoView;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.ButtonFactory;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.ViewerButtons.VideoButtons.PlayPauseButtonFactory;
-import com.example.cripto_photoaffix.Gallery.Video;
 import com.example.cripto_photoaffix.R;
-import com.example.cripto_photoaffix.VideoButton;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
 import java.util.ArrayList;
-import java.util.List;
 
 public class VideoViewerActivity extends ContentViewerActivity {
     protected VideoView videoView;
-    private List<VideoButton> videoButtons;
+    private ImageButton play_pause;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +54,7 @@ public class VideoViewerActivity extends ContentViewerActivity {
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                for (VideoButton b: videoButtons)
-                    b.finishedPlaying();
+                play_pause.setBackgroundResource(R.drawable.play);
             }
         });
 
@@ -79,20 +75,15 @@ public class VideoViewerActivity extends ContentViewerActivity {
 
         LinearLayout layout = findViewById(R.id.videoActionLayout);
         ButtonFactory factory = new PlayPauseButtonFactory(layout, R.id.play_pause);
-        videoButtons = new ArrayList<VideoButton>();
-
-        videoButtons.add((VideoButton) factory.create());
+        play_pause = factory.create();
     }
 
     @Override
     protected void toggle() {
         super.toggle();
 
-        int size = videoButtons.size();
         int visibility = mVisible?View.VISIBLE:View.INVISIBLE;
 
-        for (int i = 0; i < size; i++) {
-            videoButtons.get(i).setVisibility(visibility);
-        }
+        play_pause.setVisibility(visibility);
     }
 }
