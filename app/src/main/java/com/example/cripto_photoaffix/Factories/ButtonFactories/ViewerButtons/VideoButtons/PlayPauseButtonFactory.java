@@ -42,7 +42,7 @@ public class PlayPauseButtonFactory extends LayoutButtonFactory {
         public void onClick(View v) {
             if (playing) {
                 ActivityTransferer.getInstance().getActivity().accept(new PauseVisitor());
-                v.setBackgroundResource(R.drawable.pause);
+                v.setBackgroundResource(R.drawable.play);
                 playing = false;
             }
             else {
