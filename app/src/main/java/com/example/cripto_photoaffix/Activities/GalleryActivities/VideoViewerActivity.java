@@ -1,16 +1,19 @@
 package com.example.cripto_photoaffix.Activities.GalleryActivities;
 
-import android.media.MediaPlayer;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.MediaController;
+import android.widget.ImageButton;
 import android.widget.VideoView;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class VideoViewerActivity extends ContentViewerActivity {
     protected VideoView videoView;
-    protected MediaController controller;
+    protected List<ImageButton> videoControlButtons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,19 +43,44 @@ public class VideoViewerActivity extends ContentViewerActivity {
         videoView = (VideoView) mContentView;
         String videoPath = media.getFullPath();
 
-        if (videoPath != null) {
+        if (videoPath != null)
             videoView.setVideoPath(videoPath);
-            controller = new MediaController(this);
-            videoView.setMediaController(controller);
-            videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mp) {
-                    controller.show();
-                }
-            });
-        }
     }
 
     @Override
     public void accept(ActivityVisitor visitor) {}
+
+    @Override
+    public void initializeButtons() {
+        super.initializeButtons();
+
+        videoControlButtons = new ArrayList<ImageButton>();
+
+        final ImageButton button = findViewById(R.id.play_pause);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (videoView.isPlaying()) {
+                    videoView.pause();
+                    button.setImageResource(R.drawable.play);
+                }
+                else {
+                    videoView.start();
+                    button.setVisibility(View.INVISIBLE);
+                    button.setImageResource(R.drawable.pause);
+                }
+            }
+        });
+
+        videoControlButtons.add(button);
+    }
+
+    @Override
+    public void touchScreen() {
+        int size = videoControlButtons.size();
+
+        for (int i = 0; i < size; i++) {
+            i++;
+        }
+    }
 }

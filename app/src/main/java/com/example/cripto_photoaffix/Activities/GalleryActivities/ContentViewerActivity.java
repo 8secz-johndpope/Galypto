@@ -229,6 +229,11 @@ public abstract class ContentViewerActivity extends MyActivity {
     public abstract void loadMedia();
 
     /**
+     * Action to perform when screen is touched.
+     */
+    public abstract void touchScreen();
+
+    /**
      * Actualiza la "media" que se va a mostrar.
      * @return Media a mostrar.
      */
