@@ -63,7 +63,7 @@ public class LoginActivity extends MyActivity {
             }
         });
 
-        showPassword = findViewById(R.id.checkBox);
+        showPassword = findViewById(R.id.showPassword);
         showPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +92,7 @@ public class LoginActivity extends MyActivity {
         Button login = findViewById(R.id.button);
         login.setEnabled(false);
 
-        CheckBox checkBox = findViewById(R.id.checkBox);
+        CheckBox checkBox = findViewById(R.id.showPassword);
         checkBox.setEnabled(false);
 
         openingGallery = true;
