@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.OpenableColumns;
+import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -17,8 +18,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import com.example.cripto_photoaffix.Activities.Dialogs.CannotAddDialog;
 import com.example.cripto_photoaffix.Activities.Dialogs.TooManyFilesDialog;
@@ -38,6 +37,7 @@ import java.util.Vector;
 
 public class LoginActivity extends MyActivity {
     private EditText field;
+    private CheckBox showPassword;
     private Vector<Authenticator> authenticators;
     private List<Uri> toEncrypt;
     private boolean openingGallery;
@@ -60,6 +60,17 @@ public class LoginActivity extends MyActivity {
             @Override
             public void onClick(View v) {
                 authenticators.get(0).authenticate();
+            }
+        });
+
+        showPassword = findViewById(R.id.checkBox);
+        showPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (showPassword.isChecked())
+                    field.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                else
+                    field.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
             }
         });
     }
