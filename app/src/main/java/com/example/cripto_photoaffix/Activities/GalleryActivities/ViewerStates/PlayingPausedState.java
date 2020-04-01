@@ -2,6 +2,8 @@ package com.example.cripto_photoaffix.Activities.GalleryActivities.ViewerStates;
 
 import android.view.View;
 import android.widget.ImageButton;
+
+import com.example.cripto_photoaffix.Factories.ButtonFactories.ButtonFactory;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
 import java.util.ArrayList;
 import java.util.List;

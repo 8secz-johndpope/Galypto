@@ -8,11 +8,6 @@ import com.example.cripto_photoaffix.Activities.LoginActivity;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
 
 public class PauseVisitor implements ActivityVisitor {
-    private State state;
-    public PauseVisitor(State state) {
-        this.state = state;
-    }
-
     @Override
     public void visit(GalleryActivity activity) {}
 
@@ -25,6 +20,5 @@ public class PauseVisitor implements ActivityVisitor {
     @Override
     public void visit(VideoViewerActivity activity) {
         activity.pause();
-        activity.changeState(state.getNextState());
     }
 }

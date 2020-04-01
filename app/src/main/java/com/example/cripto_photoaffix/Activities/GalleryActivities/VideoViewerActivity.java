@@ -5,13 +5,12 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.VideoView;
-import com.example.cripto_photoaffix.Activities.GalleryActivities.ViewerStates.PlayingVideoState;
+import com.example.cripto_photoaffix.Activities.GalleryActivities.ViewerStates.PausedVideoState;
 import com.example.cripto_photoaffix.Activities.GalleryActivities.ViewerStates.State;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.ButtonFactory;
-import com.example.cripto_photoaffix.Factories.ButtonFactories.ViewerButtons.VideoButtons.PlayPauseButton;
+import com.example.cripto_photoaffix.Factories.ButtonFactories.ViewerButtons.VideoButtons.PlayPauseButtonFactory;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +40,7 @@ public class VideoViewerActivity extends ContentViewerActivity {
         // while interacting with the UI.
         findViewById(R.id.delete_button).setOnTouchListener(mDelayHideTouchListener);
 
-        state = new PlayingVideoState();
+        state = new PausedVideoState();
     }
 
     public void changeState(State state) {
@@ -75,9 +74,9 @@ public class VideoViewerActivity extends ContentViewerActivity {
         super.initializeButtons();
 
         LinearLayout layout = findViewById(R.id.videoActionLayout);
-        ButtonFactory factory = new PlayPauseButton(layout, R.id.play_pause, state);
-
+        ButtonFactory factory = new PlayPauseButtonFactory(layout, R.id.play_pause, state);
         List<ImageButton> buttons = new ArrayList<ImageButton>();
+        buttons.add(factory.create());
         state.setButtons(buttons);
     }
 
