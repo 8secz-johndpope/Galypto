@@ -39,8 +39,14 @@
         <item name="android:background">@drawable/passcoderoundedcorner</item>
         <item name="android:paddingLeft">20dp</item>
         <item name="android:paddingRight">20dp</item>
-        <item name="android:textColorHint">@color/inputTextHint</item>
+        <item name="android:textColorHint">@color/fullWhite</item>
         <item name="android:textColor">@color/fullWhite</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:shadowColor">#10000000</item>
+        <item name="android:elevation">5dp</item>
+        <item name="android:shadowDx">5</item>
+        <item name="android:shadowDy">4</item>
+        <item name="fontFamily">@font/laosangmanmn</item>
     </style>
 
     <style name="ImageSelextedStyle">
@@ -54,7 +60,9 @@
     </style>
 
     <style name="LoginButtonStyle">
-        <item name="android:background">@drawable/roundedyellow</item>
+        <item name="android:background">@drawable/roundedblue</item>
+        <item name="android:textColor">@color/fullWhite</item>
+        <item name="fontFamily">@font/laosangmanmn</item>
     </style>
 
     <style name="roundedImage">
