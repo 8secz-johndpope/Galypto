@@ -7,7 +7,10 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.cripto_photoaffix.Activities.MyActivity;
+import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Authenticators.Authenticator;
 import com.example.cripto_photoaffix.Authenticators.PasscodeAuthenticator;
 import com.example.cripto_photoaffix.GalleryTransferer;
@@ -24,19 +27,28 @@ import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
 import java.security.SecureRandom;
 
 public class RegisterActivity extends MyActivity {
+    private EditText field;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        EditText field = findViewById(R.id.passcode);
+        field = findViewById(R.id.passcode);
+
 
         field.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE)
-                    createUserData();
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    if (validPassword(field.getText().toString()))
+                        createUserData();
+                    else {
+                        Toast.makeText(ActivityTransferer.getInstance().getActivity(),
+                                    "Password must have at least 8 characters and 2 numbers.",
+                                        Toast.LENGTH_LONG).show();
+                    }
+                }
 
                 return true;
             }
@@ -49,7 +61,13 @@ public class RegisterActivity extends MyActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createUserData();
+                if (validPassword(field.getText().toString()))
+                    createUserData();
+                else {
+                    Toast.makeText(ActivityTransferer.getInstance().getActivity(),
+                            "Password must have at least 8 characters and 2 numbers.",
+                            Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -153,5 +171,22 @@ public class RegisterActivity extends MyActivity {
         FilesManager manager = FilesManager.getInstance();
 
         manager.storePassword(file);
+    }
+
+    private boolean validPassword(String string) {
+        boolean valid = string.length() > 8;
+
+        if (valid) {
+            int cantNumbers = 0;
+
+            for (int i = 0; i < string.length(); i++) {
+                if (Character.isDigit(string.charAt(i)))
+                    cantNumbers++;
+            }
+
+            valid = cantNumbers >= 2;
+        }
+
+        return valid;
     }
 }
