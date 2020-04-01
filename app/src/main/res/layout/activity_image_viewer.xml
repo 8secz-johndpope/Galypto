@@ -30,59 +30,62 @@
 
         <LinearLayout
             android:id="@+id/fullscreen_content_controls"
-            style="?metaButtonBarStyle"
+            style="@style/ViewerButtonsStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="38dp"
             android:layout_gravity="bottom|center_horizontal"
-            android:background="@android:color/transparent"
             android:orientation="horizontal"
             tools:ignore="UselessParent">
 
             <ImageButton
                 android:id="@+id/share_button"
+                style="@style/MediaViewerOptionButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:contentDescription="@string/share_button"
-                android:src="@android:drawable/ic_menu_share"
+                android:src="@drawable/share"
                 android:text="@string/ShareButton" />
 
             <ImageButton
                 android:id="@+id/save_button"
+                style="@style/MediaViewerOptionButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:contentDescription="@string/save_button"
-                android:src="@android:drawable/ic_menu_save"
+                android:src="@drawable/download"
                 android:text="@string/save_to_device" />
 
             <ImageButton
                 android:id="@+id/delete_button"
+                style="@style/MediaViewerOptionButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:contentDescription="@string/delete_button"
-                android:src="@android:drawable/ic_menu_delete"
+                android:src="@drawable/trash"
                 android:text="@string/Delete" />
 
             <ImageButton
                 android:id="@+id/rotate_left_button"
+                style="@style/MediaViewerOptionButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:contentDescription="@string/rotate"
-                android:src="@android:drawable/ic_menu_rotate"
-                android:rotationY="180"
+                android:src="@drawable/rotate"
                 android:text="@string/rotate" />
 
             <ImageButton
                 android:id="@+id/rotate_right_button"
-                style="?metaButtonBarButtonStyle"
+                style="@style/MediaViewerOptionButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:contentDescription="@string/rotate"
-                android:src="@android:drawable/ic_menu_rotate"
+                android:rotationY="180"
+                android:src="@drawable/rotate"
                 android:text="@string/rotate" />
 
         </LinearLayout>

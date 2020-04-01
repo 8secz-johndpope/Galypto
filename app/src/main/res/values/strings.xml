@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">Cripto-PhotoAffix</string>
+    <string name="app_name">Crypto-PhotoAffix</string>
     <string name="FingerprintAuthentication">Fingerprint Authentication</string>
     <string name="Status">PlaceFingerprint</string>
     <string name="MainPage">MainPage</string>
     <string name="fingerprintauthentication">Fingerprint Authentication</string>
     <string name="PasscodeAuthentication">Passcode Authentication</string>
-    <string name="usepasscode">Use passcode login</string>
+    <string name="usepasscode">Use passcode to login</string>
     <string name="Authenticate">Enter</string>
-    <string name="insertPassword">Insert numeric password</string>
+    <string name="insertPassword">Insert password</string>
     <string name="title_activity_gallery">GalleryActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
@@ -111,10 +111,10 @@
     <string name="imageView">TODO</string>
     <string name="select">Select</string>
     <string name="insert_password">Insert password</string>
-    <string name="entrar">Entrar</string>
-    <string name="inserte_contrase_a">Inserte contraseña</string>
-    <string name="registro">Registro</string>
-    <string name="inserte_contrase_a_numerica">Inserte contraseña numerica</string>
+    <string name="entrar">Enter</string>
+    <string name="inserte_contrase_a">Password</string>
+    <string name="registro">Register</string>
+    <string name="inserte_contrase_a_numerica">Insert password</string>
     <string name="rotate">rotate</string>
     <string name="delete_button">delete_button</string>
     <string name="save_button">save_button</string>
@@ -122,4 +122,6 @@
     <string name="delete">Delete</string>
     <string name="store">Store</string>
     <string name="share">Share</string>
+    <string name="loginButton">Log in</string>
+    <string name="showpass">Show password</string>
 </resources>

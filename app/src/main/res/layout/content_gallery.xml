@@ -6,13 +6,18 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Activities.GalleryActivities.GalleryActivity"
-    tools:showIn="@layout/activity_gallery">
+    tools:showIn="@layout/activity_gallery"
+    android:background="@drawable/roundedinput">
 
     <androidx.gridlayout.widget.GridLayout
+        style="@style/GridStyle"
         android:id="@+id/grid_layout"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="0dp"
+        android:paddingHorizontal="25dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
 
     </androidx.gridlayout.widget.GridLayout>
 </androidx.core.widget.NestedScrollView>

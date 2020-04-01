@@ -1,7 +1,7 @@
 package com.example.cripto_photoaffix.Activities.GalleryActivities;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivityStates.Opener;
@@ -37,6 +37,7 @@ public class GalleryActivity extends MyActivity {
     private GridLayout gridLayout;
     private Map<Media, MyImageButton> buttons;
     private List<ImageButton> actionButtons;
+    private View actionButtonsView;
     private State state;
 
     @Override
@@ -97,16 +98,12 @@ public class GalleryActivity extends MyActivity {
             if (buttons.get(media) == null) {          //Si no hay un boton en la pantalla, lo añado
                 button = new MyImageButton(media);
 
-                button.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
-                gridLayout.addView(button, getScreenWidth() / 3, getScreenHeigth() / 6);
+                gridLayout.addView(button, (int)(getScreenWidth() / 3.5), getScreenHeigth() / 7);
 
                 button.setOnClickListener(touchListener);
                 button.setOnLongClickListener(longClickListener);
 
                 buttons.put(media, button);
-
-                button.setBackgroundColor(Color.BLACK);
             }
             else                                      //Si hay un boton en la pantalla, lo saco de
                 toRemove.remove(media);               //la lista a eliminar botones.
@@ -136,6 +133,8 @@ public class GalleryActivity extends MyActivity {
             b.setVisibility(View.INVISIBLE);
             b.setClickable(false);
         }
+
+        actionButtonsView.setVisibility(View.INVISIBLE);
     }
 
     /**
@@ -151,6 +150,8 @@ public class GalleryActivity extends MyActivity {
             b.setVisibility(View.VISIBLE);
             b.setClickable(true);
         }
+
+        actionButtonsView.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -229,6 +230,8 @@ public class GalleryActivity extends MyActivity {
 
         gridLayout.setRowCount(gallery.getMedia().size()/3 + 1);
 
+        gridLayout.setBackgroundResource(R.drawable.roundedimage);
+
         refresh();
 
         state = new Opener();
@@ -253,6 +256,8 @@ public class GalleryActivity extends MyActivity {
         factory = new GalleryShareButtonFactory(layout, R.id.share);//, buttons);
         button = factory.create();
         actionButtons.add(button);
+
+        actionButtonsView = findViewById(R.id.actionButtonsView);
 
         hideButtons();
     }

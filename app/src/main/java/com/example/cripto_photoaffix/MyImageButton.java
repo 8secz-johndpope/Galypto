@@ -10,6 +10,12 @@ public class MyImageButton extends AppCompatImageButton {
     public MyImageButton(Media media) {
         super(ActivityTransferer.getInstance().getActivity());
         this.media = media;
+
+        setScaleType(ScaleType.CENTER_CROP);
+        setBackgroundResource(R.drawable.roundedimage);
+        setCropToPadding(true);
+        setPadding(3, 3, 3, 3);
+
         setImageBitmap(media.getPreview());
     }
 

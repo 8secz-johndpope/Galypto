@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#008577</color>
+    <color name="fullWhite">#FFFFFF</color>
+    <color name="loginGreen">#3B5D5B</color>
+    <color name="passcodeGreen">#1C9AE0C8</color>
+    <color name="yellowlove">#FFCE9A</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-
+    <color name="eggshell">#EEEBD3</color>
+    <color name="queenBlue">#437C90</color>
+    <color name="inputTextHint">#24FFFFFF</color>
+    <color name="darkSlateGray">#255957</color>
+    <color name="verdigris">#4CB5AE</color>
     <color name="black_overlay">#66000000</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

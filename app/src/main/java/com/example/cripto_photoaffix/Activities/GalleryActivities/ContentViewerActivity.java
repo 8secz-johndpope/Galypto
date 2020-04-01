@@ -69,7 +69,7 @@ public abstract class ContentViewerActivity extends MyActivity {
             // Delayed display of UI elements
             ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
-                actionBar.show();
+                actionBar.hide();
             }
             mControlsView.setVisibility(View.VISIBLE);
         }
@@ -188,6 +188,11 @@ public abstract class ContentViewerActivity extends MyActivity {
     @Override
     public void onResume() {
         super.onResume();
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
 
         if (!wentBack) {
             Command command = new RemoveDecryptedMediaCommand();

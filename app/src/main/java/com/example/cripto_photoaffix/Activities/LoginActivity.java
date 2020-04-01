@@ -13,6 +13,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -52,6 +54,14 @@ public class LoginActivity extends MyActivity {
         field = findViewById(R.id.loginPasscode);
 
         openingGallery = false;
+
+        Button loginButton = findViewById(R.id.button);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                authenticators.get(0).authenticate();
+            }
+        });
     }
 
     /**
@@ -68,6 +78,11 @@ public class LoginActivity extends MyActivity {
         imm.hideSoftInputFromWindow(field.getApplicationWindowToken(), 0);
 
         field.setEnabled(false);
+        Button login = findViewById(R.id.button);
+        login.setEnabled(false);
+
+        CheckBox checkBox = findViewById(R.id.checkBox);
+        checkBox.setEnabled(false);
 
         openingGallery = true;
 

@@ -5,10 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@android:color/background_dark"
+    android:background="@color/loginGreen"
     tools:context=".Activities.GalleryActivities.GalleryActivity">
 
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_gallery" />
+
     <com.google.android.material.appbar.AppBarLayout
+        android:background="@color/loginGreen"
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
@@ -16,68 +21,79 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:background="@color/loginGreen"
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:title="Galería"
-            app:contentScrim="?attr/colorPrimary"
+            app:title="Gallery"
+            app:contentScrim="@color/loginGreen"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
 
             <androidx.appcompat.widget.Toolbar
+                android:background="@color/loginGreen"
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                android:elevation="0dp"/>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
-
-    <include
-        android:id="@+id/include"
-        layout="@layout/content_gallery" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLay"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageButton
-            android:id="@+id/delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:contentDescription="@string/delete"
+        <View
+            android:id="@+id/actionButtonsView"
+            style="@style/GallerButtonsViewStyle"
+            android:layout_width="319dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="41dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_delete" />
-
-        <ImageButton
-            android:id="@+id/share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"
-            android:contentDescription="@string/share"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_share" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageButton
             android:id="@+id/store"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            style="@style/GalleryImageButtonStyle"
+            android:layout_width="41dp"
+            android:layout_height="41dp"
+            android:layout_marginBottom="44dp"
             android:contentDescription="@string/store"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/delete"
-            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toEndOf="@+id/share"
-            app:srcCompat="@android:drawable/ic_menu_save" />
+            app:srcCompat="@drawable/download" />
+
+        <ImageButton
+            android:id="@+id/share"
+            style="@style/GalleryImageButtonStyle"
+            android:layout_width="41dp"
+            android:layout_height="41dp"
+            android:layout_marginStart="42dp"
+            android:layout_marginBottom="45dp"
+            android:contentDescription="@string/share"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/share" />
+
+        <ImageButton
+            android:id="@+id/delete"
+            style="@style/GalleryImageButtonStyle"
+            android:layout_width="41dp"
+            android:layout_height="41dp"
+            android:layout_marginEnd="42dp"
+            android:layout_marginBottom="45dp"
+            android:contentDescription="@string/delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/trash" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

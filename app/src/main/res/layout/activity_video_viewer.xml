@@ -25,37 +25,39 @@
 
         <LinearLayout
             android:id="@+id/fullscreen_content_controls"
-            style="?metaButtonBarStyle"
+            style="@style/ViewerButtonsStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_gravity="bottom|center_horizontal"
-            android:background="@android:color/transparent"
             android:orientation="horizontal"
             tools:ignore="UselessParent">
 
             <ImageButton
                 android:id="@+id/share_button"
+                style="@style/MediaViewerOptionButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@android:drawable/ic_menu_share"
-                android:contentDescription="@string/share_button" />
+                android:contentDescription="@string/share_button"
+                android:src="@drawable/share" />
 
             <ImageButton
                 android:id="@+id/save_button"
+                style="@style/MediaViewerOptionButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@android:drawable/ic_menu_save"
-                android:contentDescription="@string/save_button" />
+                android:contentDescription="@string/save_button"
+                android:src="@drawable/download" />
 
             <ImageButton
                 android:id="@+id/delete_button"
+                style="@style/MediaViewerOptionButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@android:drawable/ic_menu_delete"
-                android:contentDescription="@string/delete_button" />
+                android:contentDescription="@string/delete_button"
+                android:src="@drawable/trash" />
 
         </LinearLayout>
 

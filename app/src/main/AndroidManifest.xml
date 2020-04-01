@@ -27,7 +27,7 @@
             android:theme="@style/FullscreenTheme"></activity>
         <activity
             android:name=".Activities.GalleryActivities.GalleryActivity"
-            android:label="Galería"
+            android:label="Gallery"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".Activities.RegisterActivities.RegisterActivity" />
         <activity android:name=".Activities.GalleryActivities.ImageViewerActivity"
