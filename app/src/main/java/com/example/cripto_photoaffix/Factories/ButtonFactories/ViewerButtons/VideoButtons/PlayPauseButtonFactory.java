@@ -18,6 +18,7 @@ public class PlayPauseButtonFactory extends LayoutButtonFactory {
     @Override
     public ImageButton create() {
         ImageButton created = super.create();
+
         created.setBackgroundResource(R.drawable.play);
         return created;
     }
