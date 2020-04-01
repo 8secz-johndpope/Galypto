@@ -98,4 +98,10 @@
         <item name="android:height">300dp</item>
     </style>
 
+    <style name="CheckBoxStyle">
+        <item name="android:fontFamily">@font/laosangmanmn"</item>
+        <item name="android:textColor">@color/black_overlay</item>
+        <item name="android:tint">@color/darkblue</item>
+    </style>
+
 </resources>
