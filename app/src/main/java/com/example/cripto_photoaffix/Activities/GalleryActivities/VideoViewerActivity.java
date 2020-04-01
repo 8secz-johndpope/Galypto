@@ -10,7 +10,6 @@ import com.example.cripto_photoaffix.Factories.ButtonFactories.ButtonFactory;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.ViewerButtons.VideoButtons.PlayPauseButtonFactory;
 import com.example.cripto_photoaffix.R;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
-import java.util.ArrayList;
 
 public class VideoViewerActivity extends ContentViewerActivity {
     protected VideoView videoView;
