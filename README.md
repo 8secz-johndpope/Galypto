@@ -8,5 +8,5 @@ There's no apk released yet but you can install the app by generating your own a
 Santiago Pardal
 
 # Libraries used
--[FlatBuffers](https://google.github.io/flatbuffers/)
--[BCrypt](https://www.npmjs.com/package/bcrypt)
+..*[FlatBuffers](https://google.github.io/flatbuffers/)
+..*[BCrypt](https://www.npmjs.com/package/bcrypt)
