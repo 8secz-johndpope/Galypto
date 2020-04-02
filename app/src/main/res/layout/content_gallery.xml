@@ -9,7 +9,17 @@
     tools:showIn="@layout/activity_gallery"
     android:background="@drawable/roundedinput">
 
-    <androidx.gridlayout.widget.GridLayout
+    <androidx.recyclerview.widget.RecyclerView
+        style="@style/GridStyle"
+        android:id="@+id/grid_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="0dp"
+        android:paddingHorizontal="25dp"
+     />
+   <!-- <androidx.gridlayout.widget.GridLayout
         style="@style/GridStyle"
         android:id="@+id/grid_layout"
         android:layout_marginLeft="25dp"
@@ -19,5 +29,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </androidx.gridlayout.widget.GridLayout>
+    </androidx.gridlayout.widget.GridLayout>-->
 </androidx.core.widget.NestedScrollView>

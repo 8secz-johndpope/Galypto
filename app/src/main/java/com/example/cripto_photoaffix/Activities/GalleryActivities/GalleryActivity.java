@@ -24,6 +24,10 @@ import android.util.ArrayMap;
 import android.util.DisplayMetrics;
 import android.view.View;
 import androidx.gridlayout.widget.GridLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import com.example.cripto_photoaffix.R;
@@ -34,7 +38,8 @@ import java.util.Map;
 public class GalleryActivity extends MyActivity {
 
     private Gallery gallery;
-    private GridLayout gridLayout;
+  //  private GridLayout gridLayout;
+    private RecyclerView recyclerView;
     private Map<Media, MyImageButton> buttons;
     private List<ImageButton> actionButtons;
     private View actionButtonsView;
@@ -98,7 +103,8 @@ public class GalleryActivity extends MyActivity {
             if (buttons.get(media) == null) {          //Si no hay un boton en la pantalla, lo añado
                 button = new MyImageButton(media);
 
-                gridLayout.addView(button, (int)(getScreenWidth() / 3.5), getScreenHeigth() / 7);
+                //gridLayout.addView(button, (int)(getScreenWidth() / 3.5), getScreenHeigth() / 7);
+                recyclerView.addView(button, (int)(getScreenWidth() / 3.5), getScreenHeigth() / 7);
 
                 button.setOnClickListener(touchListener);
                 button.setOnLongClickListener(longClickListener);
@@ -114,7 +120,8 @@ public class GalleryActivity extends MyActivity {
         for (int i = 0; i < size; i++) {              //Elimino todos los botones que hay que eliminar.
             media = toRemove.get(i);
 
-            gridLayout.removeView(buttons.get(media));
+        //    gridLayout.removeView(buttons.get(media));
+            recyclerView.removeView(buttons.get(media));
 
             buttons.remove(media);
         }
@@ -225,13 +232,18 @@ public class GalleryActivity extends MyActivity {
         GalleryTransferer transferer = GalleryTransferer.getInstance();
         gallery = transferer.getGallery();
 
+        recyclerView = findViewById(R.id.grid_layout);
+        GridLayoutManager manager = new GridLayoutManager(this, 3);
+        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(manager);
+/*
         gridLayout = findViewById(R.id.grid_layout);
         gridLayout.setColumnCount(3);
 
         gridLayout.setRowCount(gallery.getMedia().size()/3 + 1);
 
         gridLayout.setBackgroundResource(R.drawable.roundedimage);
-
+*/
         refresh();
 
         state = new Opener();
