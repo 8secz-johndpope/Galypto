@@ -1,11 +1,11 @@
 package com.example.cripto_photoaffix.Activities.GalleryActivities;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivityStates.Opener;
 import com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivityStates.State;
+import com.example.cripto_photoaffix.Activities.GalleryActivities.RecyclerViewComponents.RecyclerViewAdapter;
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.Commands.Command;
 import com.example.cripto_photoaffix.Factories.ButtonFactories.ButtonFactory;
@@ -23,13 +23,9 @@ import android.os.Vibrator;
 import android.util.ArrayMap;
 import android.util.DisplayMetrics;
 import android.view.View;
-import androidx.gridlayout.widget.GridLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import com.example.cripto_photoaffix.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,8 +100,7 @@ public class GalleryActivity extends MyActivity {
                 button = new MyImageButton(media);
 
                 //gridLayout.addView(button, (int)(getScreenWidth() / 3.5), getScreenHeigth() / 7);
-                recyclerView.addView(button, (int)(getScreenWidth() / 3.5), getScreenHeigth() / 7);
-
+                //recyclerView.addView(button, (int)(getScreenWidth() / 3.5), getScreenHeigth() / 7);
                 button.setOnClickListener(touchListener);
                 button.setOnLongClickListener(longClickListener);
 
@@ -233,9 +228,15 @@ public class GalleryActivity extends MyActivity {
         gallery = transferer.getGallery();
 
         recyclerView = findViewById(R.id.grid_layout);
+
         GridLayoutManager manager = new GridLayoutManager(this, 3);
-        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        System.out.println(recyclerView);
         recyclerView.setLayoutManager(manager);
+
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, gallery.getMedia());
+        adapter.setOnClickListener(new ButtonListener());
+        adapter.setOnLongClickListener(new LongClickListener());
+        recyclerView.setAdapter(adapter);
 /*
         gridLayout = findViewById(R.id.grid_layout);
         gridLayout.setColumnCount(3);

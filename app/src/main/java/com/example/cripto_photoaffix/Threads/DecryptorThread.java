@@ -37,6 +37,13 @@ public class DecryptorThread extends Thread {
             result.add(media);
 
             file.clear();
+
+            try {
+                Thread.sleep(250);
+                System.gc();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
