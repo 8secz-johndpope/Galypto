@@ -5,7 +5,7 @@ Crypto PhotoAffix is a gallery app which ecnrypts pictures and videos. Once the 
 There's no apk released yet but you can install the app by generating your own apk or simply running the code on your device using Android Studio.
 
 # Author
-Santiago Pardal
+[Santiago Pardal](https://www.instagram.com/santipardal/)
 
 # Libraries used
 * [FlatBuffers](https://google.github.io/flatbuffers/)
