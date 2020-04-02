@@ -19,7 +19,7 @@ public class PlayPauseButtonFactory extends LayoutButtonFactory {
     public ImageButton create() {
         ImageButton created = super.create();
 
-        created.setBackgroundResource(R.drawable.play);
+        created.setBackgroundResource(R.drawable.playbutton);
         return created;
     }
 
@@ -40,12 +40,12 @@ public class PlayPauseButtonFactory extends LayoutButtonFactory {
             if (playing) {
                 ActivityTransferer.getInstance().getActivity().accept(new PauseVisitor());
                 playing = false;
-                v.setBackgroundResource(R.drawable.play);
+                v.setBackgroundResource(R.drawable.playbutton);
             }
             else {
                 ActivityTransferer.getInstance().getActivity().accept(new PlayVisitor());
                 playing = true;
-                v.setBackgroundResource(R.drawable.pause);
+                v.setBackgroundResource(R.drawable.pausebutton);
             }
         }
     }

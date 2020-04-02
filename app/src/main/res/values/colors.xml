@@ -13,6 +13,7 @@
     <color name="darkSlateGray">#255957</color>
     <color name="verdigris">#4CB5AE</color>
     <color name="newgreen">#26D69A</color>
+    <color name="blacktransparent">#33000000</color>
     <color name="darkblue">#212D40</color>
     <color name="black_overlay">#66000000</color>
     <color name="transparent">#00FFFFFF</color>

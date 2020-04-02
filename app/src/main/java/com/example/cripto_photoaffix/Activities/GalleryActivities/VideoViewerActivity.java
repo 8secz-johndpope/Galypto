@@ -53,7 +53,7 @@ public class VideoViewerActivity extends ContentViewerActivity {
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                play_pause.setBackgroundResource(R.drawable.play);
+                play_pause.setBackgroundResource(R.drawable.playbutton);
             }
         });
 
