@@ -32,8 +32,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
                 .inflate(R.layout.recyclerviewitem, parent, false);
 
         GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) button.getLayoutParams();
-        params.height = (getScreenHeigth()/7);
-        params.width = ((int)(getScreenWidth()/3.5));
+        params.height = parent.getMeasuredHeight()/7;
+        params.width = (int)(parent.getMeasuredWidth()/3.57);
         button.setLayoutParams(params);
 
         return new ViewHolder(button);

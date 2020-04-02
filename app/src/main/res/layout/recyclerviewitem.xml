@@ -5,6 +5,5 @@
     android:gravity="center"
     android:cropToPadding="true"
     android:scaleType="centerCrop"
-    android:padding="3dp"
     android:background="@drawable/roundedimage"
     xmlns:android="http://schemas.android.com/apk/res/android" />
