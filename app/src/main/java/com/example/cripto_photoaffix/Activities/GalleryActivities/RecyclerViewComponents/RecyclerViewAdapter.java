@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Gallery.Media;
@@ -30,10 +31,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
         MyImageButton button = (MyImageButton) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recyclerviewitem, parent, false);
 
-        button.setMinimumHeight(getScreenHeigth()/7);
-        button.setMinimumWidth((int)(getScreenWidth()/3.5));
-        button.setMaxWidth((int)(getScreenWidth()/3.5));
-        button.setMaxHeight(getScreenHeigth()/7);
+        GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) button.getLayoutParams();
+        params.height = (getScreenHeigth()/7);
+        params.width = ((int)(getScreenWidth()/3.5));
+        button.setLayoutParams(params);
 
         return new ViewHolder(button);
     }
