@@ -53,7 +53,6 @@ public class Gallery {
     }
 
     public List<Media> getMedia() {
-        List<Media> list = new ArrayList<Media>();
         Queue<Media> toRemove = new ArrayDeque<Media>();
 
         int size = media.size();
@@ -62,16 +61,14 @@ public class Gallery {
         for (int i = 0; i < size; i++) {
             actual = media.get(i);
 
-            if (FilesManager.getInstance().exists(actual.getFullPath()))
-                list.add(actual);
-            else
+            if (!FilesManager.getInstance().exists(actual.getFullPath()))
                 toRemove.add(actual);
         }
 
         while (!toRemove.isEmpty())
             media.remove(toRemove.poll());
 
-        return list;
+        return media;
     }
 
     /**

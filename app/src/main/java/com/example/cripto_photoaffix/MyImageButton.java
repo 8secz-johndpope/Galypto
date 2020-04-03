@@ -13,39 +13,25 @@ public class MyImageButton extends AppCompatImageButton {
         super(ActivityTransferer.getInstance().getActivity());
         this.media = media;
 
-        setScaleType(ScaleType.CENTER_CROP);
-        setBackgroundResource(R.drawable.roundedimage);
-        setCropToPadding(true);
-        setPadding(3, 3, 3, 3);
-
-        setImageBitmap(media.getPreview());
+       setMedia(media);
     }
 
     public MyImageButton(Context context) {
         super(context);
 
-        setScaleType(ScaleType.CENTER_CROP);
-        setBackgroundResource(R.drawable.roundedimage);
-        setCropToPadding(true);
-        setPadding(3, 3, 3, 3);
+        setStyle();
     }
 
     public MyImageButton(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        setScaleType(ScaleType.CENTER_CROP);
-        setBackgroundResource(R.drawable.roundedimage);
-        setCropToPadding(true);
-        setPadding(3, 3, 3, 3);
+        setStyle();
     }
 
     public MyImageButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        setScaleType(ScaleType.CENTER_CROP);
-        setBackgroundResource(R.drawable.roundedimage);
-        setCropToPadding(true);
-        setPadding(3, 3, 3, 3);
+        setStyle();
     }
 
     /**
@@ -54,10 +40,7 @@ public class MyImageButton extends AppCompatImageButton {
      */
     public void setMedia(Media media) {
         this.media = media;
-        setScaleType(ScaleType.CENTER_CROP);
-        setBackgroundResource(R.drawable.roundedimage);
-        setCropToPadding(true);
-        setPadding(3, 3, 3, 3);
+        setStyle();
 
         setImageBitmap(media.getPreview());
     }
@@ -72,5 +55,12 @@ public class MyImageButton extends AppCompatImageButton {
 
     public Bitmap getPreview() {
         return media.getPreview();
+    }
+
+    private void setStyle() {
+        setScaleType(ScaleType.CENTER_CROP);
+        setBackgroundResource(R.drawable.roundedimage);
+        setCropToPadding(true);
+        setPadding(3, 3, 3, 3);
     }
 }

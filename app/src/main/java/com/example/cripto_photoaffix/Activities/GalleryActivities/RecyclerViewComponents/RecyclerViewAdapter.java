@@ -1,14 +1,12 @@
 package com.example.cripto_photoaffix.Activities.GalleryActivities.RecyclerViewComponents;
 
 import android.content.Context;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.MyImageButton;
 import com.example.cripto_photoaffix.R;
@@ -16,12 +14,11 @@ import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     private List<Media> media;
-    private LayoutInflater inflater;
     private View.OnLongClickListener longClickListener;
     private View.OnClickListener clickListener;
 
     public RecyclerViewAdapter(Context context, List<Media> media) {
-        inflater = LayoutInflater.from(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
         this.media = media;
     }
 
@@ -32,8 +29,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
                 .inflate(R.layout.recyclerviewitem, parent, false);
 
         GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) button.getLayoutParams();
-        params.height = parent.getMeasuredHeight()/7;
-        params.width = (int)(parent.getMeasuredWidth()/3.57);
+        params.height = parent.getMeasuredHeight()/6;
+        params.width = (int)(parent.getMeasuredWidth()/3.5);
         button.setLayoutParams(params);
 
         return new ViewHolder(button);
@@ -59,25 +56,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
         this.longClickListener = listener;
     }
 
-    /**
-     * Retorna el ancho de la pantalla.
-     * @return Retorna el ancho de la pantalla.
-     */
-    private int getScreenWidth() {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        ActivityTransferer.getInstance().getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-
-        return displayMetrics.widthPixels;
-    }
-
-    /**
-     * Retorna el largo de la pantalla.
-     * @return Retorna el largo de la pantalla.
-     */
-    private int getScreenHeigth() {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        ActivityTransferer.getInstance().getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-
-        return displayMetrics.heightPixels;
+    public void remove(Media media) {
+        int position = this.media.indexOf(media) + 1;
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, this.media.size());
     }
 }

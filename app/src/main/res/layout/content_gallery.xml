@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Activities.GalleryActivities.GalleryActivity"
     tools:showIn="@layout/activity_gallery"
@@ -15,9 +16,6 @@
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:paddingHorizontal="25dp"
      />
  <!--   <androidx.gridlayout.widget.GridLayout
         style="@style/GridStyle"
