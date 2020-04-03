@@ -7,15 +7,18 @@ import com.example.cripto_photoaffix.Commands.RemoveDecryptedMediaCommand;
 import com.example.cripto_photoaffix.Commands.RemoveSharedCommand;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.IntentFactory;
 import com.example.cripto_photoaffix.Factories.IntentsFactory.LoginIntentFactory;
+import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.MyImageButton;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.GalleryVisitors.SelectorBackVisitor;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Selector implements State {
-    private int cantSelected;
+    private List<Media> selected;
 
     public Selector() {
-        cantSelected = 0;
+        selected = new ArrayList<Media>();
     }
 
     @Override
@@ -23,15 +26,15 @@ public class Selector implements State {
         if (button.isSelected()) {
             button.setSelected(false);
             button.setAlpha(1f);
-            cantSelected--;
+            selected.remove(button.getMedia());
 
-            if (cantSelected == 0)
+            if (selected.isEmpty())
                 back();
         }
         else {
             button.setSelected(true);
             button.setAlpha(0.5f);
-            cantSelected++;
+            selected.add(button.getMedia());
         }
     }
 
@@ -72,5 +75,10 @@ public class Selector implements State {
     @Override
     public State getNextState() {
         return new Opener();
+    }
+
+    @Override
+    public List<Media> getSelected() {
+        return selected;
     }
 }

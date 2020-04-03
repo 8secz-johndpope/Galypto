@@ -27,9 +27,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.widget.ImageButton;
 import com.example.cripto_photoaffix.R;
+
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 public class GalleryActivity extends MyActivity {
 
@@ -161,23 +164,25 @@ public class GalleryActivity extends MyActivity {
      * @param task Tarea a ejecutar.
      */
     public void executeOnSelected(Command task) {
-        List<Media> galleryMedia = gallery.getMedia();
+        List<Media> selected = state.getSelected();
+        Queue<Media> toDeselect = new ArrayDeque<Media>();
 
-        int size = galleryMedia.size();
+        int size = selected.size();
 
         Media media;
         MyImageButton button;
 
         for (int i = 0; i < size; i++) {
-            media = galleryMedia.get(i);
+            media = selected.get(i);
             button = buttons.get(media);
-
-            if (button.isSelected())
-                task.addMedia(media);
 
             button.setSelected(false);
             button.setAlpha(1f);
+            toDeselect.add(media);
         }
+
+        while (!toDeselect.isEmpty())
+            selected.remove(toDeselect.poll());
 
         task.execute();
 
@@ -237,14 +242,7 @@ public class GalleryActivity extends MyActivity {
         adapter.setOnClickListener(new ButtonListener());
         adapter.setOnLongClickListener(new LongClickListener());
         recyclerView.setAdapter(adapter);
-/*
-        gridLayout = findViewById(R.id.grid_layout);
-        gridLayout.setColumnCount(3);
 
-        gridLayout.setRowCount(gallery.getMedia().size()/3 + 1);
-
-        gridLayout.setBackgroundResource(R.drawable.roundedimage);
-*/
         refresh();
 
         state = new Opener();
@@ -258,15 +256,15 @@ public class GalleryActivity extends MyActivity {
 
         View layout = findViewById(R.id.constraintLay);
 
-        ButtonFactory factory = new GalleryDeleteButtonFactory(layout, R.id.delete);//, buttons);
+        ButtonFactory factory = new GalleryDeleteButtonFactory(layout, R.id.delete);
         ImageButton button = factory.create();
         actionButtons.add(button);
 
-        factory = new GalleryStoreButtonFactory(layout, R.id.store);//, buttons);
+        factory = new GalleryStoreButtonFactory(layout, R.id.store);
         button = factory.create();
         actionButtons.add(button);
 
-        factory = new GalleryShareButtonFactory(layout, R.id.share);//, buttons);
+        factory = new GalleryShareButtonFactory(layout, R.id.share);
         button = factory.create();
         actionButtons.add(button);
 

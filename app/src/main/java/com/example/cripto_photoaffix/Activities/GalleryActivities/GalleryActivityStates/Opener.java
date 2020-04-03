@@ -13,6 +13,9 @@ import com.example.cripto_photoaffix.Visitors.ActivityVisitors.GalleryVisitors.O
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaOpenerVisitor;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Opener implements State {
     private boolean openedImage;
     private boolean goToLogin;
@@ -78,6 +81,11 @@ public class Opener implements State {
     @Override
     public State getNextState() {
         return this;
+    }
+
+    @Override
+    public List<Media> getSelected() {
+        return new ArrayList<Media>();
     }
 
     private void goToLogin() {

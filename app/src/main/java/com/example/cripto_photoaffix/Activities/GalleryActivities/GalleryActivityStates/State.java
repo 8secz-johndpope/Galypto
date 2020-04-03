@@ -1,6 +1,8 @@
 package com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivityStates;
 
+import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.MyImageButton;
+import java.util.List;
 
 public interface State {
     /**
@@ -40,4 +42,10 @@ public interface State {
      * @return Siguiente estado.
      */
     public State getNextState();
+
+    /**
+     * Returns the elements previously selected.
+     * @return List of media with elements selected.
+     */
+    public List<Media> getSelected();
 }
