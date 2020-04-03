@@ -20,25 +20,23 @@ import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
 import androidx.appcompat.widget.Toolbar;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.util.ArrayMap;
 import android.util.DisplayMetrics;
 import android.view.View;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.widget.ImageButton;
 import com.example.cripto_photoaffix.R;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Queue;
 
 public class GalleryActivity extends MyActivity {
 
     private Gallery gallery;
-    private RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerViewAdapter;
-    private Map<Media, MyImageButton> buttons;
+    private List<Media> mediaList;
     private List<ImageButton> actionButtons;
     private View actionButtonsView;
     private State state;
@@ -50,8 +48,6 @@ public class GalleryActivity extends MyActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        buttons = new ArrayMap<Media, MyImageButton>();
 
         initialize();
 
@@ -70,9 +66,11 @@ public class GalleryActivity extends MyActivity {
      * Deselecciona todos los botones previamente seleccionados.
      */
     public void unselectAllButtons() {
-        for (MyImageButton button: buttons.values()) {
-            button.setSelected(false);
-            button.setAlpha(1f);
+        List<Media> media = gallery.getMedia();
+
+        for (Media m: media) {
+            m.deselect();
+            recyclerViewAdapter.deselect(m);
         }
     }
 
@@ -87,37 +85,24 @@ public class GalleryActivity extends MyActivity {
     @Override
     public void refresh() {
         List<Media> galleryMedia = gallery.getMedia();
-        View.OnLongClickListener longClickListener = new LongClickListener();
-        View.OnClickListener touchListener = new ButtonListener();
+        List<Media> toRemove = new ArrayList<Media>(mediaList);
 
-        MyImageButton button;
         Media media;
         int size = galleryMedia.size();
-        List<Media> toRemove = new ArrayList<Media>(buttons.keySet());
 
         for (int i = 0; i < size; i++) {
             media = galleryMedia.get(i);
 
-            if (buttons.get(media) == null) {          //Si no hay un boton en la pantalla, lo añado
-                button = new MyImageButton(media);
-
-                button.setOnClickListener(touchListener);
-                button.setOnLongClickListener(longClickListener);
-
-                buttons.put(media, button);
-            }
-            else                                      //Si hay un boton en la pantalla, lo saco de
-                toRemove.remove(media);               //la lista a eliminar botones.
+            if (mediaList.contains(media))           //Si hay un boton en la pantalla, lo saco de
+                toRemove.remove(media);              //la lista a eliminar botones.
         }
 
         size = toRemove.size();
 
-        for (int i = 0; i < size; i++) {              //Elimino todos los botones que hay que eliminar.
-            media = toRemove.get(i);
-
+        for (int j = 0; j < size; j++) {              //Elimino todos los botones que hay que eliminar.
+            media = toRemove.get(j);
+            mediaList.remove(media);
             recyclerViewAdapter.remove(media);
-
-            buttons.remove(media);
         }
     }
 
@@ -160,26 +145,23 @@ public class GalleryActivity extends MyActivity {
      * @param task Tarea a ejecutar.
      */
     public void executeOnSelected(Command task) {
-        List<Media> selected = state.getSelected();
-        Queue<Media> toDeselect = new ArrayDeque<Media>();
+        List<Media> selected = gallery.getMedia();
 
         int size = selected.size();
 
         Media media;
-        MyImageButton button;
 
         for (int i = 0; i < size; i++) {
             media = selected.get(i);
-            button = buttons.get(media);
-            task.addMedia(media);
 
-            button.setSelected(false);
-            button.setAlpha(1f);
-            toDeselect.add(media);
+            if (media.isSelected()) {
+                task.addMedia(media);
+
+                media.deselect();
+
+                recyclerViewAdapter.deselect(media);
+            }
         }
-
-        while (!toDeselect.isEmpty())
-            selected.remove(toDeselect.poll());
 
         task.execute();
 
@@ -229,7 +211,7 @@ public class GalleryActivity extends MyActivity {
         GalleryTransferer transferer = GalleryTransferer.getInstance();
         gallery = transferer.getGallery();
 
-        recyclerView = findViewById(R.id.grid_layout);
+        RecyclerView recyclerView = findViewById(R.id.grid_layout);
         recyclerView.setHorizontalScrollBarEnabled(false);
 
         GridLayoutManager manager = new GridLayoutManager(this, 3);
@@ -240,6 +222,8 @@ public class GalleryActivity extends MyActivity {
         recyclerViewAdapter.setOnClickListener(new ButtonListener());
         recyclerViewAdapter.setOnLongClickListener(new LongClickListener());
         recyclerView.setAdapter(recyclerViewAdapter);
+
+        mediaList = new ArrayList<Media>(gallery.getMedia());
 
         refresh();
 

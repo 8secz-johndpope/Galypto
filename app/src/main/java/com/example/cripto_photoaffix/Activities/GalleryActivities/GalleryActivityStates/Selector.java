@@ -11,30 +11,32 @@ import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.MyImageButton;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.ActivityVisitor;
 import com.example.cripto_photoaffix.Visitors.ActivityVisitors.GalleryVisitors.SelectorBackVisitor;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Selector implements State {
-    private List<Media> selected;
+    private int selected;
 
     public Selector() {
-        selected = new ArrayList<Media>();
+        selected = 0;
     }
 
     @Override
     public void touch(MyImageButton button) {
-        if (button.isSelected()) {
+        Media media = button.getMedia();
+
+        if (media.isSelected()) {
             button.setSelected(false);
             button.setAlpha(1f);
-            selected.remove(button.getMedia());
+            media.deselect();
+            selected--;
 
-            if (selected.isEmpty())
+            if (selected == 0)
                 back();
         }
         else {
+            media.select();
             button.setSelected(true);
             button.setAlpha(0.5f);
-            selected.add(button.getMedia());
+            selected++;
         }
     }
 
@@ -75,10 +77,5 @@ public class Selector implements State {
     @Override
     public State getNextState() {
         return new Opener();
-    }
-
-    @Override
-    public List<Media> getSelected() {
-        return selected;
     }
 }

@@ -11,6 +11,7 @@ import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.MyImageButton;
 import com.example.cripto_photoaffix.R;
 import java.util.List;
+import java.util.Queue;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     private List<Media> media;
@@ -57,8 +58,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     public void remove(Media media) {
-        int position = this.media.indexOf(media) + 1;
+        int position = this.media.indexOf(media);
+        this.media.remove(position);
+
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, this.media.size());
+    }
+
+    public void deselect(Media media) {
+        int position = this.media.indexOf(media);
+        notifyItemChanged(position);
     }
 }

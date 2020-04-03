@@ -7,6 +7,7 @@ import java.io.File;
 public abstract class Media {
     protected Bitmap preview;
     protected String path, filename;
+    protected boolean selected;
 
     /**
      * Vista previa de la "Media".
@@ -68,4 +69,30 @@ public abstract class Media {
      * @return Archivo donde fue guardado.
      */
     public abstract File store(String path);
+
+    /**
+     * Tells whether the media is selected or not.
+     * @return true if selected or false if not selected.
+     */
+    public boolean isSelected() {
+        return selected;
+    }
+
+    /**
+     * Selects the media.
+     * @return final result.
+     */
+    public boolean select() {
+        selected = true;
+        return selected;
+    }
+
+    /**
+     * Deselects the media.
+     * @return final result.
+     */
+    public boolean deselect() {
+        selected = false;
+        return selected;
+    }
 }

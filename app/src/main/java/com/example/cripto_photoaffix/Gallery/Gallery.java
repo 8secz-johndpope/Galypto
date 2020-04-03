@@ -68,7 +68,7 @@ public class Gallery {
         while (!toRemove.isEmpty())
             media.remove(toRemove.poll());
 
-        return media;
+        return new ArrayList<Media>(media);
     }
 
     /**
