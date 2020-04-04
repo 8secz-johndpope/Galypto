@@ -26,9 +26,8 @@ public class FilesManager {
     private FilesManager() {}
 
     /**
-     * Retorna la instancia del manejador. Es un Singleton para evitar crear instancias no
-     * necesarias.
-     * @return Instancia del manejador.
+     * Returns an instance.
+     * @return Instance.
      */
     public static FilesManager getInstance() {
         if (instance == null)
@@ -38,9 +37,9 @@ public class FilesManager {
     }
 
     /**
-     * Escribe en un archivo la informacion especificada.
-     * @param path Camino al archivo al cual escribir.
-     * @param data Informacion a escribir.
+     * Writes in a certain file data.
+     * @param path Path where the file to write is stored.
+     * @param data Data to store.
      */
     public void writeToFile(String path, String data) {
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
@@ -136,49 +135,17 @@ public class FilesManager {
      * Deserializa los archivos (Media) encriptados.
      * @return Media encriptada.
      */
-    public List<EncryptedFile> restoreMedia() {
+    public List<EncryptedFile> restoreAllMedia() {
         List<EncryptedFile> files = new ArrayList<EncryptedFile>();
         List<String> names = getMedia();
 
-        try {
-            EncryptedFile file;
-            ByteBuffer byteBuffer;
-            EncryptedFileFBS flatbuffered;
-            Deserialazator deserialazator = Deserialazator.getInstance();
+        int size = names.size();
+        String name;
 
-            int size = names.size();
-            String name;
+        for (int i = 0; i < size; i++) {
+            name = names.get(i);
 
-            for (int i = 0; i < size; i++) {
-                name = names.get(i);
-
-                if (!name.endsWith(".mp4") && !name.endsWith(".jpg")) {
-                    FileInputStream fis = new FileInputStream(name);
-                    ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
-
-                    byte[] bytes = new byte[(int)fis.getChannel().size()];
-                    int read = fis.read(bytes);
-
-                    while (read != -1) {
-                        byteOutputStream.write(bytes);
-                        read = fis.read(bytes);
-                    }
-
-                    byte[] data = byteOutputStream.toByteArray();
-
-                    fis.close();
-                    byteOutputStream.close();
-
-                    byteBuffer = ByteBuffer.wrap(data);
-                    flatbuffered = EncryptedFileFBS.getRootAsEncryptedFileFBS(byteBuffer);
-
-                    file = deserialazator.deserialize(flatbuffered);
-
-                    files.add(file);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+            files.add(restoreMedia(name));
         }
 
         names.clear();
@@ -186,6 +153,11 @@ public class FilesManager {
         return files;
     }
 
+    /**
+     * Restores an EncryptedFile contained in certain path.
+     * @param path Path where the EncryptedFile is contained.
+     * @return EncryptedFile restored.
+     */
     public EncryptedFile restoreMedia(String path) {
         EncryptedFile file = null;
 

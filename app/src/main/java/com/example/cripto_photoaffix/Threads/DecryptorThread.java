@@ -1,7 +1,6 @@
 package com.example.cripto_photoaffix.Threads;
 
 import android.os.Process;
-
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;

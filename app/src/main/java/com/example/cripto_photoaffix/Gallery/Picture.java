@@ -33,9 +33,8 @@ public class Picture extends Media {
     }
 
     /**
-     * Retorna el porcentaje por el cual se debe reducir la calidad de la imagen para la vista
-     * previa. Esto es para ahorrar espacio en memoria.
-     * @return Porcentaje de reduccion de calidad.
+     * Returns the scale to which reduce the preview quality in order to save space.
+     * @return Final quality percentage.
      */
     private double getDiscount() {
         BitmapFactory.Options options = new BitmapFactory.Options();

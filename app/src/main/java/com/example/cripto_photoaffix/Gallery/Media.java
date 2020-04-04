@@ -1,7 +1,6 @@
 package com.example.cripto_photoaffix.Gallery;
 
 import android.graphics.Bitmap;
-
 import com.example.cripto_photoaffix.PreviewChache;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 import java.io.File;
@@ -11,8 +10,8 @@ public abstract class Media {
     protected boolean selected;
 
     /**
-     * Vista previa de la "Media".
-     * @return Bitmap con la vista previa.
+     * Returns the media's preview.
+     * @return Preview's bitmap.
      */
     public Bitmap getPreview() {
         if (PreviewChache.getInstance().getPreview(this) == null)
@@ -22,46 +21,45 @@ public abstract class Media {
     }
 
     /**
-     * Accept del visitor.
-     * @param visitor Visitor que desea visitar.
+     * @param visitor Visitor visiting.
      */
     public abstract void accept(MediaVisitor visitor);
 
     /**
-     * Retorna el camino donde esta guardada la media.
-     * @return Camino donde esta guardada.
+     * Returns media's path.
+     * @return Path where the media is stored.
      */
     public String getPath() {
         return path;
     }
 
     /**
-     * Retorna el nombre del archivo.
-     * @return Nombre del archivo.
+     * Returns the file name.
+     * @return Filename.
      */
     public String getFilename() {
         return filename;
     }
 
     /**
-     * Retorna el camino completo del archivo.
-     * @return Camino completo del archivo.
+     * Returns the file's full path. This is path/filename.
+     * @return Full path.
      */
     public String getFullPath() {
         return path + filename;
     }
 
     /**
-     * Cambia el camino del archivo.
-     * @param path Camino nuevo del archivo.
+     * Changes the file's path.
+     * @param path New path.
      */
     public void setPath(String path) {
         this.path = path;
     }
 
     /**
-     * Cambia el nombre del archivo.
-     * @param name
+     * Changes the filename.
+     * @param name filename to set.
      */
     public void setFilename(String name) {
         filename = name;
@@ -71,9 +69,9 @@ public abstract class Media {
     }
 
     /**
-     * Guarda el archivo en cierta locacion.
-     * @param path Camino a guardar el archivo.
-     * @return Archivo donde fue guardado.
+     * Stores the file in certain location.
+     * @param path Path where to store the file.
+     * @return File where it has been stored.
      */
     public abstract File store(String path);
 
@@ -103,5 +101,8 @@ public abstract class Media {
         return selected;
     }
 
+    /**
+     * Stores the preview in the LruCache.
+     */
     protected abstract void findPreview();
 }
