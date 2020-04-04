@@ -22,7 +22,7 @@ public class Picture extends Media {
     public Bitmap getPreview() {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 5;
-        Bitmap preview = BitmapFactory.decodeFile(path + ".jpg", options);
+        Bitmap preview = BitmapFactory.decodeFile(path + filename + ".jpg", options);
 
         return Bitmap.createScaledBitmap(preview, (int)(preview.getWidth()*discount), (int)(preview.getHeight()*discount), false);
     }
