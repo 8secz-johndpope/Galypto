@@ -16,6 +16,9 @@ public abstract class Media {
      * @return Bitmap con la vista previa.
      */
     public Bitmap getPreview() {
+        if (PreviewChache.getInstance().getPreview(this) == null)
+            findPreview();
+
         return PreviewChache.getInstance().getPreview(this);
     }
 
