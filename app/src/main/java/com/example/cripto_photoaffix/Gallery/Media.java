@@ -5,7 +5,7 @@ import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 import java.io.File;
 
 public abstract class Media {
-    protected Bitmap preview;
+  //  protected Bitmap preview;
     protected String path, filename;
     protected boolean selected;
 
@@ -13,9 +13,9 @@ public abstract class Media {
      * Vista previa de la "Media".
      * @return Bitmap con la vista previa.
      */
-    public Bitmap getPreview() {
+    public abstract Bitmap getPreview();/* {
         return preview;
-    }
+    }*/
 
     /**
      * Accept del visitor.

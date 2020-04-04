@@ -7,14 +7,24 @@ import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 import java.io.File;
 
 public class Picture extends Media {
+    protected double discount;
+
     public Picture(String path) {
         this.path = path;
 
+     //   BitmapFactory.Options options = new BitmapFactory.Options();
+     //   options.inSampleSize = 5;
+      //  preview = BitmapFactory.decodeFile(path + ".jpg", options);
+        discount = getDiscount();
+      //  preview = Bitmap.createScaledBitmap(preview, (int)(preview.getWidth()*d), (int)(preview.getHeight()*d), false);
+    }
+
+    public Bitmap getPreview() {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 5;
-        preview = BitmapFactory.decodeFile(path + ".jpg", options);
-        double d = getDiscount();
-        preview = Bitmap.createScaledBitmap(preview, (int)(preview.getWidth()*d), (int)(preview.getHeight()*d), false);
+        Bitmap preview = BitmapFactory.decodeFile(path + ".jpg", options);
+
+        return Bitmap.createScaledBitmap(preview, (int)(preview.getWidth()*discount), (int)(preview.getHeight()*discount), false);
     }
 
     public void accept(MediaVisitor visitor) {
@@ -42,7 +52,11 @@ public class Picture extends Media {
      * @return Porcentaje de reduccion de calidad.
      */
     private double getDiscount() {
-        double discount = 0.5;
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 5;
+        Bitmap preview = BitmapFactory.decodeFile(path + ".jpg", options);
+
+        double discount = 0.85;
 
         int value = preview.getHeight() > preview.getWidth()? preview.getWidth(): preview.getHeight();
 
