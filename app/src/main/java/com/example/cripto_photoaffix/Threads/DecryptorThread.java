@@ -41,7 +41,7 @@ public class DecryptorThread extends Thread {
         Media media;
 
         while (!encryptedFiles.isEmpty()) {
-            file = FilesManager.getInstance().restoreFile(encryptedFiles.poll());
+            file = FilesManager.getInstance().restoreMedia(encryptedFiles.poll());
             //file = encryptedFiles.poll();
 
             media = file.accept(visitor);
