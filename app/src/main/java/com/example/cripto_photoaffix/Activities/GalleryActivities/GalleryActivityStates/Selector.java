@@ -24,8 +24,6 @@ public class Selector implements State {
         Media media = button.getMedia();
 
         if (media.isSelected()) {
-            button.setSelected(false);
-            button.setAlpha(1f);
             media.deselect();
             selected--;
 
@@ -34,8 +32,6 @@ public class Selector implements State {
         }
         else {
             media.select();
-            button.setSelected(true);
-            button.setAlpha(0.5f);
             selected++;
         }
     }

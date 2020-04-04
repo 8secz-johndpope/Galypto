@@ -62,5 +62,16 @@ public class MyImageButton extends AppCompatImageButton {
         setBackgroundResource(R.drawable.roundedimage);
         setCropToPadding(true);
         setPadding(3, 3, 3, 3);
+
+        if (media != null) {
+            if (!media.isSelected()) {
+                setSelected(false);
+                setAlpha(1f);
+            }
+            else {
+                setSelected(true);
+                setAlpha(0.5f);
+            }
+        }
     }
 }
