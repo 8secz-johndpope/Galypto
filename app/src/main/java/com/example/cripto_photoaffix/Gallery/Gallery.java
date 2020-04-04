@@ -23,7 +23,8 @@ public class Gallery {
     public Gallery(String password) {
         media = new ArrayList<Media>();
 
-        List<Queue<EncryptedFile>> queues = divideDecryption();
+     //   List<Queue<EncryptedFile>> queues = divideDecryption();
+        List<Queue<String>> queues = divideDecryption();
         List<Media> allMedia = startDecryption(queues, password);
 
         media.addAll(allMedia);
@@ -38,7 +39,8 @@ public class Gallery {
 
         store(toEncrypt, password);
 
-        List<Queue<EncryptedFile>> queues = divideDecryption();
+    //    List<Queue<EncryptedFile>> queues = divideDecryption();
+        List<Queue<String>> queues = divideDecryption();
         List<Media> allMedia = startDecryption(queues, password);
 
         media.addAll(allMedia);
@@ -75,6 +77,7 @@ public class Gallery {
      * Divide el proceso de desencriptado en a lo sumo 5 colas.
      * @return Lista de colas con los archivos a desencriptar.
      */
+    /*
     private List<Queue<EncryptedFile>> divideDecryption() {
         FilesManager manager = FilesManager.getInstance();
         List<EncryptedFile> encryptedFiles = manager.restoreMedia();
@@ -113,14 +116,14 @@ public class Gallery {
         encryptedFiles.clear();
 
         return res;
-    }
+    }*/
 
     /**
      * Inicia el proceso de desencriptado en a lo sumo 5 hilos.
      * @param queues Lista de colas de elementos a desencriptar.
      * @param passcode Contraseña con la cual desencriptar los elementos.
      * @return Lista de Media, es decir los archivos desencriptados.
-     */
+     *//*
     private List<Media> startDecryption(List<Queue<EncryptedFile>> queues, String passcode) {
         List<DecryptorThread> threads = new ArrayList<DecryptorThread>();
         ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
@@ -159,7 +162,7 @@ public class Gallery {
         threads.clear();
 
         return media;
-    }
+    }*/
 
     /**
      * Guarda y encripta los archivos de los URIs indicados.
@@ -264,4 +267,85 @@ public class Gallery {
 
         this.media.remove(media);
     }
+    //----------------------------------------------------------------------------------------------
+    private List<Media> startDecryption(List<Queue<String>> queues, String passcode) {
+        List<DecryptorThread> threads = new ArrayList<DecryptorThread>();
+        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
+
+        DecryptorThread thread;
+        int size = queues.size();
+        Queue<String> queue;
+
+        for (int i = 0; i < size; i++) {
+            queue = queues.get(i);
+
+            thread = new DecryptorThread(queue, passcode);
+            executor.execute(thread);
+            threads.add(thread);
+        }
+
+        queues.clear();
+
+        try {
+            executor.shutdown();
+            executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        List<Media> media = new ArrayList<Media>();
+
+        for (int i = 0; i < size; i++) {
+            thread = threads.get(i);
+
+            media.addAll(thread.getMedia());
+            thread.clear();
+        }
+
+        threads.clear();
+
+        return media;
+    }
+
+    private List<Queue<String>> divideDecryption() {
+        FilesManager manager = FilesManager.getInstance();
+        List<String> encryptedFiles = manager.getMedia();
+
+        List<Queue<String>> res = new ArrayList<Queue<String>>();
+
+        int cantQueues = encryptedFiles.size() > 5?5:encryptedFiles.size();
+
+        Queue<String> actual;
+
+        int pos = 0;
+
+        for (int i = 0; i < cantQueues; i++) {
+
+            actual = new LinkedTransferQueue<String>();
+
+            for (int j = 0; j < encryptedFiles.size()/cantQueues; j++) {
+                actual.add(encryptedFiles.get(pos));
+                pos++;
+            }
+
+            res.add(actual);
+
+            if (pos < encryptedFiles.size() && i == cantQueues - 1) {
+
+                int queue = 0;
+
+                while (queue < cantQueues && pos < encryptedFiles.size()) {
+                    res.get(queue).add(encryptedFiles.get(pos));
+                    queue++;
+                    pos++;
+                }
+            }
+        }
+
+        encryptedFiles.clear();
+
+        return res;
+    }
+
 }

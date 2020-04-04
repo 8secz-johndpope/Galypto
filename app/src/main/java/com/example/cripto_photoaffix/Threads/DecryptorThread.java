@@ -1,6 +1,8 @@
 package com.example.cripto_photoaffix.Threads;
 
 import android.os.Process;
+
+import com.example.cripto_photoaffix.FileManagement.FilesManager;
 import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedFile;
 import com.example.cripto_photoaffix.Visitors.EncryptedFilesVisitors.EncryptedFileVisitor;
@@ -10,11 +12,20 @@ import java.util.List;
 import java.util.Queue;
 
 public class DecryptorThread extends Thread {
-    private Queue<EncryptedFile> encryptedFiles;
+  //  private Queue<EncryptedFile> encryptedFiles;
+  private Queue<String> encryptedFiles;
     private List<Media> result;
     private String passcode;
 
+    /*
     public DecryptorThread(Queue<EncryptedFile> encryptedFiles, String passcode) {
+        super();
+        this.encryptedFiles = encryptedFiles;
+        result = new ArrayList<Media>();
+        this.passcode = passcode;
+    }*/
+
+    public DecryptorThread(Queue<String> encryptedFiles, String passcode) {
         super();
         this.encryptedFiles = encryptedFiles;
         result = new ArrayList<Media>();
@@ -30,7 +41,8 @@ public class DecryptorThread extends Thread {
         Media media;
 
         while (!encryptedFiles.isEmpty()) {
-            file = encryptedFiles.poll();
+            file = FilesManager.getInstance().restoreFile(encryptedFiles.poll());
+            //file = encryptedFiles.poll();
 
             media = file.accept(visitor);
 

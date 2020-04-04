@@ -186,6 +186,43 @@ public class FilesManager {
         return files;
     }
 
+    public EncryptedFile restoreMedia(String path) {
+        EncryptedFile file = null;
+
+        try {
+            ByteBuffer byteBuffer;
+            EncryptedFileFBS flatbuffered;
+            Deserialazator deserialazator = Deserialazator.getInstance();
+
+            if (!path.endsWith(".mp4") && !path.endsWith(".jpg")) {
+                FileInputStream fis = new FileInputStream(path);
+                ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
+
+                byte[] bytes = new byte[(int)fis.getChannel().size()];
+                int read = fis.read(bytes);
+
+                while (read != -1) {
+                    byteOutputStream.write(bytes);
+                    read = fis.read(bytes);
+                }
+
+                byte[] data = byteOutputStream.toByteArray();
+                fis.close();
+                byteOutputStream.close();
+
+                byteBuffer = ByteBuffer.wrap(data);
+                flatbuffered = EncryptedFileFBS.getRootAsEncryptedFileFBS(byteBuffer);
+
+                file = deserialazator.deserialize(flatbuffered);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return file;
+    }
+
     /**
      * Retorna una lista con los caminos a los archivos encriptados.
      * @return Lista con caminos a todos los archivos encriptados.
