@@ -222,6 +222,7 @@ public class GalleryActivity extends MyActivity {
         recyclerViewAdapter.setOnClickListener(new ButtonListener());
         recyclerViewAdapter.setOnLongClickListener(new LongClickListener());
         recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerViewAdapter.setRecyclerView(recyclerView);
 
         mediaList = new ArrayList<Media>(gallery.getMedia());
 
@@ -284,6 +285,7 @@ public class GalleryActivity extends MyActivity {
         @Override
         public void onClick(View view) {
             state.touch((MyImageButton) view);
+            recyclerViewAdapter.update(((MyImageButton) view).getMedia());
         }
     }
 

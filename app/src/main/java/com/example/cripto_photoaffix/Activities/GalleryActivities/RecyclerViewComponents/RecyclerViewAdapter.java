@@ -17,6 +17,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     private List<Media> media;
     private View.OnLongClickListener longClickListener;
     private View.OnClickListener clickListener;
+    private RecyclerView recyclerView;
 
     public RecyclerViewAdapter(Context context, List<Media> media) {
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -66,7 +67,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     public void update(Media media) {
+        System.out.println(media.isSelected());
         int position = this.media.indexOf(media);
-        notifyItemChanged(position);
+        if (media.isSelected()) {
+            recyclerView.findViewHolderForAdapterPosition(position).itemView.setAlpha(0.5f);
+            recyclerView.findViewHolderForAdapterPosition(position).itemView.setSelected(true);
+        }
+        else {
+            recyclerView.findViewHolderForAdapterPosition(position).itemView.setAlpha(1f);
+            recyclerView.findViewHolderForAdapterPosition(position).itemView.setSelected(false);
+        }
+
+        System.out.println(media.isSelected());
+    }
+
+    public void setRecyclerView(RecyclerView view) {
+        recyclerView = view;
     }
 }
