@@ -2,7 +2,6 @@ package com.example.cripto_photoaffix;
 
 import android.graphics.Bitmap;
 import android.util.LruCache;
-
 import com.example.cripto_photoaffix.Gallery.Media;
 
 public class PreviewChache {
