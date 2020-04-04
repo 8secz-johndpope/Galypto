@@ -22,8 +22,9 @@ public class PreviewChache {
         return instance;
     }
 
-    public void addPreview(Media media, Bitmap bitmap) {
-        cache.put(media, bitmap);
+    public synchronized void addPreview(Media media, Bitmap bitmap) {
+        if (cache.get(media) != null || cache.get(media) != bitmap)
+            cache.put(media, bitmap);
     }
 
     public Bitmap getPreview(Media media) {
