@@ -46,13 +46,13 @@ public class Picture extends Media {
 
         int value = Math.min(preview.getHeight(), preview.getWidth());
 
-        if (discount * value > 320) {
-            while (discount * value > 320)
+        if (discount * value > 370) {
+            while (discount * value > 370)
                 discount = discount * 0.5;
         }
-        else if (discount * value < 290) {
+        else if (discount * value < 340) {
 
-            while (discount * value <= 290 && discount < 1)
+            while (discount * value <= 340 && discount < 1)
                 discount = discount + 0.25;
         }
 
