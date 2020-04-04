@@ -7,24 +7,9 @@ import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 import java.io.File;
 
 public class Picture extends Media {
-    protected double discount;
 
     public Picture(String path) {
         this.path = path;
-
-     //   BitmapFactory.Options options = new BitmapFactory.Options();
-     //   options.inSampleSize = 5;
-      //  preview = BitmapFactory.decodeFile(path + ".jpg", options);
-        discount = getDiscount();
-      //  preview = Bitmap.createScaledBitmap(preview, (int)(preview.getWidth()*d), (int)(preview.getHeight()*d), false);
-    }
-
-    public Bitmap getPreview() {
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 5;
-        Bitmap preview = BitmapFactory.decodeFile(path + filename + ".jpg", options);
-
-        return Bitmap.createScaledBitmap(preview, (int)(preview.getWidth()*discount), (int)(preview.getHeight()*discount), false);
     }
 
     public void accept(MediaVisitor visitor) {
@@ -54,19 +39,19 @@ public class Picture extends Media {
     private double getDiscount() {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 5;
-        Bitmap preview = BitmapFactory.decodeFile(path + ".jpg", options);
+        Bitmap preview = BitmapFactory.decodeFile(getFullPath(), options);
 
-        double discount = 0.85;
+        double discount = 0.75;
 
         int value = Math.min(preview.getHeight(), preview.getWidth());
 
-        if (discount * value > 440) {
-            while (discount * value > 440)
+        if (discount * value > 320) {
+            while (discount * value > 320)
                 discount = discount * 0.5;
         }
-        else if (discount * value < 410) {
+        else if (discount * value < 290) {
 
-            while (discount * value <= 410 && discount < 1)
+            while (discount * value <= 290 && discount < 1)
                 discount = discount + 0.25;
         }
 
@@ -75,5 +60,14 @@ public class Picture extends Media {
     
     public String getFullPath() {
         return super.getFullPath() + ".jpg";
+    }
+
+    protected void findPreview() {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 5;
+        preview = BitmapFactory.decodeFile(getFullPath(), options);
+        double discount = getDiscount();
+        preview = Bitmap.createScaledBitmap(preview, (int)(preview.getWidth()*discount),
+                                            (int)(preview.getHeight()*discount), false);
     }
 }
