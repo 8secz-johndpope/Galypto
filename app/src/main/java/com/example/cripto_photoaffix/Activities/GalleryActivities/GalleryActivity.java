@@ -68,10 +68,10 @@ public class GalleryActivity extends MyActivity {
     public void unselectAllButtons() {
         List<Media> media = gallery.getMedia();
 
-        for (Media m: media) {
+        for (Media m: media)
             m.deselect();
-            recyclerViewAdapter.update(m);
-        }
+
+        recyclerViewAdapter.update();
     }
 
     /**
@@ -158,10 +158,10 @@ public class GalleryActivity extends MyActivity {
                 task.addMedia(media);
 
                 media.deselect();
-
-                recyclerViewAdapter.update(media);
             }
         }
+
+        recyclerViewAdapter.update();
 
         task.execute();
 
@@ -222,7 +222,6 @@ public class GalleryActivity extends MyActivity {
         recyclerViewAdapter.setOnClickListener(new ButtonListener());
         recyclerViewAdapter.setOnLongClickListener(new LongClickListener());
         recyclerView.setAdapter(recyclerViewAdapter);
-        recyclerViewAdapter.setRecyclerView(recyclerView);
 
         mediaList = new ArrayList<Media>(gallery.getMedia());
 
@@ -285,7 +284,7 @@ public class GalleryActivity extends MyActivity {
         @Override
         public void onClick(View view) {
             state.touch((MyImageButton) view);
-            recyclerViewAdapter.update(((MyImageButton) view).getMedia());
+            recyclerViewAdapter.update();
         }
     }
 
@@ -304,7 +303,7 @@ public class GalleryActivity extends MyActivity {
             }
 
             state.onLongPress((MyImageButton) view);
-            recyclerViewAdapter.update(((MyImageButton) view).getMedia());
+            recyclerViewAdapter.update();
 
             return true;
         }

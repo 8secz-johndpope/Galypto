@@ -11,13 +11,11 @@ import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.MyImageButton;
 import com.example.cripto_photoaffix.R;
 import java.util.List;
-import java.util.Queue;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     private List<Media> media;
     private View.OnLongClickListener longClickListener;
     private View.OnClickListener clickListener;
-    private RecyclerView recyclerView;
 
     public RecyclerViewAdapter(Context context, List<Media> media) {
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -66,22 +64,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
         notifyItemRangeChanged(position, this.media.size());
     }
 
-    public void update(Media media) {
-        System.out.println(media.isSelected());
-        int position = this.media.indexOf(media);
-        if (media.isSelected()) {
-            recyclerView.findViewHolderForAdapterPosition(position).itemView.setAlpha(0.5f);
-            recyclerView.findViewHolderForAdapterPosition(position).itemView.setSelected(true);
-        }
-        else {
-            recyclerView.findViewHolderForAdapterPosition(position).itemView.setAlpha(1f);
-            recyclerView.findViewHolderForAdapterPosition(position).itemView.setSelected(false);
-        }
-
-        System.out.println(media.isSelected());
-    }
-
-    public void setRecyclerView(RecyclerView view) {
-        recyclerView = view;
+    public void update() {
+        notifyDataSetChanged();
     }
 }
