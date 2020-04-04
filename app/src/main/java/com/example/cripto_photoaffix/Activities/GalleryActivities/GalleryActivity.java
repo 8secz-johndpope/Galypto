@@ -70,7 +70,7 @@ public class GalleryActivity extends MyActivity {
 
         for (Media m: media) {
             m.deselect();
-            recyclerViewAdapter.deselect(m);
+            recyclerViewAdapter.update(m);
         }
     }
 
@@ -159,7 +159,7 @@ public class GalleryActivity extends MyActivity {
 
                 media.deselect();
 
-                recyclerViewAdapter.deselect(media);
+                recyclerViewAdapter.update(media);
             }
         }
 
@@ -302,6 +302,7 @@ public class GalleryActivity extends MyActivity {
             }
 
             state.onLongPress((MyImageButton) view);
+            recyclerViewAdapter.update(((MyImageButton) view).getMedia());
 
             return true;
         }

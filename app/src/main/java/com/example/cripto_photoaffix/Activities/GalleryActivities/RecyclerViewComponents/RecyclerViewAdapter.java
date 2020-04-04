@@ -65,7 +65,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
         notifyItemRangeChanged(position, this.media.size());
     }
 
-    public void deselect(Media media) {
+    public void update(Media media) {
         int position = this.media.indexOf(media);
         notifyItemChanged(position);
     }
