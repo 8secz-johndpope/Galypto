@@ -1,11 +1,13 @@
 package com.example.cripto_photoaffix.Gallery;
 
 import android.graphics.Bitmap;
+
+import com.example.cripto_photoaffix.PreviewChache;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 import java.io.File;
 
 public abstract class Media {
-    protected Bitmap preview;
+ //   protected Bitmap preview;
     protected String path, filename;
     protected boolean selected;
 
@@ -14,7 +16,7 @@ public abstract class Media {
      * @return Bitmap con la vista previa.
      */
     public Bitmap getPreview() {
-        return preview;
+        return PreviewChache.getInstance().getPreview(this);
     }
 
     /**

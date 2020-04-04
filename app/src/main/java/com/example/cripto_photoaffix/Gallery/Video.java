@@ -1,8 +1,10 @@
 package com.example.cripto_photoaffix.Gallery;
 
+import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
 import android.provider.MediaStore;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
+import com.example.cripto_photoaffix.PreviewChache;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 import java.io.File;
 
@@ -36,6 +38,9 @@ public class Video extends Media {
     }
 
     protected void findPreview() {
-        preview = ThumbnailUtils.createVideoThumbnail(getFullPath(), MediaStore.Video.Thumbnails.MINI_KIND);
+        Bitmap preview = ThumbnailUtils.createVideoThumbnail(getFullPath(),
+                                                             MediaStore.Video.Thumbnails.MINI_KIND);
+
+        PreviewChache.getInstance().addPreview(this, preview);
     }
 }

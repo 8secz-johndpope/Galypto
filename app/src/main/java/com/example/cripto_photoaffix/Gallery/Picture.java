@@ -3,6 +3,7 @@ package com.example.cripto_photoaffix.Gallery;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import com.example.cripto_photoaffix.FileManagement.FilesManager;
+import com.example.cripto_photoaffix.PreviewChache;
 import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 import java.io.File;
 
@@ -65,9 +66,11 @@ public class Picture extends Media {
     protected void findPreview() {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 5;
-        preview = BitmapFactory.decodeFile(getFullPath(), options);
+        Bitmap preview = BitmapFactory.decodeFile(getFullPath(), options);
         double discount = getDiscount();
         preview = Bitmap.createScaledBitmap(preview, (int)(preview.getWidth()*discount),
                                             (int)(preview.getHeight()*discount), false);
+
+        PreviewChache.getInstance().addPreview(this, preview);
     }
 }
