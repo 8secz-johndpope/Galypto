@@ -41,6 +41,13 @@ public class EncryptorThread extends Thread {
             encrypted = encryptUri(file);
 
             result.add(encrypted);
+
+            try {
+                Thread.sleep(25);
+                System.gc();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -39,7 +39,7 @@ public class DecryptorThread extends Thread {
             file.clear();
 
             try {
-                Thread.sleep(250);
+                Thread.sleep(25);
                 System.gc();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -49,7 +49,7 @@ public class DecryptorThread extends Thread {
 
     /**
      * Retorna toda la "media" desencriptada.
-     * @return
+     * @return Media decrypted.
      */
     public List<Media> getMedia() {
         return result;
