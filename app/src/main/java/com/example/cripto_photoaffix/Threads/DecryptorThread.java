@@ -31,8 +31,10 @@ public class DecryptorThread extends Thread {
         EncryptedFileVisitor visitor = new MediaSelectorVisitor(passcode);
         Media media;
         String path;
+        long start;
 
         while (!encryptedFiles.isEmpty()) {
+            start = System.currentTimeMillis();
             path = encryptedFiles.poll();
 
             if (!path.endsWith(".jpg") && !path.endsWith(".mp4")) {
@@ -44,12 +46,7 @@ public class DecryptorThread extends Thread {
 
                 file.clear();
 
-                try {
-                    Thread.sleep(25);
-                    System.gc();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                System.out.println("It took " + (double)(System.currentTimeMillis() - start)/1000 + " seconds to restore and decrypt file.");
             }
         }
     }
