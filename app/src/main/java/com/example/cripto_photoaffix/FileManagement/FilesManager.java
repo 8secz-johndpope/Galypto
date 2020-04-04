@@ -156,7 +156,7 @@ public class FilesManager {
                     FileInputStream fis = new FileInputStream(name);
                     ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
 
-                    byte[] bytes = new byte[4096];
+                    byte[] bytes = new byte[(int)fis.getChannel().size()];
                     int read = fis.read(bytes);
 
                     while (read != -1) {
@@ -335,7 +335,7 @@ public class FilesManager {
             FileInputStream input = new FileInputStream(origin);
             FileOutputStream output = new FileOutputStream(destination);
 
-            byte[] bytes = new byte[4096];
+            byte[] bytes = new byte[(int)input.getChannel().size()];
             int read = input.read(bytes);
 
             while (read != -1) {
