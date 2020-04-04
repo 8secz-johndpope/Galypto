@@ -16,10 +16,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     private List<Media> media;
     private View.OnLongClickListener longClickListener;
     private View.OnClickListener clickListener;
+    private int height, width;
 
     public RecyclerViewAdapter(Context context, List<Media> media) {
         LayoutInflater inflater = LayoutInflater.from(context);
         this.media = media;
+        height = -9;
+        width = -9;
     }
 
     @NonNull
@@ -28,9 +31,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
         MyImageButton button = (MyImageButton) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recyclerviewitem, parent, false);
 
+        if (height == -9 || width == -9) {
+            height = parent.getMeasuredHeight() / 6;
+            width = (int) (parent.getMeasuredWidth() / 3.5);
+        }
+
         GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) button.getLayoutParams();
-        params.height = parent.getMeasuredHeight()/6;
-        params.width = (int)(parent.getMeasuredWidth()/3.5);
+        params.height = height;
+        params.width = width;
         button.setLayoutParams(params);
 
         return new ViewHolder(button);
