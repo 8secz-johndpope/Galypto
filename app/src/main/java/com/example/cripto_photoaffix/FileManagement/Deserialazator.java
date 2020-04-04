@@ -52,7 +52,6 @@ public class Deserialazator {
      */
     public EncryptedFile deserialize(EncryptedFileFBS file) {
         EncryptedFile res = database.get(file.type());
-        long start = System.currentTimeMillis();
 
         if (res != null) {
             res = res.clone();
@@ -63,10 +62,6 @@ public class Deserialazator {
             res.setSalt(byteVectorToArray(file.saltVector()));
             res.setIV(byteVectorToArray(file.ivVector()));
         }
-
-        long finish = System.currentTimeMillis();
-
-        System.out.println("It took " + (double)(finish-start)/1000 + " seconds.");
 
         return res;
     }
