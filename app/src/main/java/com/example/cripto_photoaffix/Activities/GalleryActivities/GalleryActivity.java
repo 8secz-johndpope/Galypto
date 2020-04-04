@@ -71,7 +71,7 @@ public class GalleryActivity extends MyActivity {
         for (Media m: media)
             m.deselect();
 
-        recyclerViewAdapter.update();
+        recyclerViewAdapter.update(media);
     }
 
     /**
@@ -145,14 +145,14 @@ public class GalleryActivity extends MyActivity {
      * @param task Tarea a ejecutar.
      */
     public void executeOnSelected(Command task) {
-        List<Media> selected = gallery.getMedia();
+        List<Media> galleryMedia = gallery.getMedia();
 
-        int size = selected.size();
+        int size = galleryMedia.size();
 
         Media media;
 
         for (int i = 0; i < size; i++) {
-            media = selected.get(i);
+            media = galleryMedia.get(i);
 
             if (media.isSelected()) {
                 task.addMedia(media);
@@ -161,7 +161,7 @@ public class GalleryActivity extends MyActivity {
             }
         }
 
-        recyclerViewAdapter.update();
+        recyclerViewAdapter.update(galleryMedia);
 
         task.execute();
 
@@ -284,7 +284,7 @@ public class GalleryActivity extends MyActivity {
         @Override
         public void onClick(View view) {
             state.touch((MyImageButton) view);
-            recyclerViewAdapter.update();
+            recyclerViewAdapter.update(gallery.getMedia());
         }
     }
 
@@ -303,7 +303,7 @@ public class GalleryActivity extends MyActivity {
             }
 
             state.onLongPress((MyImageButton) view);
-            recyclerViewAdapter.update();
+            recyclerViewAdapter.update(gallery.getMedia());
 
             return true;
         }
