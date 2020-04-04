@@ -12,18 +12,9 @@ import java.util.List;
 import java.util.Queue;
 
 public class DecryptorThread extends Thread {
-  //  private Queue<EncryptedFile> encryptedFiles;
   private Queue<String> encryptedFiles;
     private List<Media> result;
     private String passcode;
-
-    /*
-    public DecryptorThread(Queue<EncryptedFile> encryptedFiles, String passcode) {
-        super();
-        this.encryptedFiles = encryptedFiles;
-        result = new ArrayList<Media>();
-        this.passcode = passcode;
-    }*/
 
     public DecryptorThread(Queue<String> encryptedFiles, String passcode) {
         super();
@@ -42,7 +33,6 @@ public class DecryptorThread extends Thread {
 
         while (!encryptedFiles.isEmpty()) {
             file = FilesManager.getInstance().restoreMedia(encryptedFiles.poll());
-            //file = encryptedFiles.poll();
 
             media = file.accept(visitor);
 
