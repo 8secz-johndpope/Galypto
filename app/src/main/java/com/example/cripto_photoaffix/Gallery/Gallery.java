@@ -23,7 +23,6 @@ public class Gallery {
     public Gallery(String password) {
         media = new ArrayList<Media>();
 
-     //   List<Queue<EncryptedFile>> queues = divideDecryption();
         List<Queue<String>> queues = divideDecryption();
         List<Media> allMedia = startDecryption(queues, password);
 
@@ -39,7 +38,6 @@ public class Gallery {
 
         store(toEncrypt, password);
 
-    //    List<Queue<EncryptedFile>> queues = divideDecryption();
         List<Queue<String>> queues = divideDecryption();
         List<Media> allMedia = startDecryption(queues, password);
 
@@ -83,7 +81,7 @@ public class Gallery {
 
         List<Queue<String>> res = new ArrayList<Queue<String>>();
 
-        int cantQueues = encryptedFiles.size() > 5?5:encryptedFiles.size();
+        int cantQueues = Math.min(encryptedFiles.size(), 5);
 
         Queue<String> actual;
 
@@ -221,7 +219,7 @@ public class Gallery {
 
         List<Queue<Uri>> res = new ArrayList<Queue<Uri>>();
 
-        int cantQueues = uris.size() > 5?5:uris.size();
+        int cantQueues = Math.min(uris.size(), 5);
 
         Queue<Uri> actual;
 
