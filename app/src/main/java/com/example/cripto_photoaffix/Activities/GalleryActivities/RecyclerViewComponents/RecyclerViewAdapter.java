@@ -19,7 +19,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     private int height, width;
 
     public RecyclerViewAdapter(Context context, List<Media> media) {
-        LayoutInflater inflater = LayoutInflater.from(context);
+        LayoutInflater.from(context);
         this.media = media;
         height = -9;
         width = -9;
@@ -29,7 +29,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         MyImageButton button = (MyImageButton) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recyclerviewitem, parent, false);
+                                .inflate(R.layout.recyclerviewitem, parent, false);
 
         if (height == -9 || width == -9) {
             height = parent.getMeasuredHeight() / 6;
