@@ -7,7 +7,6 @@ import com.example.cripto_photoaffix.Visitors.MediaVisitors.MediaVisitor;
 import java.io.File;
 
 public abstract class Media {
- //   protected Bitmap preview;
     protected String path, filename;
     protected boolean selected;
 
