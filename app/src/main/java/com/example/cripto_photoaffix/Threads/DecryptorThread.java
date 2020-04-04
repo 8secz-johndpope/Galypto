@@ -30,21 +30,26 @@ public class DecryptorThread extends Thread {
         EncryptedFile file;
         EncryptedFileVisitor visitor = new MediaSelectorVisitor(passcode);
         Media media;
+        String path;
 
         while (!encryptedFiles.isEmpty()) {
-            file = FilesManager.getInstance().restoreMedia(encryptedFiles.poll());
+            path = encryptedFiles.poll();
 
-            media = file.accept(visitor);
+            if (!path.endsWith(".jpg") && !path.endsWith(".mp4")) {
+                file = FilesManager.getInstance().restoreMedia(path);
 
-            result.add(media);
+                media = file.accept(visitor);
 
-            file.clear();
+                result.add(media);
 
-            try {
-                Thread.sleep(25);
-                System.gc();
-            } catch (Exception e) {
-                e.printStackTrace();
+                file.clear();
+
+                try {
+                    Thread.sleep(25);
+                    System.gc();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
