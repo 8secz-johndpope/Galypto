@@ -177,18 +177,16 @@ public abstract class ContentViewerActivity extends MyActivity {
 
     @Override
     public void onStop() {
-        super.onStop();
-
         if (!wentBack) {
             Command command = new RemoveDecryptedMediaCommand();
             command.execute();
         }
+
+        super.onStop();
     }
 
     @Override
     public void onResume() {
-        super.onResume();
-
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
@@ -214,13 +212,15 @@ public abstract class ContentViewerActivity extends MyActivity {
 
             initializeButtons();
         }
+
+        super.onResume();
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-
         wentBack = true;
+
+        super.onBackPressed();
     }
 
     /**

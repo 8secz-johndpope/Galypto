@@ -21,15 +21,15 @@ public abstract class MyActivity extends AppCompatActivity {
 
     @Override
     public void onRestart() {
-        super.onRestart();
-
         ActivityTransferer.getInstance().setActivity(this);
+
+        super.onRestart();
     }
 
     @Override
     public void onResume() {
-        super.onResume();
-
         ActivityTransferer.getInstance().setActivity(this);
+
+        super.onResume();
     }
 }

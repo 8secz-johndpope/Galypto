@@ -250,11 +250,11 @@ public class LoginActivity extends MyActivity {
      */
     @Override
     public void onDestroy() {
-        super.onDestroy();
-
         authenticators.clear();
         authenticators = null;
         field = null;
+
+        super.onDestroy();
     }
 
     /**
@@ -263,14 +263,14 @@ public class LoginActivity extends MyActivity {
      */
     @Override
     public void onRestart() {
-        super.onRestart();
-
         if (!openingGallery) {
             checkForIncomingIntents();
 
             for (Authenticator auth : authenticators)
                 auth.initialize();
         }
+
+        super.onRestart();
     }
 
     /**
@@ -279,8 +279,6 @@ public class LoginActivity extends MyActivity {
      * vez que se vuelve a la actividad o se inicia.
      */
     public void onResume() {
-        super.onResume();
-
         if (!openingGallery) {
             authenticators = new Vector<Authenticator>();
 
@@ -288,5 +286,7 @@ public class LoginActivity extends MyActivity {
             initializeAuthenticators();
             chooseActivity();
         }
+
+        super.onResume();
     }
 }

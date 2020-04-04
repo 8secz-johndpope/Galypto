@@ -38,9 +38,9 @@ public class ImageViewerActivity extends ContentViewerActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-
         imageView.setImageBitmap(null);
+
+        super.onBackPressed();
     }
 
     @Override

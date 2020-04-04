@@ -177,9 +177,9 @@ public class GalleryActivity extends MyActivity {
      */
     @Override
     public void onPause() {
-        super.onPause();
-
         state.onPause();
+
+        super.onPause();
     }
 
     /**
@@ -188,16 +188,16 @@ public class GalleryActivity extends MyActivity {
      */
     @Override
     public void onRestart() {
-        super.onRestart();
-
         state.onRestart();
+
+        super.onRestart();
     }
 
     @Override
     public void onResume() {
-        super.onResume();
-
         state.onResume();
+
+        super.onResume();
     }
 
     public void accept(ActivityVisitor activityVisitor) {
