@@ -72,19 +72,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
         notifyItemRangeChanged(position, this.media.size());
     }
 
-    public void update(List<Media> updatedList) {
-        int size = media.size();
-
-        if (updatedList.size() != size) {
-            Media m;
-            for (int i = 0; i < size; i++) {
-                m = media.get(i);
-
-                if (!updatedList.contains(m))
-                    remove(m);
-            }
-        }
-        else
-            notifyDataSetChanged();
+    public void update() {
+        notifyDataSetChanged();
     }
 }

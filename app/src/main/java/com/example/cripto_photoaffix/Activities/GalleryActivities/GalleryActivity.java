@@ -71,7 +71,7 @@ public class GalleryActivity extends MyActivity {
         for (Media m: media)
             m.deselect();
 
-        recyclerViewAdapter.update(media);
+        recyclerViewAdapter.update();
     }
 
     /**
@@ -161,7 +161,7 @@ public class GalleryActivity extends MyActivity {
             }
         }
 
-        recyclerViewAdapter.update(galleryMedia);
+        recyclerViewAdapter.update();
 
         task.execute();
 
@@ -284,7 +284,7 @@ public class GalleryActivity extends MyActivity {
         @Override
         public void onClick(View view) {
             state.touch((MyImageButton) view);
-            recyclerViewAdapter.update(gallery.getMedia());
+            recyclerViewAdapter.update();
         }
     }
 
@@ -303,7 +303,7 @@ public class GalleryActivity extends MyActivity {
             }
 
             state.onLongPress((MyImageButton) view);
-            recyclerViewAdapter.update(gallery.getMedia());
+            recyclerViewAdapter.update();
 
             return true;
         }
