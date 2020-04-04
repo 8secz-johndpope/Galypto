@@ -58,7 +58,7 @@ public class Picture extends Media {
 
         double discount = 0.85;
 
-        int value = preview.getHeight() > preview.getWidth()? preview.getWidth(): preview.getHeight();
+        int value = Math.min(preview.getHeight(), preview.getWidth());
 
         if (discount * value > 440) {
             while (discount * value > 440)
