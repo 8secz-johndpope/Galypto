@@ -47,6 +47,8 @@ public class DecryptorThread extends Thread {
 
                 System.out.println("It took " + (double)(System.currentTimeMillis() - start)/1000 + " seconds to restore and decrypt file.");
             }
+
+            System.gc();
         }
     }
 

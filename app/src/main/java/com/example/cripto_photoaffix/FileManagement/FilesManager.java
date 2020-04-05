@@ -170,7 +170,7 @@ public class FilesManager {
                 FileInputStream fis = new FileInputStream(path);
                 ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
 
-                byte[] bytes = new byte[(int)fis.getChannel().size()];
+                byte[] bytes = new byte[fis.available()];
                 int read = fis.read(bytes);
 
                 while (read != -1) {
@@ -344,7 +344,7 @@ public class FilesManager {
             FileInputStream input = new FileInputStream(origin);
             FileOutputStream output = new FileOutputStream(destination);
 
-            byte[] bytes = new byte[(int)input.getChannel().size()];
+            byte[] bytes = new byte[input.available()];
             int read = input.read(bytes);
 
             while (read != -1) {
@@ -378,7 +378,7 @@ public class FilesManager {
             File f = new File(activity.getFilesDir() + "/" + path);
             FileInputStream fis = new FileInputStream(f);
 
-            byte[] data = new byte[(int) f.length()];
+            byte[] data = new byte[fis.available()];
             fis.read(data);
             fis.close();
 

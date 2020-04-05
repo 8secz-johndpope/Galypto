@@ -119,7 +119,7 @@ public class EncryptorThread extends Thread {
             if (fis != null) {
                 ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
 
-                byte[] bytes = new byte[4096];
+                byte[] bytes = new byte[fis.available()];
 
                 int read = fis.read(bytes);
 

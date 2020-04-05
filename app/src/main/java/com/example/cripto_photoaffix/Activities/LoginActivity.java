@@ -36,6 +36,8 @@ import java.util.List;
 import java.util.Vector;
 
 public class LoginActivity extends MyActivity {
+    private final int MAX_SIZE = 50;
+    private final int MAX_ELEMENTS = 30;
     private EditText field;
     private CheckBox showPassword;
     private Vector<Authenticator> authenticators;
@@ -147,7 +149,7 @@ public class LoginActivity extends MyActivity {
         if (Intent.ACTION_SEND.equals(action) && type != null) {
             Uri uri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
 
-            if (getFileSize(uri) < 60)
+            if (getFileSize(uri) < MAX_SIZE)
                 toEncrypt.add(uri);
             else
                 cannotAdd++;
@@ -163,7 +165,7 @@ public class LoginActivity extends MyActivity {
                 for (int i = 0; i < size; i++) {
                     uri = list.get(i);
 
-                    if (getFileSize(uri) < 40)
+                    if (getFileSize(uri) < MAX_SIZE)
                         toEncrypt.add(uri);
                     else
                         cannotAdd++;
@@ -171,7 +173,7 @@ public class LoginActivity extends MyActivity {
             }
         }
 
-        if (toEncrypt.size() > 15) {
+        if (toEncrypt.size() > MAX_ELEMENTS) {
             AppCompatDialogFragment dialog = new TooManyFilesDialog();
             dialog.show(getSupportFragmentManager(), "Too many files dialog.");
             toEncrypt.clear();
