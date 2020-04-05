@@ -17,6 +17,9 @@ public abstract class MyActivity extends AppCompatActivity {
 
     public abstract void accept(ActivityVisitor activityVisitor);
 
+    /**
+     * Refreshes the screen content.
+     */
     public abstract void refresh();
 
     @Override

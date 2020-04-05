@@ -56,9 +56,9 @@ public class FilesManager {
     }
 
     /**
-     * Retorna el contenido de un archivo especificado.
-     * @param path Camino al archivo para obtener la informacion.
-     * @return Informacion en forma de String.
+     * Returns the content of certain file.
+     * @param path Path to file with the data.
+     * @return Data in string.
      */
     public String getFileContent(String path) {
         StringBuilder res = new StringBuilder();
@@ -91,9 +91,9 @@ public class FilesManager {
     }
 
     /**
-     * Determina si un archiv existe o no.
-     * @param path Camino del archivo a determinar su existencia.
-     * @return True si el archivo existe, False en caso contrario.
+     * Determines whether a file exists or not.
+     * @param path Path of file.
+     * @return True if exists, False if does not exists.
      */
     public boolean exists(String path) {
         File f = new File(path);
@@ -102,8 +102,8 @@ public class FilesManager {
     }
 
     /**
-     * Serializa una lista de archivos encriptados.
-     * @param files Archivos encriptados a serializar.
+     * Serializes a list of EncryptedFile.
+     * @param files EncryptedFiles to serialize.
      */
     public void store(List<EncryptedFile> files) {
         SecureRandom random = new SecureRandom();
@@ -132,8 +132,8 @@ public class FilesManager {
     }
 
     /**
-     * Deserializa los archivos (Media) encriptados.
-     * @return Media encriptada.
+     * Deserializes all the EncryptedMedia.
+     * @return List of Media encrypted.
      */
     public List<EncryptedFile> restoreAllMedia() {
         List<EncryptedFile> files = new ArrayList<EncryptedFile>();
@@ -196,8 +196,8 @@ public class FilesManager {
     }
 
     /**
-     * Retorna una lista con los caminos a los archivos encriptados.
-     * @return Lista con caminos a todos los archivos encriptados.
+     * Returns a list with the path of all encrypted media.
+     * @return List with the path of all encrypted media.
      */
     public List<String> getMedia() {
         String[] media;
@@ -228,8 +228,8 @@ public class FilesManager {
     }
 
     /**
-     * Retorna una lista con todos los elementos compartidos.
-     * @return Lista con camino a todos los elementos compartidos.
+     * Returns a list with the path of all shared elements.
+     * @return List with the path of all shared elements.
      */
     public List<String> getShared() {
         String[] media;
@@ -256,7 +256,7 @@ public class FilesManager {
     }
 
     /**
-     * Elimina todos los datos de la aplicacion.
+     * Removes all data in the app.
      */
     public void removeEverything() {
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
@@ -283,8 +283,8 @@ public class FilesManager {
     }
 
     /**
-     * Elimina todos los archivos en un arreglo de archivos.
-     * @param files Archivos a eliminar.
+     * Removes all files contained in the array.
+     * @param files Files to delete.
      */
     private void deleteFiles(File [] files) {
         int size = 0;
@@ -305,8 +305,8 @@ public class FilesManager {
     }
 
     /**
-     * Elimina un archivo en un camino determinado.
-     * @param path Camino del archivo a eliminar.
+     * Deletes a file in certain patth.
+     * @param path File path to remove.
      */
     public void removeFile(String path) {
         File file = new File(path);
@@ -320,8 +320,8 @@ public class FilesManager {
     }
 
     /**
-     * Guarda una contraseña (archivo encriptado).
-     * @param password Contraseña a guardar.
+     * Stores a passowrd (archivo encriptado).
+     * @param password Password to store.
      */
     public void storePassword(EncryptedFile password) {
         MyActivity activity = ActivityTransferer.getInstance().getActivity();
@@ -331,10 +331,10 @@ public class FilesManager {
     }
 
     /**
-     * Copia un archivo a otro destino.
-     * @param origin Camino al archivo cual copiar.
-     * @param destination Destino donde pegar el archivo.
-     * @return Archivo destino.
+     * Copies a file to another destination.
+     * @param origin Path where copy from.
+     * @param destination Path where copy to.
+     * @return File in destination.
      */
     public static File copy(String origin, String destination) {
         File res = null;
@@ -366,9 +366,9 @@ public class FilesManager {
     }
 
     /**
-     * Restaura la contraseña con camino en name.
-     * @param path Nombre de la contraseña.
-     * @return Archivo encriptado con la contraseña.
+     * Restores a password in certain path.
+     * @param path Password path.
+     * @return EncryptedFile with password.
      */
     public EncryptedFile restoreFile(String path) {
         EncryptedFile file = null;
@@ -395,10 +395,10 @@ public class FilesManager {
     }
 
     /**
-     * Serializa un archivo encriptado en un camino especificado y con un nombre especificado.
-     * @param file Archivo a serializar.
-     * @param path Camino en donde guardar.
-     * @param name Nombre del archivo a ser guardado.
+     * Serializes an EncryptedFile in the give path with a given name.
+     * @param file File to serialize.
+     * @param path Path where to store the file.
+     * @param name Name to give the file.
      */
     private void storeObject(EncryptedFile file, String path, String name) {
         FlatBufferBuilder builder = file.serialize();
@@ -420,8 +420,8 @@ public class FilesManager {
     }
 
     /**
-     * Crea una carpeta con un determinado nombre.
-     * @param name Nombre de la carpeta a crear.
+     * Creates a folder.
+     * @param name Name of the folder.
      */
     private void createFolder(String name) {
         MyActivity activity = ActivityTransferer.getInstance().getActivity();

@@ -55,15 +55,15 @@ public class GalleryActivity extends MyActivity {
     }
 
     /**
-     * Cambia el estado que se esta utilizando.
-     * @param state Nuevo estado.
+     * Changes the state in use.
+     * @param state New state.
      */
     public void changeState(State state) {
         this.state = state;
     }
 
     /**
-     * Deselecciona todos los botones previamente seleccionados.
+     * Deselects all images previously selected.
      */
     public void unselectAllButtons() {
         List<Media> media = gallery.getMedia();
@@ -75,8 +75,8 @@ public class GalleryActivity extends MyActivity {
     }
 
     /**
-     * Retorna el estado actual.
-     * @return Estado actual.
+     * Returns the actual state.
+     * @return Actual state.
      */
     public State getState() {
         return state;
@@ -107,7 +107,7 @@ public class GalleryActivity extends MyActivity {
     }
 
     /**
-     * Oculta los botones flotantes (compartir, eliminar y guardar).
+     * Hides all buttons (share, store and delete).
      */
     public void hideButtons() {
         int size = actionButtons.size();
@@ -124,7 +124,7 @@ public class GalleryActivity extends MyActivity {
     }
 
     /**
-     * Muestra todos los botones.
+     * Makes all buttons visible.
      */
     public void showButtons() {
         int size = actionButtons.size();
@@ -141,8 +141,8 @@ public class GalleryActivity extends MyActivity {
     }
 
     /**
-     * Ejecuta en los botones seleccionados una tarea.
-     * @param task Tarea a ejecutar.
+     * Executes a task in the selected images.
+     * @param task Task to execute.
      */
     public void executeOnSelected(Command task) {
         List<Media> galleryMedia = gallery.getMedia();
@@ -172,9 +172,6 @@ public class GalleryActivity extends MyActivity {
         changeState(state.getNextState());
     }
 
-    /**
-     * Si se frena la actividad actual se avisa al estado y se determina la accion a realizar.
-     */
     @Override
     public void onPause() {
         state.onPause();
@@ -182,10 +179,6 @@ public class GalleryActivity extends MyActivity {
         super.onPause();
     }
 
-    /**
-     * Si se reinicia la actividad actual, se avisa al estado actual y se determina la activiad a
-     * realizar, tambien se añade a esta actividad como la actual.
-     */
     @Override
     public void onRestart() {
         state.onRestart();
@@ -205,7 +198,7 @@ public class GalleryActivity extends MyActivity {
     }
 
     /**
-     * Inicializa la grilla de imagenes y el estado.
+     * Initializes the grid and the state.
      */
     private void initialize() {
         GalleryTransferer transferer = GalleryTransferer.getInstance();
@@ -231,7 +224,7 @@ public class GalleryActivity extends MyActivity {
     }
 
     /**
-     * Inicializa los botones flotantes (compartir, eliminar y borrar).
+     * Initializes all buttons.
      */
     private void initializeFloatingButtons() {
         actionButtons = new ArrayList<ImageButton>();
@@ -256,8 +249,8 @@ public class GalleryActivity extends MyActivity {
     }
 
     /**
-     * Retorna el ancho de la pantalla.
-     * @return Retorna el ancho de la pantalla.
+     * Returns the screen width.
+     * @return Screen's width.
      */
     private int getScreenWidth() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -267,8 +260,8 @@ public class GalleryActivity extends MyActivity {
     }
 
     /**
-     * Retorna el largo de la pantalla.
-     * @return Retorna el largo de la pantalla.
+     * Returns the screen height.
+     * @return Screen's height.
      */
     private int getScreenHeigth() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -278,7 +271,7 @@ public class GalleryActivity extends MyActivity {
     }
 
     /**
-     * ButtonListener de tocado en las imagenes.
+     * ButtonListener when images are clicked.
      */
     private class ButtonListener implements View.OnClickListener {
         @Override
@@ -289,7 +282,7 @@ public class GalleryActivity extends MyActivity {
     }
 
     /**
-     * ButtonListener de tocado largo en las imagenes.
+     * ButtonListener when images are long pressed.
      */
     private class LongClickListener implements View.OnLongClickListener {
         public boolean onLongClick(View view) {

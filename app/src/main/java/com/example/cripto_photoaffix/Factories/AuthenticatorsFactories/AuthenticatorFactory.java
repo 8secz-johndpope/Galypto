@@ -4,8 +4,8 @@ import com.example.cripto_photoaffix.Authenticators.Authenticator;
 
 public abstract class AuthenticatorFactory {
     /**
-     * Crea un autenticador.
-     * @return Autenticador especificado.
+     * Creates an authenticator.
+     * @return Authenticator created.
      */
     public abstract Authenticator create();
 }

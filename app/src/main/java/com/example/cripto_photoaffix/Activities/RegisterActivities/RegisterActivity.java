@@ -72,17 +72,12 @@ public class RegisterActivity extends MyActivity {
         });
     }
 
-    /**
-     * Accept del visitor. No hace nada ya que por el momento no se requiere que se visite esta
-     * actividad.
-     * @param activityVisitor Visitor visitando.
-     */
     public void accept(ActivityVisitor activityVisitor) {}
 
     public void refresh() {}
 
     /**
-     * Se crea la informacion brindada por el usuario. Para despues poder ser usada por el login.
+     * The information provided by the user is stored and the passwords are set up.
      */
     private void createUserData() {
         EditText field = findViewById(R.id.passcode);
@@ -97,7 +92,7 @@ public class RegisterActivity extends MyActivity {
         Authenticator fingerprint = fingerprintAuthenticatorFactory.create();
 
         if (fingerprint.canBeUsed())
-            setupFingerprint(fingerprint, finalPassword);
+            setupBiometrics(fingerprint, finalPassword);
 
         GalleryTransferer transferer = GalleryTransferer.getInstance();
         transferer.setGallery(new Gallery());
@@ -108,10 +103,8 @@ public class RegisterActivity extends MyActivity {
     }
 
     /**
-     * Genera una contraseña "universal", que va a ser la cual encripta las fotos y videos, ya que
-     * la contraseña numerica creada por el usuario obviamente difiere de la biometrica (si es que
-     * se usa) y esto nos permite no tener que duplicar los archivos.
-     * @return Contraseña "universal".
+     * Generates a "universal password", which will be the one that encrypts and decrypts the files.
+     * @return "Universal password".
      */
     private String generatePassword() {
         StringBuilder res = new StringBuilder();
@@ -132,8 +125,8 @@ public class RegisterActivity extends MyActivity {
     }
 
     /**
-     * Hashea la contraseña y crea el archivo correspondiente.
-     * @param password Contraseña a hashear.
+     * Hashes the user's password and creates the corresponding file.
+     * @param password Password to hash.
      */
     private void hashPassword(String password) {
         String salt = BCrypt.gensalt(12);
@@ -145,9 +138,9 @@ public class RegisterActivity extends MyActivity {
     }
 
     /**
-     * Encripta la contraseña "universal" usando la contraseña del usuario.
-     * @param field Campo que contiene la contraseña del usuario.
-     * @param passwordToEncrypt Contraseña "universal" a encriptar.
+     * Encrypts the "universal password" using the user's password.
+     * @param field Field with user's password.
+     * @param passwordToEncrypt "Universal password" to encrypt.
      */
     private void setupPasscode(EditText field, String passwordToEncrypt) {
         Authenticator authenticator = new PasscodeAuthenticator(field);
@@ -160,12 +153,12 @@ public class RegisterActivity extends MyActivity {
     }
 
     /**
-     * Encripta la contraseña "universal" usando la huella digital.
-     * @param fingerprint Authenticador que contiene la contraseña del usuario.
-     * @param password Contraseña "universal" a encriptar.
+     * Encrypts the "universal password" using biometrics.
+     * @param biometric Authenticator containing the user's identification.
+     * @param password "Universal password" to encrypt.
      */
-    private void setupFingerprint(Authenticator fingerprint, String password) {
-        EncryptedFile file = fingerprint.encrypt(password);
+    private void setupBiometrics(Authenticator biometric, String password) {
+        EncryptedFile file = biometric.encrypt(password);
         file.setFileName("fingerprintFinalPassword");
 
         FilesManager manager = FilesManager.getInstance();
@@ -173,14 +166,19 @@ public class RegisterActivity extends MyActivity {
         manager.storePassword(file);
     }
 
-    private boolean validPassword(String string) {
-        boolean valid = string.length() > 8;
+    /**
+     * Decides whether the given password is valid or not.
+     * @param password Password to decide.
+     * @return True if the password is valid and false if not.
+     */
+    private boolean validPassword(String password) {
+        boolean valid = password.length() > 8;
 
         if (valid) {
             int cantNumbers = 0;
 
-            for (int i = 0; i < string.length(); i++) {
-                if (Character.isDigit(string.charAt(i)))
+            for (int i = 0; i < password.length(); i++) {
+                if (Character.isDigit(password.charAt(i)))
                     cantNumbers++;
             }
 

@@ -14,23 +14,20 @@ public abstract class GalleryButtonFactory extends LayoutButtonFactory {
     }
 
     /**
-     * Retorna el comando necesario para ejecutar una vez que se toca al boton.
-     * @return Comando a ejecutar.
+     * Returns the command to execute when the button is pressed.
+     * @return Command to execute.
      */
     protected abstract Command command();
 
     protected View.OnClickListener listener() {
-        return new GalleryButtonListener(command());
+        return new GalleryButtonListener();
     }
 
-    /**
-     * ButtonListener de los botones flotantes, cada uno tiene su propio comando.
-     */
     private class GalleryButtonListener implements View.OnClickListener {
         private ActivityVisitor visitor;
 
-        private GalleryButtonListener(Command task) {
-            visitor = new GalleryButtonVisitor(task);
+        private GalleryButtonListener() {
+            visitor = new GalleryButtonVisitor(command());
         }
 
         @Override

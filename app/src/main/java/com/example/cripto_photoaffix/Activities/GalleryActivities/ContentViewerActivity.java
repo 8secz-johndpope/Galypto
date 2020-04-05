@@ -159,7 +159,7 @@ public abstract class ContentViewerActivity extends MyActivity {
     public void refresh() {}
 
     /**
-     * Inicializa los botones de eliminar, compartir y guardar.
+     * Initializes the share, store and delete buttons.
      */
     protected void initializeButtons() {
         LinearLayout layout = findViewById(R.id.fullscreen_content_controls);
@@ -224,13 +224,13 @@ public abstract class ContentViewerActivity extends MyActivity {
     }
 
     /**
-     * Carga la "media" en la vista donde deberia ser cargada.
+     * Loads the media.
      */
     public abstract void loadMedia();
 
     /**
-     * Actualiza la "media" que se va a mostrar.
-     * @return Media a mostrar.
+     * Updates the media to show.
+     * @return Media to show.
      */
     private Media getMedia() {
         MediaTransferer transferer = MediaTransferer.getInstance();

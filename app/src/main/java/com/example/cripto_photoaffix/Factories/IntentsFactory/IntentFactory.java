@@ -4,8 +4,8 @@ import android.content.Intent;
 
 public abstract class IntentFactory {
     /**
-     * Crea el "Intent" deseado.
-     * @return Intent a crear.
+     * Creates the intent.
+     * @return Intent created.
      */
     public abstract Intent create();
 }

@@ -20,8 +20,8 @@ public class CannotAddDialog extends AppCompatDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         if (cantFiles > 1) {
-            builder.setTitle("No se puede añadir " + cantFiles + " archivos.")
-                    .setMessage("Los archivos son mas pesados de lo esperado.")
+            builder.setTitle("Cannot add " + cantFiles + " files.")
+                    .setMessage("The files are heavier than expected.")
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -30,8 +30,8 @@ public class CannotAddDialog extends AppCompatDialogFragment {
                     });
         }
         else {
-            builder.setTitle("No se puede añadir 1 archivo.")
-                    .setMessage("El archivo es mas pesado de lo esperado.")
+            builder.setTitle("Cannot add one file.")
+                    .setMessage("The file is heavier than expected.")
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {

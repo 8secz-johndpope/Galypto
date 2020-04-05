@@ -15,8 +15,8 @@ public class CouldNotDecryptDialog extends AppCompatDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.setTitle("No se pudo desencriptar un archivo.")
-                .setMessage("El archivo o la contraseña pueden estar corruptos.")
+        builder.setTitle("Could not decrypt a file.")
+                .setMessage("The file or password are corrupt.")
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {}

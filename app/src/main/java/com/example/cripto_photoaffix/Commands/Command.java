@@ -12,13 +12,13 @@ public abstract class Command {
     }
 
     /**
-     * Ejecuta la tarea.
+     * Execute task.
      */
     public abstract void execute();
 
     /**
-     * Añade elementos en los cuales ejecutar la tarea.
-     * @param media Media en la cual ejecutar la tarea.
+     * Adds elements to which execute the task in.
+     * @param media Media to which execute the task.
      */
     public void addMedia(Media media){
         toExecuteOn.add(media);

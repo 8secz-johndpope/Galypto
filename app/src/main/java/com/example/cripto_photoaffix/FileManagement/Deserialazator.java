@@ -9,12 +9,6 @@ import com.example.cripto_photoaffix.Security.EncryptedFiles.EncryptedVideo;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Esta clase tiene como objetivo poder deserializar los archivos serializados de una forma que sea
- * facil modificar en caso de añadir otros tipos de "Media", ya que Flatbuffers no permite la
- * jerarquia de herencia. Esto flexibiliza esta tarea, ya que basta con añadir al mapeo el tipo
- * nuevo de "Media".
- */
 public class Deserialazator {
     private static Map<String, EncryptedFile> database;
     private static final Deserialazator instance = new Deserialazator();
@@ -24,7 +18,7 @@ public class Deserialazator {
     }
 
     /**
-     * Iicializa el mapeo que determina de que tipo es cada archivo encriptado serializado.
+     * Initializes the database.
      */
     private static void initialize() {
         database = new HashMap<String, EncryptedFile>();
@@ -34,9 +28,8 @@ public class Deserialazator {
     }
 
     /**
-     * Retorna instancia del deserializador ya que es un Singleton. Es un Singleton para evitar
-     * "Memory Churn".
-     * @return Instancia actual.
+     * Returns an instance of the deserializator.
+     * @return Instance.
      */
     public static Deserialazator getInstance() {
         if (database == null)
@@ -46,9 +39,9 @@ public class Deserialazator {
     }
 
     /**
-     * Retorna el archivo de Flatbuffers deserializado.
-     * @param file Archivo encriptado serializado por Flatbuffers.
-     * @return Archivo encriptado (deserializado).
+     * Deserializes a serialized file.
+     * @param file Serialized file.
+     * @return EncryptedFile (deserialized).
      */
     public EncryptedFile deserialize(EncryptedFileFBS file) {
         EncryptedFile res = database.get(file.type());
@@ -67,7 +60,7 @@ public class Deserialazator {
     }
 
     /**
-     * Una vez terminado de usar se libera de la memoria.
+     * Once finished using, the deserializator has to be freed..
      */
     public void free() {
         database.clear();
@@ -75,9 +68,9 @@ public class Deserialazator {
     }
 
     /**
-     * Transforma un ByteVector a array de bytes.
-     * @param vector ByteVector a transformar.
-     * @return ByteVector transformado.
+     * Transforms a ByteVector into a byte array.
+     * @param vector ByteVector to transform.
+     * @return ByteVector transformed.
      */
     private byte[] byteVectorToArray(ByteVector vector) {
         byte[] bytes = new byte[vector.length()];

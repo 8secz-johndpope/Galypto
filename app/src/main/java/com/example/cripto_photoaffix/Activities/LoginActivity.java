@@ -78,9 +78,8 @@ public class LoginActivity extends MyActivity {
     }
 
     /**
-     * Este metodo es llamado si el usuario ingreso correctamente la contraseña o si las biometricas
-     * aceptaron al usuario.
-     * @param password Contraseña ingresada por el usuario/biometricas.
+     * If the login is successful, the visitor calls this method.
+     * @param password Password to decrypt files.
      */
     public void loginSuccessful(String password) {
         findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
@@ -104,8 +103,7 @@ public class LoginActivity extends MyActivity {
     }
 
     /**
-     * Si el usuario ingresa una contraseña incorrecta o las biometricas no lo aceptan, el visitor
-     * llama a este metodo.
+     * If the password is wrong, the visitor calls this method.
      */
     public void loginUnsuccessful() {
         field.selectAll();
@@ -119,10 +117,6 @@ public class LoginActivity extends MyActivity {
         }
     }
 
-    /**
-     * Accept del visitor.
-     * @param activityVisitor Visitor que quiere visitar.
-     */
     public void accept(ActivityVisitor activityVisitor) {
         activityVisitor.visit(this);
     }
@@ -131,13 +125,8 @@ public class LoginActivity extends MyActivity {
     public void refresh() {}
 
     /**
-     * Se fija si se esta tratando de compartir alguna imagen o video con la aplicacion, si es el
-     * caso, añade lo que se esta tratando de compartir a una cola. En caso de que uno o mas
-     * archivos superen los 60 Mb esos no van a ser agregados a la cola y se va a mostrar un mensaje
-     * indicando que no se pueden añadir. Esto es porque el proceso de encriptado consume mucha
-     * memoria y requiere poder de procesado, aproximadamente 60Mb es lo que puede aguantar
-     * un Galaxy S9 (Mi celular) se deberia encontrar alguna forma mejor para determinar el limite
-     * dependiendo de la cantidad del dispositivo en uso.
+     * Checks if any elements are being shared to the app. If there are elements being shared,
+     * they will be added to a queue in order to be encrypted.
      */
     private void checkForIncomingIntents() {
         Intent intent = getIntent();
@@ -187,9 +176,9 @@ public class LoginActivity extends MyActivity {
     }
 
     /**
-     * Retorna el tamaño de un archivo en un URI.
-     * @param uri URI a obtener el tamaño.
-     * @return Tamaño en Mb del archivo que "apunta" el URI.
+     * Returns the size of the file in the uri.
+     * @param uri URI to which get the size;
+     * @return Size in Mb.
      */
     private double getFileSize(Uri uri) {
         Cursor cursor = getContentResolver().query(uri, null, null, null, null);
@@ -201,7 +190,7 @@ public class LoginActivity extends MyActivity {
     }
 
     /**
-     * Si el usuario no esta registrado, se inicia la actividad para registrarlo.
+     * If the user is not registered, the app will open the register activity.
      */
     private void chooseActivity() {
         System.out.println("Path: " + getFilesDir());
@@ -218,8 +207,7 @@ public class LoginActivity extends MyActivity {
     }
 
     /**
-     * Inicializa los autenticadores que el dispositivo tenga habilitados (no todos, solamente los
-     * disponibles por la aplicacion) y el usuario se haya registrado.
+     * Initializes the authenticators available.
      */
     private void initializeAuthenticators() {
         AuthenticatorFactory factory = new PasscodeAuthenticatorFactory(field);
@@ -246,10 +234,6 @@ public class LoginActivity extends MyActivity {
             authenticators.add(created);
     }
 
-    /**
-     * Si la aplicacion se cierra, se limpian los autenticadores y campos para que las contraseñas,
-     * si estan guardadas, sean liberadas de memoria.
-     */
     @Override
     public void onDestroy() {
         authenticators.clear();
@@ -259,10 +243,6 @@ public class LoginActivity extends MyActivity {
         super.onDestroy();
     }
 
-    /**
-     * Al reiniciar la actividad, se fija si se estan compartiendo elementos y reinicia los
-     * autenticadores.
-     */
     @Override
     public void onRestart() {
         if (!openingGallery) {
@@ -275,11 +255,6 @@ public class LoginActivity extends MyActivity {
         super.onRestart();
     }
 
-    /**
-     * Inicia los autenticadores si es posible o inicia la activiad de registro
-     * finalmente, busca imagenes o videos que se esten compartiendo. Esto se realiza cada
-     * vez que se vuelve a la actividad o se inicia.
-     */
     public void onResume() {
         if (!openingGallery) {
             authenticators = new Vector<Authenticator>();

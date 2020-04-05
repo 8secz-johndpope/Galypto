@@ -14,7 +14,7 @@ public abstract class RotateImageButtonFactory extends LayoutButtonFactory {
     }
 
     /**
-     * Rota la imagen en la vista "view".
+     * Rotates the image.
      */
     protected void rotate() {
         MyActivity activity = ActivityTransferer.getInstance().getActivity();

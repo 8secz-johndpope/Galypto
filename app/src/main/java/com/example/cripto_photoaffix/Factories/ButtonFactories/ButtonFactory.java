@@ -4,8 +4,8 @@ import android.widget.ImageButton;
 
 public abstract class ButtonFactory {
     /**
-     * Crea un boton para imagen.
-     * @return Boton para imagen.
+     * Creates a button.
+     * @return Button.
      */
     public abstract ImageButton create();
 }

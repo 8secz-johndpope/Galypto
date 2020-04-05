@@ -14,8 +14,8 @@ public class TooManyFilesDialog extends AppCompatDialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("No se puede añadir los archivos.")
-                .setMessage("Debe añadir a lo sumo 15 archivos por vez.")
+        builder.setTitle("Cannot add the files.")
+                .setMessage("You can only add 30 files at a time.")
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {}

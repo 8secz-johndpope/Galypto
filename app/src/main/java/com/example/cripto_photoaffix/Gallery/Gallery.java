@@ -72,8 +72,8 @@ public class Gallery {
     }
 
     /**
-     * Divide el proceso de desencriptado en a lo sumo 5 colas.
-     * @return Lista de colas con los archivos a desencriptar.
+     * Divides the decryption process in as much 5 queues.
+     * @return List of queues with files to decrypt.
      */
     private List<Queue<String>> divideDecryption() {
         FilesManager manager = FilesManager.getInstance();
@@ -116,10 +116,10 @@ public class Gallery {
     }
 
     /**
-     * Inicia el proceso de desencriptado en a lo sumo 5 hilos.
-     * @param queues Lista de colas de elementos a desencriptar.
-     * @param passcode Contraseña con la cual desencriptar los elementos.
-     * @return Lista de Media, es decir los archivos desencriptados.
+     * Initializes the decryption process in as much 5 threads.
+     * @param queues List of queues with elements to decrypt.
+     * @param passcode Password to decrypt the files.
+     * @return List of media with the files decrypted.
      */
     private List<Media> startDecryption(List<Queue<String>> queues, String passcode) {
         List<DecryptorThread> threads = new ArrayList<DecryptorThread>();
@@ -162,9 +162,9 @@ public class Gallery {
     }
 
     /**
-     * Guarda y encripta los archivos de los URIs indicados.
-     * @param toEncrypt Lista de archivos a encriptar.
-     * @param password Contraseña con la cual encriptar los archivos.
+     * Stores and ecrypts a list of uris.
+     * @param toEncrypt List of uris to encrypt and store.
+     * @param password Password to encrypt them.
      */
     private void store(List<Uri> toEncrypt, String password) {
         List<Queue<Uri>> queues = divideEncryption(toEncrypt);
@@ -211,9 +211,9 @@ public class Gallery {
     }
 
     /**
-     * Divide la tarea de encriptar en a lo sumo 5 colas.
-     * @param uris Lista de URIs a encriptar.
-     * @return Lista de cola de URIs ya dividida.
+     * Divided the encryption task in as much 5 queues.
+     * @param uris List of URIs to encrypt.
+     * @return List of queues with Uris to encrypt.
      */
     private List<Queue<Uri>> divideEncryption(List<Uri> uris) {
 
@@ -254,8 +254,8 @@ public class Gallery {
     }
 
     /**
-     * Elimina la "media" dada de la galeria.
-     * @param media Media a eliminar.
+     * Deletes media from the gallery.
+     * @param media Media to delete.
      */
     public void remove(Media media) {
         Command command = new DeleteCommand();

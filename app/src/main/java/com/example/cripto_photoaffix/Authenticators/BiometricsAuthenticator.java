@@ -120,11 +120,11 @@ public class BiometricsAuthenticator implements Authenticator {
     }
 
     /**
-     * Inicializa el texto de la caja de informacion.
+     * Initializes the boxe's text.
      */
     protected void initializePromptInfo() {
-        promptInfo = new BiometricPrompt.PromptInfo.Builder().setTitle("Log in por biometricas")
-                .setSubtitle("Entre usando biometricas.").setNegativeButtonText("Usar contraseña")
+        promptInfo = new BiometricPrompt.PromptInfo.Builder().setTitle("Log in using biometrics")
+                .setSubtitle("Log in using biometrics.").setNegativeButtonText("Use password")
                 .build();
     }
 
@@ -155,7 +155,7 @@ public class BiometricsAuthenticator implements Authenticator {
     }
 
     /**
-     * Retorna el "Crypto Cipher".
+     * Returns "Crypto Cipher".
      * @return "Crypto Cipher"
      */
     protected Cipher getCryptoCipher() {
@@ -171,8 +171,8 @@ public class BiometricsAuthenticator implements Authenticator {
     }
 
     /**
-     * Retorna la contraseña secreta.
-     * @return Contraseña secreta.
+     * Returns the secret key.
+     * @return Secret key.
      */
     protected SecretKey getSecretKey() {
         SecretKey secretKey = null;

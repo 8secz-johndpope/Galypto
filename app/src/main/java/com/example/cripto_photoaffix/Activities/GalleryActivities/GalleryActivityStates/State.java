@@ -1,45 +1,43 @@
 package com.example.cripto_photoaffix.Activities.GalleryActivities.GalleryActivityStates;
 
-import com.example.cripto_photoaffix.Gallery.Media;
 import com.example.cripto_photoaffix.MyImageButton;
-import java.util.List;
 
 public interface State {
     /**
-     * Cuando el usuario toca una imagen, se hace esta tarea.
-     * @param button Boton de imagen o video que el usuario toco.
+     * When the user touches an image, this method is called.
+     * @param button Button touched.
      */
     public void touch(MyImageButton button);
 
     /**
-     * Si el usuario presiona para ir para atras se realiza esta tarea.
+     * When the user presses the back button, this method is called.
      */
     public void back();
 
     /**
-     * Si el usuario hace un "long press" se realiza esta tarea.
-     * @param button Boton de la imagen on video que el usuario presiono por un tiempo "largo".
+     * If the user long presses an image.
+     * @param button Button long pressed.
      */
     public void onLongPress(MyImageButton button);
 
     /**
-     * Si se frena la actividad actual, se realiza esta tarea.
+     * When the activity is stopped.
      */
     public void onPause();
 
     /**
-     * Si se reanuda, se realiza esta tarea.
+     * When the activity is resumed.
      */
     public void onResume();
 
     /**
-     * Si se reanuda, se realiza esta tarea.
+     * When the activity is restarted.
      */
     public void onRestart();
 
     /**
-     * Retorna el siguiente estado.
-     * @return Siguiente estado.
+     * Returns the next state to use.
+     * @return Next state.
      */
     public State getNextState();
 }
