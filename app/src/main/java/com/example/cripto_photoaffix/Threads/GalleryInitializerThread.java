@@ -1,8 +1,6 @@
 package com.example.cripto_photoaffix.Threads;
 
 import android.net.Uri;
-import android.view.WindowManager;
-
 import com.example.cripto_photoaffix.Activities.MyActivity;
 import com.example.cripto_photoaffix.ActivityTransferer;
 import com.example.cripto_photoaffix.GalleryTransferer;
@@ -29,8 +27,6 @@ public class GalleryInitializerThread extends Thread {
 
     public void run() {
         MyActivity currentActivity = ActivityTransferer.getInstance().getActivity();
-
-        currentActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         Gallery gallery;
 

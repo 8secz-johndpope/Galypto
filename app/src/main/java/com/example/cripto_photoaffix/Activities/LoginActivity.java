@@ -12,6 +12,7 @@ import android.provider.OpenableColumns;
 import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -84,6 +85,8 @@ public class LoginActivity extends MyActivity {
     public void loginSuccessful(String password) {
         findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
         findViewById(R.id.view).setVisibility(View.VISIBLE);
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         //Oculta el teclado.
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
