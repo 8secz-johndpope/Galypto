@@ -101,6 +101,7 @@ public abstract class ContentViewerActivity extends MyActivity {
         super.onCreate(savedInstanceState);
 
         media = getMedia();
+        getWindow().setStatusBarColor(getResources().getColor(R.color.blacktransparent, getTheme()));
 
         wentBack = true;
     }
@@ -214,6 +215,8 @@ public abstract class ContentViewerActivity extends MyActivity {
         }
 
         super.onResume();
+
+        show();
     }
 
     @Override
