@@ -89,15 +89,15 @@ public class LoginActivity extends MyActivity {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(field.getApplicationWindowToken(), 0);
 
+        CheckBox checkBox = findViewById(R.id.showPassword);
 
-        if (field.getInputType() != (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD))
-            field.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        if (checkBox.isChecked())
+            checkBox.performClick();
 
         field.setEnabled(false);
         Button login = findViewById(R.id.button);
         login.setEnabled(false);
 
-        CheckBox checkBox = findViewById(R.id.showPassword);
         checkBox.setEnabled(false);
 
         openingGallery = true;
