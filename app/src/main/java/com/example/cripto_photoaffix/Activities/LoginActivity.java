@@ -89,6 +89,10 @@ public class LoginActivity extends MyActivity {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(field.getApplicationWindowToken(), 0);
 
+
+        if (field.getInputType() != (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD))
+            field.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
         field.setEnabled(false);
         Button login = findViewById(R.id.button);
         login.setEnabled(false);
