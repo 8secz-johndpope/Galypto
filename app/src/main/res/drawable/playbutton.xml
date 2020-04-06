@@ -8,4 +8,5 @@
           android:height="20dp"
           android:gravity="center"
      />
+    <item android:drawable="@drawable/ripple" />
 </layer-list>

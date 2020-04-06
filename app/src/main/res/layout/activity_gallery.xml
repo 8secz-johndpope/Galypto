@@ -61,6 +61,7 @@
 
         <ImageButton
             android:id="@+id/store"
+            app:srcCompat="@drawable/download"
             style="@style/GalleryImageButtonStyle"
             android:layout_width="41dp"
             android:layout_height="41dp"
@@ -68,11 +69,11 @@
             android:contentDescription="@string/store"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/delete"
-            app:layout_constraintStart_toEndOf="@+id/share"
-            app:srcCompat="@drawable/download" />
+            app:layout_constraintStart_toEndOf="@+id/share" />
 
         <ImageButton
             android:id="@+id/share"
+            app:srcCompat="@drawable/share"
             style="@style/GalleryImageButtonStyle"
             android:layout_width="41dp"
             android:layout_height="41dp"
@@ -80,11 +81,11 @@
             android:layout_marginBottom="45dp"
             android:contentDescription="@string/share"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/share" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageButton
             android:id="@+id/delete"
+            app:srcCompat="@drawable/trash"
             style="@style/GalleryImageButtonStyle"
             android:layout_width="41dp"
             android:layout_height="41dp"
@@ -92,8 +93,7 @@
             android:layout_marginBottom="45dp"
             android:contentDescription="@string/delete"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/trash" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
