@@ -17,6 +17,8 @@ public abstract class LayoutButtonFactory extends ButtonFactory {
 
         button.setOnClickListener(listener());
 
+        layout = null;
+
         return button;
     }
 

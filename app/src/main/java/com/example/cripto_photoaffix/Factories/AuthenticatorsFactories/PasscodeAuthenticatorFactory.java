@@ -12,6 +12,8 @@ public class PasscodeAuthenticatorFactory extends AuthenticatorFactory {
     }
 
     public Authenticator create() {
-        return new PasscodeAuthenticator(field);
+        Authenticator auth = new PasscodeAuthenticator(field);
+        field = null;
+        return auth;
     }
 }

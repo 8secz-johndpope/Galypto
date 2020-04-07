@@ -38,6 +38,9 @@ public class GalleryInitializerThread extends Thread {
         GalleryTransferer transferer = GalleryTransferer.getInstance();
         transferer.setGallery(gallery);
 
+        toEncrypt.clear();
+        toEncrypt = null;
+
         IntentFactory factory = new GalleryIntentFactory();
         currentActivity.startActivity(factory.create());
 
